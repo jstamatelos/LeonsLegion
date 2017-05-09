@@ -26,7 +26,17 @@ public class Card implements Comparator{
     public enum Suit {SPADES, HEARTS, DIAMONDS, CLUBS}
     public enum Rank {TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE}
 
-    public String printCardToString(Card card) {
+    public int getPointValue() {
+        if(rank.ordinal() < 8) {
+            return rank.ordinal() + 2;
+        } else if(rank.ordinal() < 12) {
+            return 10;
+        } else {
+            return 11;
+        }
+    }
+
+    public String toString(Card card) {
         return card.rank + " of " + card.suit;
     }
 

@@ -8,7 +8,7 @@ public class PokerHand extends Hand implements Comparable {
     HandType handType;
 
     public int compareTo(Object other) {
-        PokerHand otherHand = (PokerHandHand) other;
+        PokerHand otherHand = (PokerHand) other;
         return handType.ordinal() - otherHand.getHandType().ordinal();
     }
 
