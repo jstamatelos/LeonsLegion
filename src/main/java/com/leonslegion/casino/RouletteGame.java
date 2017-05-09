@@ -59,7 +59,9 @@ public class RouletteGame implements Spin {
 
 
 
-    public void spin() {
-        
+    public String spin() {
+        ArrayList<String> rouletteWheel = RouletteGame.createRouletteWheel();
+        int randomNumber = (int) Math.floor(Math.random()*37);
+        return rouletteWheel.get(randomNumber);
     }
 }
