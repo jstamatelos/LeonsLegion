@@ -5,6 +5,6 @@ package com.leonslegion.casino;
  */
 public abstract class CardGame extends CasinoGame {
 
-    
+
 
 }
