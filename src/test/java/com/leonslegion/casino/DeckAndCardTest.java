@@ -50,19 +50,19 @@ public class DeckAndCardTest {
         Assert.assertFalse(expectedOutputIfNotShuffled.equals(actualOutput));
 
     }
-/*
+
     @Test
     public void testDealCard() {
         //Given:
-        ArrayList<Card> newDeck = newDeckFactory();
+        ArrayList<Card> newDeck = Deck.createNewDeck();
 
         //When:
-        newDeck.dealCard();
+        Deck.dealCard(newDeck);
 
         //Then:
-        Assert.assertFalse(newDeck.size() == 51);
+        Assert.assertTrue(newDeck.size() == 51);
 
     }
 
-*/
+
 }

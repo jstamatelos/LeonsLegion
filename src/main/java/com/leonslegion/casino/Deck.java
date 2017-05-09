@@ -4,7 +4,11 @@ import java.util.*;
 
 public class Deck {
 
+
+
     private Deck() {}
+
+
 
     public static ArrayList<Card> createNewDeck() {
         ArrayList<Card> newDeck = new ArrayList<Card>();
@@ -18,6 +22,7 @@ public class Deck {
     }
 
 
+
     public static String printDeckToString (ArrayList<Card> cardDeck) {
         String deckString = (cardDeck.get(0)).getRank().toString() + " of " + (cardDeck.get(0)).getSuit().toString();
         for (int i = 1; i < cardDeck.size(); i++) {
@@ -27,7 +32,17 @@ public class Deck {
     }
 
 
+
     public static void shuffleDeck (ArrayList<Card> cardDeck) {
         Collections.shuffle(cardDeck);
     }
+
+
+
+    public static Card dealCard(ArrayList<Card> cardDeck) {
+        Card aCard = cardDeck.get(0);
+        cardDeck.remove(0);
+        return aCard;
+    }
+
 }
