@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class WarHandTest {
     @Test
     public void compareDealerCardNotPlayerCard() throws Exception {
-        // Given - a full deck split into two - two piles of 26
+        
         WarGame war = new WarGame();
         ArrayList<Card> fullDeck = new ArrayList<Card>();
         ArrayList<Card> dealerDeck = (ArrayList<Card>) fullDeck.subList(0,25);
@@ -24,7 +24,7 @@ public class WarHandTest {
     }
     @Test
     public void dealerCardMatchesPlayerCard() throws Exception {
-        // Given - a full deck split into two - two piles of 26
+
         WarGame war = new WarGame();
         ArrayList<Card> fullDeck = new ArrayList<Card>();
         ArrayList<Card> dealerDeck = (ArrayList<Card>) fullDeck.subList(0,25);
