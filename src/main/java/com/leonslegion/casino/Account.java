@@ -36,6 +36,10 @@ public class Account {
         return accountBalance;
     }
 
+    public void setAccountBalance(double netWinnings) {
+        accountBalance += netWinnings;
+    }
+
     @Override
     public String toString() {
         return String.format("Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: $%.2f", accountBalance);
