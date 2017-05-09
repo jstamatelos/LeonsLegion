@@ -8,8 +8,16 @@ import java.util.Comparator;
  */
 public class BlackjackHand extends Hand implements Comparable {
 
+    @Override
+    public int compareTo(Object otherHand) {
 
-    public int compareTo(Object o) {
+        int thisTally = 0;
+        int otherTally = 0;
+
+        for (Card card : this.getCards()) {
+            thisTally += card.
+        }
+
         return 0;
     }
 }

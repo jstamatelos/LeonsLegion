@@ -5,9 +5,11 @@ import java.util.Comparator;
 /**
  * Created by cameronsima on 5/9/17.
  */
-public class WarHand extends Hand implements Comparator {
+public class WarHand extends Hand implements Comparable {
 
-    public int compare(Object o1, Object o2) {
+    @Override
+    public int compareTo(Object o) {
         return 0;
     }
+
 }
