@@ -20,11 +20,49 @@ public class TestAccountManager {
         String expectedResult = "Account ID: 1\nAccount Holder: Leon\nAccount Balance: $1000.00";
 
         //when
-        System.out.println(mngr.getAccounts().toString());
-        //String actualResult = mngr.getAccounts().get(0).toString();
+        String actualResult = mngr.getAccounts().get(0).toString();
 
         //then
-        //Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
 
+    }
+
+    @Test
+    public void testAddAccountToManager() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        Account expectedResult = acct2;
+
+        //when
+        Account actualResult = mngr.getAccounts().get(1);
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testRemoveAccountFromManager() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        mngr.removeAccount(acct);
+        Account expectedResult = acct2;
+
+        //when
+        Account actualResult = mngr.getAccounts().get(0);
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+        
     }
 }

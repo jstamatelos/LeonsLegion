@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class AccountManager {
 
-    private ArrayList<Account> accounts;
+    private ArrayList<Account> accounts = new ArrayList<Account>();
 
     public String showBalance(Account account) {
         return account.toString();
@@ -19,5 +19,9 @@ public class AccountManager {
 
     public void addAccount(Account account) {
         accounts.add(account);
+    }
+
+    public void removeAccount(Account account) {
+        accounts.remove(account);
     }
 }
