@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Created by markbrown on 5/9/17.
  */
-public class Card implements Comparator{
+public class Card {
 
 
 
@@ -48,9 +48,4 @@ public class Card implements Comparator{
         return card.rank + " of " + card.suit;
     }
 
-    public int compare(Object o1, Object o2) {
-        Card c1 = (Card) o1;
-        Card c2 = (Card) o2;
-        return c1.getRank().ordinal() - c2.getRank().ordinal();
-    }
 }
