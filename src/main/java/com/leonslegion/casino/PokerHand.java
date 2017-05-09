@@ -9,6 +9,10 @@ import java.util.Comparator;
  */
 public class PokerHand extends Hand implements Comparable {
 
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+
     HandType handType;
 
     PokerHand() {
@@ -28,6 +32,7 @@ public class PokerHand extends Hand implements Comparable {
 
     void setHandType() {
         this.handType = HandType.HIGHCARD;
+>>>>>>> 34e4835e5af087f7c19aae081b7772480a5c1765
     }
 
 }
