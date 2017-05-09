@@ -16,8 +16,12 @@ public class Lobby {
 
 
     public void initLobby(){
+<<<<<<< HEAD
 
         accountManager = new AccountManager();
+=======
+        accountManager =  new AccountManager();
+>>>>>>> master
         gameManager = new GameManager();
         loggedInAccount = null;
         input = new InputHandler();
