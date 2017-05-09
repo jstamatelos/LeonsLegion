@@ -6,6 +6,10 @@ public class RouletteGame implements Spin {
 
 
 
+
+
+
+
     public static void printRouletteTable() {
         System.out.println("          0 (uncolored)           00 (uncolored)        ");
         System.out.println("    1 (red)             2 (black)              3 (red)");
@@ -23,6 +27,8 @@ public class RouletteGame implements Spin {
         System.out.println();
     }
 
+
+
     public static void printInsideBets() {
         System.out.println("Possible Inside Bets:");
         System.out.println("Bet on a single number: 35:1 payout");
@@ -30,6 +36,8 @@ public class RouletteGame implements Spin {
         System.out.println("Bet on a combination of three numbers: 11:1 payout");
         System.out.println("Bet on a combination of four numbers: 8:1 payout");
         System.out.println();
+
+
 
     }
     public static void printSideBets() {
@@ -40,16 +48,6 @@ public class RouletteGame implements Spin {
         System.out.println("Bet on Front 18 (1-18) or Back 18 (19-36): 1:1 payout");
         System.out.println("Bet on Red or Black: 1:1 payout");
         System.out.println();
-
-
-
-
-
-
-
-
-
-
     }
 
 
