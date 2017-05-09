@@ -5,6 +5,8 @@ package com.leonslegion.casino;
  */
 public class WarGame extends CardGame {
     // Deck is split between player and dealer
+    WarGame war = new WarGame();
+
     // Player bets initial bet
     // Dealer plays one card
     // Player plays one card

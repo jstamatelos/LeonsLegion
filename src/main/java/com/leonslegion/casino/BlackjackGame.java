@@ -3,7 +3,7 @@ package com.leonslegion.casino;
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
-public class BlackJackGame extends CasinoGame {
+public class BlackjackGame extends CasinoGame {
     // Take cards from deck
     // Deal cards
     // Show player initial total and Dealer  initial total

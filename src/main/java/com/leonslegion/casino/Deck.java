@@ -4,11 +4,7 @@ import java.util.*;
 
 public class Deck {
 
-
-
     private Deck() {}
-
-
 
     public static ArrayList<Card> createNewDeck() {
         ArrayList<Card> newDeck = new ArrayList<Card>();
