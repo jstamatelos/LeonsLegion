@@ -5,8 +5,15 @@ import java.util.*;
 public class RouletteGame implements Spin {
 
 
-
-
+    public static ArrayList<String> createRouletteWheel() {
+        ArrayList<String> possibleRouletteOutcomes = new ArrayList<String>();
+        possibleRouletteOutcomes.add(0, "0");
+        possibleRouletteOutcomes.add(1, "00");
+        for (int i = 2; i < 38; i++) {
+            possibleRouletteOutcomes.add(i, Integer.toString(i - 1));
+        }
+        return possibleRouletteOutcomes;
+    }
 
 
 
@@ -52,8 +59,11 @@ public class RouletteGame implements Spin {
 
 
 
-
-    public void spin() {
-        
+    public String spin() {
+        ArrayList<String> rouletteWheel = RouletteGame.createRouletteWheel();
+        int randomNumber = (int) Math.floor(Math.random()*37);
+        return rouletteWheel.get(randomNumber);
     }
+
+
 }
