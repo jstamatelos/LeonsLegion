@@ -25,4 +25,10 @@ public class AccountManager {
         accounts.remove(account);
     }
 
+    public double getBalance(Account account) {
+        return account.getAccountBalance();
+    }
+
+
+
 }
