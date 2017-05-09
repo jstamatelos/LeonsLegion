@@ -64,4 +64,6 @@ public class RouletteGame implements Spin {
         int randomNumber = (int) Math.floor(Math.random()*37);
         return rouletteWheel.get(randomNumber);
     }
+
+
 }
