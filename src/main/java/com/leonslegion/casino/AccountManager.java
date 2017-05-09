@@ -24,4 +24,5 @@ public class AccountManager {
     public void removeAccount(Account account) {
         accounts.remove(account);
     }
+
 }
