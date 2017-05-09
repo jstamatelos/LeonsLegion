@@ -8,7 +8,7 @@ import java.util.Comparator;
  */
 public abstract class Hand {
 
-    private ArrayList<Card> cards;
+    //private ArrayList<Card> cards;
 
 
     public Hand() {}
