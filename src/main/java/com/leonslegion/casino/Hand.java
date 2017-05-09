@@ -7,7 +7,9 @@ import java.util.ArrayList;
  */
 public abstract class Hand {
 
-    //private ArrayList<Card> cards;
+    private ArrayList<Card> hand;
 
-
+    ArrayList<Card> getHand() {
+        return hand;
+    }
 }
