@@ -5,7 +5,7 @@ package com.leonslegion.casino;
  */
 public abstract class Hand {
 
-    private ArrayList<Card> cards;
+    //private ArrayList<Card> cards;
 
 
 }
