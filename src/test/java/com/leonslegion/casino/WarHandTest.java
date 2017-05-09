@@ -20,7 +20,9 @@ public class WarHandTest {
         // When - a card is pulled from each deck and compared
 
 
+
         // Then - dealer card is different than player card, card is returned
+
     }
     @Test
     public void dealerCardMatchesPlayerCard() throws Exception {
