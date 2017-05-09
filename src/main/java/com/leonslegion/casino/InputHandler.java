@@ -5,11 +5,7 @@ import java.util.Scanner;
  * Created by danielprahl on 5/9/17.
  */
 public class InputHandler {
-    private Scanner scanner;
-
-    public InputHandler(){
-        scanner = new Scanner(System.in);
-    }
+    private final Scanner scanner = new Scanner(System.in);
 
     // return String input
     public String getStringInput(String promptUserForInput) {
@@ -19,16 +15,12 @@ public class InputHandler {
     }
 
     // return double input
-    public double getDoubleInput(String promptUserForInput) {
-        System.out.println(promptUserForInput);
-        double userInput = scanner.nextDouble();
-        return userInput;
+    public Double getDoubleInput(String promptUserForInput) {
+        return Double.parseDouble(getStringInput(promptUserForInput));
     }
 
     // return int input
     public int getIntInput(String promptUserForInput) {
-        System.out.println(promptUserForInput);
-        int userInput = scanner.nextInt();
-        return userInput;
+        return getDoubleInput(promptUserForInput).intValue();
     }
 }
