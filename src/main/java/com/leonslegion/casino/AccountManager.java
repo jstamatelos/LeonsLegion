@@ -29,6 +29,8 @@ public class AccountManager {
         return account.getAccountBalance();
     }
 
-
+    public String getAccountHolderName(Account account) {
+        return account.getAccountHolderName();
+    }
 
 }

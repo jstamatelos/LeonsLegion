@@ -84,4 +84,23 @@ public class TestAccountManager {
         Assert.assertEquals(expectedResult, actualResult, 0);
 
     }
+
+    @Test
+    public void testAccountManagerGetAccountHolderName() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        String expectedResult = "Leon";
+
+        //when
+        String actualResult = mngr.getAccountHolderName(acct);
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
 }
