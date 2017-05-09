@@ -3,18 +3,19 @@ package com.leonslegion.casino;
 /**
  * Created by danielprahl on 5/9/17.
  */
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-public class GameManager {
+public abstract class GameManager {
+    AccountManager accountManager;
 
     public GameManager(){
         // todo
     }
 
-<<<<<<< HEAD
-=======
+    public GameManager(AccountManager accountManager) {
+        this.accountManager = accountManager;
+    }
 
->>>>>>> master
+    public AccountManager getAccountManager(){
+        return accountManager;
+    }
+
 }
