@@ -103,4 +103,24 @@ public class TestAccountManager {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
+
+    @Test
+    public void testAdjustAccountBalanceThroughManager() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        mngr.adjustAccountBalance(acct, 2000);
+        double expectedResult = 3000.00;
+
+        //when
+        double actualResult = mngr.getBalance(acct);
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult, 0);
+
+    }
 }

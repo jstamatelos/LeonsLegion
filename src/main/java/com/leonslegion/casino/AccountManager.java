@@ -33,4 +33,8 @@ public class AccountManager {
         return account.getAccountHolderName();
     }
 
+    public void adjustAccountBalance(Account account, double netWinnings) {
+        account.setAccountBalance(netWinnings);
+    }
+
 }
