@@ -13,12 +13,17 @@ public class RouletteGameManager extends GameManager {
         // no-arg constructor
     }
 
+<<<<<<< HEAD
 
 
     public RouletteGameManager(AccountManager accountManager){
+=======
+    /* public RouletteGameManager(AccountManager accountManager){
+>>>>>>> jarryd
         super(accountManager);
     }
 
+*/
 
     public static void RouletteGameEngineSetup() {
         System.out.println("Welcome to Roulette!" + "\n");
@@ -78,4 +83,9 @@ public class RouletteGameManager extends GameManager {
     }
 
 
+<<<<<<< HEAD
+=======
+*/
+
+>>>>>>> jarryd
 }

@@ -1,10 +1,8 @@
 package com.leonslegion.casino;
 
 import java.util.*;
-<<<<<<< HEAD
-=======
+
 import org.apache.commons.lang3.math.NumberUtils;
->>>>>>> e6007cb4a6d856cdcbd1b295ddbd87e15fa85664
 
 public class RouletteGame implements Spin {
 
@@ -36,10 +34,6 @@ public class RouletteGame implements Spin {
         System.out.println("   31 (black)          32 (red)                33 (black)");
         System.out.println("   34 (red)            35 (black)              36 (red)");
         System.out.println();
-<<<<<<< HEAD
-    }
-
-=======
     }
 
 
@@ -48,10 +42,9 @@ public class RouletteGame implements Spin {
         System.out.println("Possible Inside Bets:");
         System.out.println("Bet on a single number: 35:1 payout");
         System.out.println();
-
-
-
     }
+
+
     public static void printOutsideBets() {
         System.out.println("Possible Outside Bets:");
         System.out.println("Bet on 1st, 2nd or 3rd Dozen: 2:1 payout");
@@ -63,22 +56,7 @@ public class RouletteGame implements Spin {
     }
 
 
->>>>>>> e6007cb4a6d856cdcbd1b295ddbd87e15fa85664
 
-    public String spin() {
-        ArrayList<String> rouletteWheel = createRouletteWheel();
-        int randomNumber = (int) Math.floor(Math.random()*37);
-        return rouletteWheel.get(randomNumber);
-    }
-
-
-    public static void printInsideBets() {
-        System.out.println("Possible Inside Bets:");
-        System.out.println("Bet on a single number: 35:1 payout");
-        System.out.println("Bet on a combination of two numbers: 17:1 payout");
-        System.out.println("Bet on a combination of three numbers: 11:1 payout");
-        System.out.println("Bet on a combination of four numbers: 8:1 payout");
-        System.out.println();
 
     public static String handleAnyBet() {
         InputHandler input = new InputHandler();
@@ -95,16 +73,6 @@ public class RouletteGame implements Spin {
     }
 
 
-    }
-    public static void printSideBets() {
-        System.out.println("Possible Outside Bets:");
-        System.out.println("Bet on 1st, 2nd or 3rd Dozen: 2:1 payout");
-        System.out.println("Bet on Left, Middle or Right Column: 2:1 payout");
-        System.out.println("Bet on Even or Odd: 1:1 payout");
-        System.out.println("Bet on Front 18 (1-18) or Back 18 (19-36): 1:1 payout");
-        System.out.println("Bet on Red or Black: 1:1 payout");
-        System.out.println();
-    }
 
     public static String handleInsideBet() {
         InputHandler input = new InputHandler();
@@ -120,7 +88,7 @@ public class RouletteGame implements Spin {
     }
 
 
-<<<<<<< HEAD
+
     public String spin() {
         ArrayList<String> rouletteWheel = RouletteGame.createRouletteWheel();
         int randomNumber = (int) Math.floor(Math.random()*37);
@@ -128,7 +96,6 @@ public class RouletteGame implements Spin {
     }
 
 
-=======
 
     public static String handleOutsideBet() {
         InputHandler input = new InputHandler();
@@ -228,5 +195,4 @@ public class RouletteGame implements Spin {
 
 
 
->>>>>>> e6007cb4a6d856cdcbd1b295ddbd87e15fa85664
 }
