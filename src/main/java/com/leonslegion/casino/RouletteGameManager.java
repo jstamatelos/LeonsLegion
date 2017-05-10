@@ -3,50 +3,50 @@ package com.leonslegion.casino;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.*;
 
-/**
- * Created by danielprahl on 5/9/17.
- */
-public class RouletteGameManager extends GameManager {
+
+public class RouletteGameManager {
 
 
 
-    public RouletteGameManager(AccountManager accountManager){
-        super(accountManager);
-    }
 
-
-
+    private static ArrayList<RoulettePlayer> roulettePlayers = new ArrayList<RoulettePlayer>();
     public static ArrayList<RouletteBet> returnEmptyRouletteBetList () {return new ArrayList<RouletteBet>();}
-
-
-
-    public static RoulettePlayer addRoulettePlayer() {
+    public static void addRoulettePlayer() {
         InputHandler input = new InputHandler();
         String roulettePlayerID = input.getStringInput("Please enter your ID.");
         if (NumberUtils.isParsable(roulettePlayerID)) {
             Account roulettePlayerAccount = AccountManager.findAccount(Long.parseLong(roulettePlayerID));
             if (roulettePlayerAccount == null) {
                 System.out.println("ID not found!");
-                return addRoulettePlayer();
+                addRoulettePlayer();
             }
-            return new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList());
+
+            roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList()));
         }
         else {
-            return addRoulettePlayer();
+            addRoulettePlayer();
         }
+    }
+    public static boolean exitOpportunity() {
+        InputHandler inputHandler = new InputHandler();
+        String exitOpportunity = inputHandler.getStringInput("Type 'exit' before the round starts to leave game.");
+        if (exitOpportunity.equalsIgnoreCase("exit")) {return false;}
+        else {return true;}
     }
 
 
 
+
     public static void rouletteGameEngineSetup() {
-        System.out.println("Welcome to Roulette!" + "\n");
+        System.out.println("Welcome to Roulette!");
+        System.out.println("We can only accept one player for now.");
         InputHandler input = new InputHandler();
         String numberOfPlayers = input.getStringInput("How many players? Max is 2.");
         if (numberOfPlayers.equals("1")) {
             rouletteGameEngineForOnePlayer();
         }
         else if (numberOfPlayers.equals("2")) {
-            rouletteGameEngineForTwoPlayers();
+            //rouletteGameEngineForTwoPlayers();
         }
         else {
             System.out.println("That's not a valid number of players.");
@@ -57,20 +57,18 @@ public class RouletteGameManager extends GameManager {
 
 
 
+
     public static void rouletteGameEngineForOnePlayer() {
-        InputHandler inputHandler = new InputHandler();
         boolean engineOn = true;
-        RouletteGame game = new RouletteGame();
+        RouletteGame newGame = new RouletteGame();
         RouletteGame.initializeGame();
         while (engineOn) {
             engineOn = exitOpportunity();
             rouletteRoundEngineForOnePlayer();
-            String spinOutcome = game.spin();
-
+            String spinResult = newGame.spin();
+            checkPlayerBetsForResults(roulettePlayers.get(0), spinResult);
         }
     }
-
-
     public static void rouletteRoundEngineForOnePlayer() {
         boolean stillBetting = true;
         while (stillBetting) {
@@ -88,17 +86,14 @@ public class RouletteGameManager extends GameManager {
             }
         }
     }
-
-
-
     public static void rouletteRoundBettingEngineForOnePlayer() {
         InputHandler inputHandler = new InputHandler();
-        RoulettePlayer playerOne = addRoulettePlayer();
         String newBetType = RouletteGame.handleAnyBet();
         String betValue = inputHandler.getStringInput("How much would you like to put down for this bet?");
-        double betValueAsDouble = Double.parseDouble(playerOne.placeBet(betValue));
-        playerOne.makeRouletteBet(newBetType, betValueAsDouble);
+        double betValueAsDouble = Double.parseDouble(roulettePlayers.get(0).placeBet(betValue));
+        roulettePlayers.get(0).makeRouletteBet(newBetType, betValueAsDouble);
     }
+
 
 
 
@@ -121,17 +116,5 @@ public class RouletteGameManager extends GameManager {
     }
 
 
-    public static void rouletteGameEngineForTwoPlayers() {
-        RouletteGame.initializeGame();
-    }
-
-
-
-    public static boolean exitOpportunity() {
-        InputHandler inputHandler = new InputHandler();
-        String exitOpportunity = inputHandler.getStringInput("Type 'exit' before the round starts to leave game.");
-        if (exitOpportunity.equalsIgnoreCase("exit")) {return false;}
-        else {return true;}
-    }
 
 }
