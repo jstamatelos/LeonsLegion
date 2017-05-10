@@ -20,7 +20,6 @@ public class RouletteGameManager extends GameManager {
     }
 
 
-
     public static void RouletteGameEngineSetup() {
         System.out.println("Welcome to Roulette!" + "\n");
         InputHandler input = new InputHandler();
@@ -77,9 +76,6 @@ public class RouletteGameManager extends GameManager {
     public static void RouletteGameEngineForTwoPlayers() {
         RouletteGame.initializeGame();
     }
-
-
-
 
 
 }

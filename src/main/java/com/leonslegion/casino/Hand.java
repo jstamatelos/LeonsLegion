@@ -9,7 +9,14 @@ public abstract class Hand {
 
     private ArrayList<Card> hand;
 
-    ArrayList<Card> getHand() {
+    public ArrayList<Card> getHand() {
         return hand;
     }
+
+    public void addCard(Card card) {
+
+        hand.add(card);
+    }
+
+
 }
