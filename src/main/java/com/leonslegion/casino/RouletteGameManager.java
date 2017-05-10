@@ -88,6 +88,31 @@ public class RouletteGameManager extends GameManager {
 
 
 
+    public static void checkPlayerBetsForResults(RoulettePlayer playerOne, String spinResult) {
+        System.out.println("The ball landed in: " + spinResult);
+        System.out.println();
+        checkPlayerBetsForInsideBetWins(playerOne, spinResult);
+    }
+
+
+
+    public static void checkPlayerBetsForInsideBetWins(RoulettePlayer playerOne, String spinResult) {
+        for (RouletteBet bet : playerOne.getBetList()) {
+            if (bet.getBetType().equals(spinResult)) {
+                System.out.println("You won a 35:1 Payout! You won: ");
+                System.out.printf("%,.2f", bet.getBetValue()*35);
+                System.out.println();
+                playerOne.setBalance(playerOne.getBalance() + (bet.getBetValue()*35));
+                System.out.println("Your new balance: ");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+        }
+    }
+
+
+
+
     public static void rouletteGameEngineForTwoPlayers() {
         RouletteGame.initializeGame();
     }
