@@ -33,7 +33,14 @@ public class RouletteGameManager extends GameManager {
             RoulettePlayer playerTwo = RoulettePlayer.addRoulettePlayer();
             RouletteGameEngineForTwoPlayers();
         }
+        else {
+            System.out.println("That's not a valid number of players.");
+            System.out.println();
+            RouletteGameEngineSetup();
+        }
     }
+
+
 
     public static void RouletteRoundBettingEngineForOnePlayer() {
         InputHandler inputHandler = new InputHandler();
@@ -61,8 +68,11 @@ public class RouletteGameManager extends GameManager {
         RouletteGame.initializeGame();
         while (engineOn) {
             engineOn = RouletteGame.exitOpportunity();
+            RouletteRoundEngineForOnePlayer();
         }
     }
+
+
 
     public static void RouletteGameEngineForTwoPlayers() {
         RouletteGame.initializeGame();
