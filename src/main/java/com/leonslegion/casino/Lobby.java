@@ -7,7 +7,6 @@ package com.leonslegion.casino;
 
 public class Lobby {
     public boolean isRunning;
-    private GameManager gameManager;
 
 
     public Lobby(){
@@ -21,7 +20,6 @@ public class Lobby {
 
     public void initLobby(){
         isRunning = true;
-        gameManager = null;
     }
 
     // this is the main game loop
