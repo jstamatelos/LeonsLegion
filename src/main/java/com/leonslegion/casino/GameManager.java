@@ -6,13 +6,12 @@ package com.leonslegion.casino;
 
 public abstract class GameManager {
 
-
-
     AccountManager accountManager;
 
     public GameManager(){
         this.accountManager = new AccountManager();
     }
+
 
 
     public GameManager(AccountManager accountManager) {
