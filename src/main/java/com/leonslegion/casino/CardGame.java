@@ -5,6 +5,10 @@ package com.leonslegion.casino;
  */
 public abstract class CardGame extends CasinoGame {
 
+    public double placeBet(double bet){
+        return bet;
+    }
+
 
 
 }

@@ -1,11 +1,12 @@
 package com.leonslegion.casino;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static org.junit.Assert.*;
+import org.junit.Assert.*;
 
 /**
  * Created by jarrydstamatelos on 5/9/17.
@@ -21,19 +22,25 @@ public class WarHandTest extends CardComparator implements Comparator {
     @Test
     public void compareDealerCardNotPlayerCard() {
 
+        ArrayList deck = Deck.createNewDeck();
         WarGame war = new WarGame();
         ArrayList<Card> fullDeck = new ArrayList<Card>();
         ArrayList<Card> dealerDeck = (ArrayList<Card>) fullDeck.subList(0, 25);
         ArrayList<Card> playerDeck = (ArrayList<Card>) fullDeck.subList(26, 52);
 
-        // When - a card is pulled from each deck and compared
+        WarHand dealerHand = new WarHand();
+        WarHand playerHand = new WarHand();
+
+        Card card1 = new Card(Card.Rank.TEN, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.TWO, Card.Suit.DIAMONDS);
 
 
+        dealerHand.addCard(card1);
+        playerHand.addCard(card2);
 
 
-
-    // Then - dealer card is different than player card, card is returned
-
+        int result = dealerHand.compareTo(playerHand);
+        Assert.assertEquals(-1, result);
 }
 
 
