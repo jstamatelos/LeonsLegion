@@ -7,6 +7,7 @@ import java.util.Comparator;
  */
 public class WarHand extends Hand implements Comparable {
 
+    @Override
     public int compareTo(Object o) {
         return 0;
     }

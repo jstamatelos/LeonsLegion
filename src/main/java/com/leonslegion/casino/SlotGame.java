@@ -5,8 +5,8 @@ package com.leonslegion.casino;
  */
 public class SlotGame implements Spin {
     // Method to spin the slot wheel
-    public void spin() {
-
+    public String spin() {
+        return "";
     }
     // Player bets
     // Player spins
