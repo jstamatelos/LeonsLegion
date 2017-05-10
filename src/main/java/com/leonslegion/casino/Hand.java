@@ -9,13 +9,22 @@ public abstract class Hand {
 
     private ArrayList<Card> hand;
 
+    public Hand() {}
+
+    public Hand(ArrayList<Card> cards) {
+        hand = cards;
+    }
+
     public ArrayList<Card> getHand() {
         return hand;
     }
 
     public void addCard(Card card) {
-
         hand.add(card);
+    }
+
+    public void addCards(ArrayList<Card> cards) {
+        hand.addAll(cards);
     }
 
 
