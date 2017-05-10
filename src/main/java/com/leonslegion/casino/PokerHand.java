@@ -1,18 +1,12 @@
 package com.leonslegion.casino;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by cameronsima on 5/9/17.
  */
 public class PokerHand extends Hand implements Comparable {
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
 
     HandType handType;
 
@@ -31,7 +25,7 @@ public class PokerHand extends Hand implements Comparable {
         return handType;
     }
 
-    void setHandType() {
+    void determineHandType() {
         this.handType = HandType.HIGHCARD;
 
         /*
@@ -44,6 +38,10 @@ public class PokerHand extends Hand implements Comparable {
           this way doesn't provide for
           tie-breakers.
         */
+    }
+
+    void setHandType(HandType type) {
+        handType = type;
     }
 
     boolean hasFlush() {
@@ -59,7 +57,7 @@ public class PokerHand extends Hand implements Comparable {
     boolean hasStraight() {
         Card.Rank rank = getHand().get(0).getRank();
         for(int i = 1; i < 5; i++) {
-            rank++;
+            //iterate through ranks
             if(getHand().get(i).getRank() != rank) {
                 return false;
             }
@@ -107,6 +105,7 @@ public class PokerHand extends Hand implements Comparable {
 
     HandType threeRankHandChooser() {
         //todo
+        return null;
     }
 
     HandType twoRankHandChooser() {

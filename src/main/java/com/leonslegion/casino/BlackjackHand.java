@@ -8,7 +8,7 @@ import java.util.Comparator;
  */
 public class BlackjackHand extends Hand implements Comparable {
 
-    private int tally(Hand hand) {
+    private int evaluateHand(Hand hand) {
 
         int sum = 0;
         for (Card card : hand.getHand()) {
@@ -20,8 +20,8 @@ public class BlackjackHand extends Hand implements Comparable {
     @Override
     public int compareTo(Object otherHand) {
 
-        int thisTally = tally(this);
-        int otherTally = tally((Hand) otherHand);
+        int thisTally = evaluateHand(this);
+        int otherTally = evaluateHand((Hand) otherHand);
 
         if (thisTally > 21 && otherTally > 21) {
             return 0;
