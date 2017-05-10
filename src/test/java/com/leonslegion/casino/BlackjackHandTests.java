@@ -14,8 +14,6 @@ public class BlackjackHandTests {
     @Test
     public void testCompare_blackJackHand() {
 
-        ArrayList deck = Deck.createNewDeck();
-
         BlackjackHand hand1 = new BlackjackHand();
         BlackjackHand hand2 = new BlackjackHand();
 

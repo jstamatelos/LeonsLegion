@@ -25,9 +25,13 @@ public class BlackjackHand extends Hand implements Comparable {
 
         if (thisTally > 21 && otherTally > 21) {
             return 0;
-        } else if (thisTally > otherTally || otherTally > 21) {
+        }else if (thisTally > 21) {
+            return 1;
+        } else if (otherTally > 21) {
             return -1;
-        } else if (thisTally < otherTally || thisTally > 21) {
+        } else if (thisTally > otherTally) {
+            return -1;
+        } else if (thisTally < otherTally) {
             return 1;
         }
         return 0;

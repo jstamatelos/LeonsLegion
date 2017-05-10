@@ -7,37 +7,37 @@ import java.util.ArrayList;
  */
 public class AccountManager {
 
-    private ArrayList<Account> accounts = new ArrayList<Account>();
+    private static ArrayList<Account> accounts = new ArrayList<Account>();
 
-    public String showBalance(Account account) {
+    public static String showBalance(Account account) {
         return account.toString();
     }
 
-    public ArrayList<Account> getAccounts() {
+    public static ArrayList<Account> getAccounts() {
         return accounts;
     }
 
-    public void addAccount(Account account) {
+    public static void addAccount(Account account) {
         accounts.add(account);
     }
 
-    public void removeAccount(Account account) {
+    public static void removeAccount(Account account) {
         accounts.remove(account);
     }
 
-    public double getBalance(Account account) {
+    public static double getBalance(Account account) {
         return account.getAccountBalance();
     }
 
-    public String getAccountHolderName(Account account) {
+    public static String getAccountHolderName(Account account) {
         return account.getAccountHolderName();
     }
 
-    public void adjustAccountBalance(Account account, double netWinnings) {
+    public static void adjustAccountBalance(Account account, double netWinnings) {
         account.setAccountBalance(netWinnings);
     }
 
-    public Account findAccount(String accountHolderName) {
+    public static Account findAccount(String accountHolderName) {
         for (Account a : accounts) {
             if (accountHolderName.equalsIgnoreCase(a.getAccountHolderName())) {
                 return a;
@@ -46,7 +46,7 @@ public class AccountManager {
         return null;
     }
 
-    public Account findAccount(long id) {
+    public static Account findAccount(long id) {
         for (Account a : accounts) {
             if (id == a.getId()) {
                 return a;
@@ -55,4 +55,21 @@ public class AccountManager {
         return null;
     }
 
+    public static int findAccountIndex(String accountHolderName) {
+        for (Account a : accounts) {
+            if (accountHolderName.equalsIgnoreCase(a.getAccountHolderName())) {
+                return accounts.indexOf(a);
+            }
+        }
+        return -1;
+    }
+
+    public static int findAccountIndex(long id) {
+        for (Account a : accounts) {
+            if (id == a.getId()) {
+                return accounts.indexOf(a);
+            }
+        }
+        return -1;
+    }
 }
