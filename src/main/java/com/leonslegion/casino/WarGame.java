@@ -11,8 +11,6 @@ import java.util.Comparator;
 
 public class WarGame extends CardGame implements Comparator {
 
-
-
     // Deck is split between player and dealer
     WarGame warGame = new WarGame();
     ArrayList<Card> newDeck = new ArrayList<Card>();
