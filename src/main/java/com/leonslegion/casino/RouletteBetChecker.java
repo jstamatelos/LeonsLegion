@@ -4,7 +4,7 @@ package com.leonslegion.casino;
  * Created by markbrown on 5/10/17.
  */
 public class RouletteBetChecker {
-
+/*
     public static void checkPlayerBetsForInsideBetWins(RoulettePlayer playerOne, String spinResult) {
         boolean didPlayerWin = false;
         for (RouletteBet bet : playerOne.getBetList()) {
@@ -213,5 +213,5 @@ public class RouletteBetChecker {
             }
         }
     }
-
+*/
 }
