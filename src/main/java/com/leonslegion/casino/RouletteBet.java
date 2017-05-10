@@ -5,9 +5,22 @@ package com.leonslegion.casino;
  */
 public class RouletteBet {
 
-    private double betValue;
-    private String betType;
 
+
+    private String betType;
+    private double betValue;
+
+
+
+    public RouletteBet (String betType, double betValue) {
+        this.betType = betType;
+        this.betValue = betValue;
+    }
+
+
+
+    public String getBetType() {return betType;}
+    public double getBetValue() {return betValue;}
 
 
 

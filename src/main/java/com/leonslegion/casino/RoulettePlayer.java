@@ -7,9 +7,18 @@ import java.util.ArrayList;
  */
 public class RoulettePlayer extends Player {
 
+
+
     private ArrayList<RouletteBet> betList = new ArrayList<RouletteBet>();
 
+
+
     public RoulettePlayer (double balance, long accountId) {super(balance, accountId);}
+
+
+    public ArrayList<RouletteBet> getBetList() {return betList;}
+
+
 
     public double placeBet (double bet) throws Exception {
         if(super.getBalance() - bet < 0) {
@@ -17,6 +26,12 @@ public class RoulettePlayer extends Player {
         }
         super.setBalance(super.getBalance() - bet);
         return bet;
+    }
+
+
+
+    public void makeRouletteBet (String betType, double betValue) {
+        betList.add(new RouletteBet(betType, betValue));
     }
 
 

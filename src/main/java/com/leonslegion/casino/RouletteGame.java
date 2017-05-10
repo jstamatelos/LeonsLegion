@@ -128,6 +128,8 @@ public class RouletteGame implements Spin {
         else {return bet;}
     }
 
+
+
     public static String handleDozenBet() {
         InputHandler input = new InputHandler();
         System.out.println("Which dozen bet type would you like to make?");
@@ -173,7 +175,6 @@ public class RouletteGame implements Spin {
         }
         else {return bet.toLowerCase();}
     }
-
 
 
 
