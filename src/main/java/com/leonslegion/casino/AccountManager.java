@@ -61,6 +61,15 @@ public class AccountManager {
                 return accounts.indexOf(a);
             }
         }
+        return -1;
     }
 
+    public int findAccountIndex(long id) {
+        for (Account a : accounts) {
+            if (id == a.getId()) {
+                return accounts.indexOf(a);
+            }
+        }
+        return -1;
+    }
 }

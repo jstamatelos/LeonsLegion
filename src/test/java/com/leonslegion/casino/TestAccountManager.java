@@ -180,4 +180,23 @@ public class TestAccountManager {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
+
+    @Test
+    public void testFindIndexById() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        int expectedResult = 1;
+
+        //when
+        int actualResult = mngr.findAccountIndex(2);
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
 }
