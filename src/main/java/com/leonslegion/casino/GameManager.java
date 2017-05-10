@@ -11,10 +11,6 @@ public abstract class GameManager {
 
 
 
-    AccountManager accountManager;
-
-
-
     public GameManager(AccountManager accountManager) {
         this.accountManager = accountManager;
     }
