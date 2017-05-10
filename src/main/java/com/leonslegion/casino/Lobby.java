@@ -80,28 +80,23 @@ public class Lobby {
                 break;
 
             case 1:
-                gameManager = new PokerGameManager();
-                gameManager.playGame();
+                System.out.println("Dummy Poker Game Played");
                 break;
 
             case 2:
-                gameManager = new BlackjackGameManager();
-                gameManager.playGame();
+                System.out.println("Dummy Blackjack Game Played");
                 break;
 
             case 3:
-                gameManager = new WarGameManager();
-                gameManager.playGame();
+                System.out.println("Dummy War Game Played");
                 break;
 
             case 4:
-                gameManager = new RouletteGameManager();
-                gameManager.playGame();
+                System.out.println("Dummy Roulette Game Played");
                 break;
 
             case 5:
-                gameManager = new SlotGameManager();
-                gameManager.playGame();
+                System.out.println("Dummy Slots Game Played");
                 break;
 
             default:

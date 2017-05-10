@@ -12,6 +12,9 @@ public abstract class GameManager {
         this.accountManager = new AccountManager();
     }
 
+    public void playGame(){
+        // todo
+    }
 
 
     public GameManager(AccountManager accountManager) {
