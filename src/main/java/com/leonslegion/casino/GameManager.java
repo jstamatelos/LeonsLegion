@@ -8,6 +8,9 @@ public abstract class GameManager {
 
     AccountManager accountManager;
 
+    public GameManager(){
+        this.accountManager = new AccountManager();
+    }
 
 
 
