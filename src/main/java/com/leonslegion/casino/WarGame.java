@@ -54,8 +54,10 @@ public class WarGame extends CardGame implements Comparator {
         account.setAccountBalance(netWinnings);
     }
 
+
+
     // Exit game
-    public static boolean exitOpportunity() {
+    public static boolean exit() {
         InputHandler inputHandler = new InputHandler();
         String exitOpportunity = inputHandler.getStringInput("Type exit to quit");
         if (exitOpportunity.equalsIgnoreCase("exit")) {
