@@ -21,11 +21,10 @@ public class RouletteGameManager extends GameManager {
 
 
     public static RoulettePlayer addRoulettePlayer() {
-        AccountManager accountManager = new AccountManager();
         InputHandler input = new InputHandler();
         String roulettePlayerID = input.getStringInput("Please enter your ID.");
         if (NumberUtils.isParsable(roulettePlayerID)) {
-            Account roulettePlayerAccount = accountManager.findAccount(Long.parseLong(roulettePlayerID));
+            Account roulettePlayerAccount = AccountManager.findAccount(Long.parseLong(roulettePlayerID));
             if (roulettePlayerAccount == null) {
                 System.out.println("ID not found!");
                 return addRoulettePlayer();
@@ -130,7 +129,13 @@ public class RouletteGameManager extends GameManager {
                 System.out.printf("%,.2f", bet.getBetValue()*35);
                 System.out.println();
                 playerOne.setBalance(playerOne.getBalance() - (bet.getBetValue()) + (bet.getBetValue()*35));
-                System.out.println("Your new balance: ");
+                System.out.println("Your new balance: $");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+            else {
+                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue());
+                System.out.println("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
@@ -146,25 +151,31 @@ public class RouletteGameManager extends GameManager {
                 System.out.printf("%,.2f", bet.getBetValue()*2);
                 System.out.println();
                 playerOne.setBalance(playerOne.getBalance() - (bet.getBetValue()) + (bet.getBetValue()*3));
-                System.out.println("Your new balance: ");
+                System.out.println("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
-            if (Integer.parseInt(spinResult) > 12 && Integer.parseInt(spinResult) < 25 && bet.getBetType().equals("2nd D")) {
+            else if (Integer.parseInt(spinResult) > 12 && Integer.parseInt(spinResult) < 25 && bet.getBetType().equals("2nd D")) {
                 System.out.println("You won a 2:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue()*2);
                 System.out.println();
                 playerOne.setBalance(playerOne.getBalance() - (bet.getBetValue()) + (bet.getBetValue()*3));
-                System.out.println("Your new balance: ");
+                System.out.println("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
-            if (Integer.parseInt(spinResult) > 24 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("3rd D")) {
+            else if (Integer.parseInt(spinResult) > 24 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("3rd D")) {
                 System.out.println("You won a 2:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue()*2);
                 System.out.println();
                 playerOne.setBalance(playerOne.getBalance() - (bet.getBetValue()) + (bet.getBetValue()*3));
-                System.out.println("Your new balance: ");
+                System.out.println("Your new balance: $");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+            else {
+                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue());
+                System.out.println("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
@@ -174,6 +185,7 @@ public class RouletteGameManager extends GameManager {
 
 
     public static void checkPlayerBetsForOutsideColumnBetWins(RoulettePlayer playerOne, String spinResult) {
+        double tempBalance = playerOne.getBalance();
         for (RouletteBet bet : playerOne.getBetList()) {
             for (int columnStart = 1; columnStart < 35; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && bet.getBetType().equals("1st C")) {
@@ -181,7 +193,7 @@ public class RouletteGameManager extends GameManager {
                     System.out.printf("%,.2f", bet.getBetValue() * 2);
                     System.out.println();
                     playerOne.setBalance(playerOne.getBalance() - (bet.getBetValue()) + (bet.getBetValue() * 3));
-                    System.out.println("Your new balance: ");
+                    System.out.println("Your new balance: $");
                     System.out.printf("%,.2f", playerOne.getBalance());
                     System.out.println();
                 }
@@ -208,6 +220,12 @@ public class RouletteGameManager extends GameManager {
                     System.out.println();
                 }
             }
+            if (tempBalance == playerOne.getBalance()) {
+                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue());
+                System.out.println("Your new balance: $");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
 
         }
     }
@@ -225,12 +243,18 @@ public class RouletteGameManager extends GameManager {
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
-            if (Integer.parseInt(spinResult) % 2 == 1 && Integer.parseInt(spinResult) != 0 && bet.getBetType().equals("Odd")) {
+            else if (Integer.parseInt(spinResult) % 2 == 1 && Integer.parseInt(spinResult) != 0 && bet.getBetType().equals("Odd")) {
                 System.out.println("You won a 1:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue());
                 System.out.println();
                 playerOne.setBalance(playerOne.getBalance() + (bet.getBetValue()));
                 System.out.println("Your new balance: ");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+            else {
+                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue());
+                System.out.println("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
@@ -250,12 +274,18 @@ public class RouletteGameManager extends GameManager {
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
-            if (Integer.parseInt(spinResult) > 18 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("Back")) {
+            else if (Integer.parseInt(spinResult) > 18 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("Back")) {
                 System.out.println("You won a 1:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue());
                 System.out.println();
                 playerOne.setBalance(playerOne.getBalance() + (bet.getBetValue()));
                 System.out.println("Your new balance: ");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+            else {
+                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue());
+                System.out.println("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
             }
