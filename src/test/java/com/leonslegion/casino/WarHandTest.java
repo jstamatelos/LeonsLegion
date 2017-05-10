@@ -11,7 +11,7 @@ import org.junit.Assert.*;
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
-public class WarHandTest extends CardComparator implements Comparator {
+public class WarHandTest implements Comparator {
 
     public int compare(Object o1, Object o2) {
         Card c1 = (Card) o1;
