@@ -10,8 +10,8 @@ public abstract class CasinoGame {
     private int numberOfPlayers;
     private boolean hasDealer;
 
-    // Diplays error until Player class is created
-    /ArrayList<Player> Player = new ArrayList<Player>();
+
+    ArrayList<Player> players = new ArrayList<Player>();
 
 
     public int getNumberOfPlayers() {
@@ -30,14 +30,12 @@ public abstract class CasinoGame {
         this.hasDealer = hasDealer;
     }
 
+    public void setPlayer(Player player) {
+        players.add(player);
+    }
 
-
-
-
-
-
-
-
-
-
+    public void setPlayers(ArrayList<Player> somePlayers) {
+        players.addAll(somePlayers);
+    }
+    
 }
