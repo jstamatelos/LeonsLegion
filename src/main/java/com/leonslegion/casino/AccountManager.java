@@ -37,4 +37,22 @@ public class AccountManager {
         account.setAccountBalance(netWinnings);
     }
 
+    public Account findAccount(String accountHolderName) {
+        for (Account a : accounts) {
+            if (accountHolderName.equalsIgnoreCase(a.getAccountHolderName())) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public Account findAccount(long id) {
+        for (Account a : accounts) {
+            if (id == a.getId()) {
+                return a;
+            }
+        }
+        return null;
+    }
+
 }

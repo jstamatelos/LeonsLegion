@@ -123,4 +123,42 @@ public class TestAccountManager {
         Assert.assertEquals(expectedResult, actualResult, 0);
 
     }
+
+    @Test
+    public void testFindAccountByName() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        Account expectedResult = acct2;
+
+        //when
+        Account actualResult = mngr.findAccount("Hunter");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testFindAccountById() {
+
+        //given
+        Account acct = new Account("Leon");
+        Account acct2 = new Account("Hunter");
+        AccountManager mngr = new AccountManager();
+        mngr.addAccount(acct);
+        mngr.addAccount(acct2);
+        Account expectedResult = acct;
+
+        //when
+        Account actualResult = mngr.findAccount(1);
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
 }
