@@ -9,20 +9,6 @@ public class RouletteGameManager extends GameManager {
 
 
 
-    public RouletteGameManager() {
-        // no-arg constructor
-    }
-
-
-
-
-    public RouletteGameManager(AccountManager accountManager){
-
-
-        super(accountManager);
-    }
-
-
 
     public static void RouletteGameEngineSetup() {
         System.out.println("Welcome to Roulette!" + "\n");
