@@ -23,7 +23,12 @@ public abstract class GameManager {
         return accountManager;
     }
 
-
+    // dummy implementation, needs correction
+    public void playGame(){
+        System.out.println("Playing game....");
+        System.out.println("Game over, returning to lobby.");
+        System.out.println("");
+    }
 
 
 }
