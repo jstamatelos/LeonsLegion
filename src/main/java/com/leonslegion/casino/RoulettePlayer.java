@@ -1,6 +1,8 @@
 package com.leonslegion.casino;
 
 import java.util.ArrayList;
+import org.apache.commons.lang3.*;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Created by markbrown on 5/9/17.
@@ -22,16 +24,26 @@ public class RoulettePlayer extends Player {
 
 
 
-/*
+    public static ArrayList<RouletteBet> returnEmptyRouletteBetList () {
+        return new ArrayList<RouletteBet>();
+    }
+
+
+
     public static RoulettePlayer addRoulettePlayer() {
+        AccountManager accountManager = new AccountManager();
         InputHandler input = new InputHandler();
         String roulettePlayerID = input.getStringInput("Please enter your ID.");
-
-        //Method to search account manager for name
-        //Method that returns player object with accountID that matches above input
-
+        if (NumberUtils.isParsable(roulettePlayerID)) {
+            Account roulettePlayerAccount = accountManager.findAccount((long) Integer.parseInt(roulettePlayerID));
+            return new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList());
+        }
+        else {
+            return RoulettePlayer.addRoulettePlayer();
+        }
     }
-*/
+
+
 
     public ArrayList<RouletteBet> getBetList() {return betList;}
 
