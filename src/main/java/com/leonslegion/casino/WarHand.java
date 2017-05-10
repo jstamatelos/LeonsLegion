@@ -8,19 +8,20 @@ import java.util.Comparator;
  */
 public class WarHand extends Hand implements Comparable {
 
-    ArrayList deck = Deck.createNewDeck();
-
     WarGame war = new WarGame();
 
-    ArrayList<Card> fullDeck = new ArrayList<Card>();
-    ArrayList<Card> dealerDeck = (ArrayList<Card>) fullDeck.subList(0, 25);
-    ArrayList<Card> playerDeck = (ArrayList<Card>) fullDeck.subList(26, 52);
+    ArrayList deck = Deck.createNewDeck();
+
+    public ArrayList<Card> dealerDeck = new ArrayList<>();
+    public ArrayList<Card> playerDeck = new ArrayList<>();
 
 
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Object otherHand) {
         return 0;
     }
+
+
 
 }

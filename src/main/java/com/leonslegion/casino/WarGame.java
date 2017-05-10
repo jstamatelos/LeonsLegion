@@ -13,10 +13,10 @@ public class WarGame extends CardGame implements Comparator {
 
     // Initialize Game, dealer and player get deck each
     
-    WarGame war = new WarGame();
-    ArrayList<Card> newDeck = new ArrayList<Card>();
-    ArrayList<Card> dealerDeck = new ArrayList<Card>();
-    ArrayList<Card> playerDeck = new ArrayList<Card>();
+
+    Deck deck;
+    private ArrayList<Card> dealerDeck = new ArrayList<Card>();
+    private ArrayList<Card> playerDeck = new ArrayList<Card>();
 
 
     // Player bets initial bet
@@ -27,40 +27,57 @@ public class WarGame extends CardGame implements Comparator {
     }
 
     // Dealer shows one card
-    public String dealerShowCard (ArrayList<Card> cardDeck) {
-        String dealerCard = (cardDeck.get(0)).getRank().toString() + " of " + (cardDeck.get(0)).getSuit().toString();
-        for (int i = 1; i < cardDeck.size(); i++) {
-            dealerCard += ", " + (cardDeck.get(i)).getRank().toString() + " of " + (cardDeck.get(i)).getSuit().toString();
-        }
-        return dealerCard;
+    public void dealerShowCard () {
+    // show a random card
     }
 
 
     // Player shows one card
-    public String playerShowCard (ArrayList<Card> cardDeck) {
-        String playerCard = (cardDeck.get(0)).getRank().toString() + " of " + (cardDeck.get(0)).getSuit().toString();
-        for (int i = 1; i < cardDeck.size(); i++) {
-            playerCard += ", " + (cardDeck.get(i)).getRank().toString() + " of " + (cardDeck.get(i)).getSuit().toString();
-        }
-        return playerCard;
+    public void playerShowCard () {
+    //show a random card
     }
 
 
     // Compare cards - if tie - player bets again, adding to initial bet
+    private String dealerWinMessage(){
+        return "Dealer wins, bet again or exit.";
+    }
+    private String playerWinMessage(){
+        return "You win! Bet again or exit.";
+    }
+    private String tieMessage(){
+        return "Tie! You and dealer showed same card , bet again!";
+    }
+
+    public String findTheHigherCard(Card dealerCard, Card playerCard){
+        if (dealerCard.getPointValue() > playerCard.getPointValue()) {
+            return dealerWinMessage();
+        } else if (playerCard.getPointValue() > dealerCard.getPointValue()){
+            return playerWinMessage();
+        } else {
+            return tieMessage();
+        }
+
+
+    }
     public int compare(Object o1, Object o2) {
-        Card c1 = (Card) o1;
-        Card c2 = (Card) o2;
-        return c1.getRank().ordinal() - c2.getRank().ordinal();
+        Card dealerCard = (Card) o1;
+        Card playerCard = (Card) o2;
+        return dealerCard.getRank().ordinal() - playerCard.getRank().ordinal();
+    }
+
+    public void runWarGame(){
+        placeBet();
+        dealerShowCard();
+        playerShowCard();
+        findTheHigherCard(dealerShowCard(), playerShowCard());
+
+
+
     }
 
 
 
-
-    // High card wins - if player wins, add initial bet to player total
-
-    public void adjustAccountBalance(Account account, double netWinnings) {
-        account.setAccountBalance(netWinnings);
-    }
 
 
 
