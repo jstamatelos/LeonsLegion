@@ -17,32 +17,9 @@ public class RoulettePlayer extends Player {
 
 
 
-    private RoulettePlayer (double balance, long accountId, ArrayList<RouletteBet> betList) {
+    public RoulettePlayer (double balance, long accountId, ArrayList<RouletteBet> betList) {
         super(balance, accountId);
         this.betList = betList;
-    }
-
-
-
-    public static ArrayList<RouletteBet> returnEmptyRouletteBetList () {return new ArrayList<RouletteBet>();}
-
-
-
-    public static RoulettePlayer addRoulettePlayer() {
-        AccountManager accountManager = new AccountManager();
-        InputHandler input = new InputHandler();
-        String roulettePlayerID = input.getStringInput("Please enter your ID.");
-        if (NumberUtils.isParsable(roulettePlayerID)) {
-            Account roulettePlayerAccount = accountManager.findAccount((long) Integer.parseInt(roulettePlayerID));
-            if (roulettePlayerAccount == null) {
-                System.out.println("ID not found!");
-                return addRoulettePlayer();
-            }
-            return new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList());
-        }
-        else {
-            return RoulettePlayer.addRoulettePlayer();
-        }
     }
 
 
@@ -73,6 +50,7 @@ public class RoulettePlayer extends Player {
         super.setBalance(super.getBalance() - Double.parseDouble(bet));
         return bet;
     }
+
 
 
     public void makeRouletteBet (String betType, double betValue) {
