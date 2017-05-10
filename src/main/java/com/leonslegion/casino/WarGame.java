@@ -68,8 +68,6 @@ public class WarGame extends CardGame implements Comparator {
 
 
 
-
-
     // Exit game
     public static boolean exit() {
         InputHandler inputHandler = new InputHandler();
@@ -81,5 +79,8 @@ public class WarGame extends CardGame implements Comparator {
         }
     }
 
-    
+    @Override
+    public void initialDeal() {
+       //
+    }
 }

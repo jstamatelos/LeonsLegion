@@ -10,7 +10,7 @@ public class WarHand extends Hand implements Comparable {
 
     WarGame war = new WarGame();
 
-    ArrayList deck = Deck.createNewDeck();
+    
 
     public ArrayList<Card> dealerDeck = new ArrayList<>();
     public ArrayList<Card> playerDeck = new ArrayList<>();
