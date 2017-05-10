@@ -36,6 +36,9 @@ public class RouletteGameManager extends GameManager {
 
 
     public static void RouletteEngineForOnePlayer() {
+        RouletteGame.initializeGame();
+
+
 
 
 */
