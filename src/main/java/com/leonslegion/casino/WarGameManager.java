@@ -13,4 +13,6 @@ public class WarGameManager extends GameManager {
         super(accountManager);
     }
 
+
+
 }
