@@ -19,16 +19,16 @@ public class CardComparatorTest {
         Card card2 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
         Card card3 = new Card(Card.Rank.QUEEN, Card.Suit.HEARTS);
 
-        ArrayList<Card> deck = Deck.createNewDeck();
+        Deck deck = new Deck();
     }
 
     @Test
     public void sortDeckTest() {
-        ArrayList<Card> deck = Deck.createNewDeck();
-        Collections.sort(deck, new CardComparator());
+        Deck deck = new Deck();
+        Collections.sort(deck.deck, new CardComparator());
         String expected = "";
 
-        String actual = Deck.printDeckToString(deck);
+        String actual = deck.toString();
 
         Assert.assertEquals(expected, actual);
     }
