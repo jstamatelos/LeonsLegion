@@ -6,7 +6,7 @@ public class Deck {
 
     ArrayList<Card> deck;
 
-    private Deck() {
+    public Deck() {
         for (Card.Rank rank: Card.Rank.values()) {
             for (Card.Suit suit: Card.Suit.values()) {
                 deck.add(new Card(rank, suit));

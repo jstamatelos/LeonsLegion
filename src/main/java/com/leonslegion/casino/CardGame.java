@@ -16,5 +16,5 @@ public abstract class CardGame extends CasinoGame {
 
     public abstract void initialDeal();
 
-    
+
 }

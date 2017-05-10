@@ -15,6 +15,13 @@ public class BlackjackGame extends CardGame {
     // Dealer hit - if 17 or over dealer stay, if dealer over 21, player win - add bet to player total
     // Restart game
 
+    private void promptGame() {
+        InputHandler ih = new InputHandler();
+        int numPlayers = ih.getIntInput("How many players?");
+
+
+    }
+
 
     public void initialDeal() {
 
