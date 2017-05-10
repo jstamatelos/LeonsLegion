@@ -42,6 +42,24 @@ public class RouletteGameTest {
     }
 
     @Test
+    public void testThatPlayerCanLoseInsideBet() {
+        //Given:
+        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
+        RouletteBet rouletteBet = new RouletteBet("00", 100);
+        bet.add(rouletteBet);
+        RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
+        String spin = "4";
+        double expectedOutput = 900;
+
+        //When:
+        RouletteGameManager.checkPlayerBetsForInsideBetWins(playerOne, spin);
+        double actualOutput = playerOne.getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
     public void testThatPlayerCanWinOutsideDozenBet() {
         //Given:
         ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
@@ -50,6 +68,24 @@ public class RouletteGameTest {
         RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
         String spin = "5";
         double expectedOutput = 900 + (3*100);
+
+        //When:
+        RouletteGameManager.checkPlayerBetsForOutsideDozenBetWins(playerOne, spin);
+        double actualOutput = playerOne.getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseOutsideDozenBet() {
+        //Given:
+        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
+        RouletteBet rouletteBet = new RouletteBet("1st D", 100);
+        bet.add(rouletteBet);
+        RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
+        String spin = "18";
+        double expectedOutput = 900;
 
         //When:
         RouletteGameManager.checkPlayerBetsForOutsideDozenBetWins(playerOne, spin);
@@ -78,6 +114,24 @@ public class RouletteGameTest {
     }
 
     @Test
+    public void testThatPlayerCanLoseOutsideColumnBet() {
+        //Given:
+        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
+        RouletteBet rouletteBet = new RouletteBet("1st C", 100);
+        bet.add(rouletteBet);
+        RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
+        String spin = "3";
+        double expectedOutput = 900;
+
+        //When:
+        RouletteGameManager.checkPlayerBetsForOutsideColumnBetWins(playerOne, spin);
+        double actualOutput = playerOne.getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
     public void testThatPlayerCanWinOutsideEvenOrOddBet() {
         //Given:
         ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
@@ -86,6 +140,24 @@ public class RouletteGameTest {
         RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
         String spin = "2";
         double expectedOutput = 900 + (2*100);
+
+        //When:
+        RouletteGameManager.checkPlayerBetsForEvenOrOddBetWins(playerOne, spin);
+        double actualOutput = playerOne.getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseOutsideEvenOrOddBet() {
+        //Given:
+        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
+        RouletteBet rouletteBet = new RouletteBet("Even", 100);
+        bet.add(rouletteBet);
+        RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
+        String spin = "3";
+        double expectedOutput = 900;
 
         //When:
         RouletteGameManager.checkPlayerBetsForEvenOrOddBetWins(playerOne, spin);
@@ -112,4 +184,24 @@ public class RouletteGameTest {
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
     }
+
+    @Test
+    public void testThatPlayerCanLoseOutsideFrontOrBackBet() {
+        //Given:
+        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
+        RouletteBet rouletteBet = new RouletteBet("Front", 100);
+        bet.add(rouletteBet);
+        RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
+        String spin = "19";
+        double expectedOutput = 900;
+
+        //When:
+        RouletteGameManager.checkPlayerBetsForFrontOrBackBetWins(playerOne, spin);
+        double actualOutput = playerOne.getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+
 }
