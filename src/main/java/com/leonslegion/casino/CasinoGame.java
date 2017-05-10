@@ -37,5 +37,5 @@ public abstract class CasinoGame {
     public void setPlayers(ArrayList<Player> somePlayers) {
         players.addAll(somePlayers);
     }
-    
+
 }
