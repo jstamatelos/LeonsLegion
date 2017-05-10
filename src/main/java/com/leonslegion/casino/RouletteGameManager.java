@@ -7,7 +7,7 @@ import java.util.*;
 public class RouletteGameManager {
 
 
-
+/*
 
     private static ArrayList<RoulettePlayer> roulettePlayers = new ArrayList<RoulettePlayer>();
     public static ArrayList<RouletteBet> returnEmptyRouletteBetList () {return new ArrayList<RouletteBet>();}
@@ -116,5 +116,5 @@ public class RouletteGameManager {
     }
 
 
-
+*/
 }
