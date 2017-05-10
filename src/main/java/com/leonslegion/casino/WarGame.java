@@ -66,11 +66,21 @@ public class WarGame extends CardGame implements Comparator {
         return dealerCard.getRank().ordinal() - playerCard.getRank().ordinal();
     }
 
+<<<<<<< HEAD
     public void runWarGame() {
+=======
+    public void runWarGame(){
+>>>>>>> jarryd
         placeBet();
         dealerShowCard();
         playerShowCard();
         findTheHigherCard(dealerShowCard(), playerShowCard());
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> jarryd
     }
 
 
