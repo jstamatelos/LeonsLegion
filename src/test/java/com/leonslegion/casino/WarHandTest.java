@@ -11,22 +11,18 @@ import org.junit.Assert.*;
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
-public class WarHandTest implements Comparator {
+public class WarHandTest {
 
-    public int compare(Object o1, Object o2) {
-        Card c1 = (Card) o1;
-        Card c2 = (Card) o2;
-        return c1.getRank().ordinal() - c2.getRank().ordinal();
-    }
 
     @Test
     public void compareDealerCardNotPlayerCard() {
 
         ArrayList deck = Deck.createNewDeck();
+
         WarGame war = new WarGame();
-        ArrayList<Card> fullDeck = new ArrayList<Card>();
-        ArrayList<Card> dealerDeck = (ArrayList<Card>) fullDeck.subList(0, 25);
-        ArrayList<Card> playerDeck = (ArrayList<Card>) fullDeck.subList(26, 52);
+
+        ArrayList<Card> dealerDeck = new ArrayList<Card>();
+        ArrayList<Card> playerDeck = new ArrayList<Card>();
 
         WarHand dealerHand = new WarHand();
         WarHand playerHand = new WarHand();
@@ -40,7 +36,7 @@ public class WarHandTest implements Comparator {
 
 
         int result = dealerHand.compareTo(playerHand);
-        Assert.assertEquals(1, result);
+        Assert.assertEquals(-1, result);
 }
 
 
@@ -48,15 +44,26 @@ public class WarHandTest implements Comparator {
     public void dealerCardMatchesPlayerCard() {
 
         WarGame war = new WarGame();
-        ArrayList<Card> fullDeck = new ArrayList<Card>();
-        ArrayList<Card> dealerDeck = (ArrayList<Card>) fullDeck.subList(0,25);
-        ArrayList<Card> playerDeck = (ArrayList<Card>) fullDeck.subList(26,52);
 
-        // When - a card is pulled from each deck and compared
+        ArrayList<Card> dealerDeck = new ArrayList<Card>();
+        ArrayList<Card> playerDeck = new ArrayList<Card>();
+
+        
+        WarHand dealerHand = new WarHand();
+        WarHand playerHand = new WarHand();
+
+        Card card1 = new Card(Card.Rank.TEN, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.TEN, Card.Suit.CLUBS);
 
 
+        dealerHand.addCard(card1);
+        playerHand.addCard(card2);
 
-        // Then - dealer card is the same than player card, card is returned
+
+        int result = dealerHand.compareTo(playerHand);
+        Assert.assertEquals(0, result);
+        Assert.assertEquals(card1,card2);
+
     }
 
 }
