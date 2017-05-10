@@ -11,7 +11,7 @@ public abstract class CasinoGame {
     private boolean hasDealer;
 
     // Diplays error until Player class is created
-    // ArrayList<Players> Player = new ArrayList<Players>();
+    /ArrayList<Player> Player = new ArrayList<Player>();
 
 
     public int getNumberOfPlayers() {
