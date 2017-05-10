@@ -34,6 +34,10 @@ public class RoulettePlayer extends Player {
         String roulettePlayerID = input.getStringInput("Please enter your ID.");
         if (NumberUtils.isParsable(roulettePlayerID)) {
             Account roulettePlayerAccount = accountManager.findAccount((long) Integer.parseInt(roulettePlayerID));
+            if (roulettePlayerAccount == null) {
+                System.out.println("ID not found!");
+                return addRoulettePlayer();
+            }
             return new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList());
         }
         else {
@@ -47,14 +51,28 @@ public class RoulettePlayer extends Player {
 
 
 
-    public double placeBet (double bet) throws Exception {
-        if(super.getBalance() - bet < 0) {
-            throw new Exception("Bet is too large.");
+    public double placeBet (double bet) {
+        if (super.getBalance() - bet < 0) {
+            System.out.println("Bet greater than current Balance!");
         }
         super.setBalance(super.getBalance() - bet);
         return bet;
     }
 
+
+    public String placeBet (String bet) {
+        InputHandler inputHandler = new InputHandler();
+        if (!NumberUtils.isParsable(bet)) {
+            String newBet = inputHandler.getStringInput("That's not a valid bet.");
+            return placeBet(newBet);
+        }
+        else if (super.getBalance() - Double.parseDouble(bet) < 0) {
+            String newBet = inputHandler.getStringInput("Your bet is greater than your balance!");
+            return placeBet(newBet);
+        }
+        super.setBalance(super.getBalance() - Double.parseDouble(bet));
+        return bet;
+    }
 
 
     public void makeRouletteBet (String betType, double betValue) {
