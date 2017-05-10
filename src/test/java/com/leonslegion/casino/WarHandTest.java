@@ -40,7 +40,7 @@ public class WarHandTest implements Comparator {
 
 
         int result = dealerHand.compareTo(playerHand);
-        Assert.assertEquals(-1, result);
+        Assert.assertEquals(1, result);
 }
 
 
