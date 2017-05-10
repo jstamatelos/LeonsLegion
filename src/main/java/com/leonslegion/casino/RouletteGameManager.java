@@ -25,7 +25,7 @@ public class RouletteGameManager extends GameManager {
         InputHandler input = new InputHandler();
         String roulettePlayerID = input.getStringInput("Please enter your ID.");
         if (NumberUtils.isParsable(roulettePlayerID)) {
-            Account roulettePlayerAccount = accountManager.findAccount((long) Integer.parseInt(roulettePlayerID));
+            Account roulettePlayerAccount = accountManager.findAccount(Long.parseLong(roulettePlayerID));
             if (roulettePlayerAccount == null) {
                 System.out.println("ID not found!");
                 return addRoulettePlayer();

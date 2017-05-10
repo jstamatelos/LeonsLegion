@@ -94,4 +94,22 @@ public class RouletteGameTest {
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
     }
+
+    @Test
+    public void testThatPlayerCanWinOutsideFrontOrBackBet() {
+        //Given:
+        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
+        RouletteBet rouletteBet = new RouletteBet("Front", 100);
+        bet.add(rouletteBet);
+        RoulettePlayer playerOne = new RoulettePlayer(1000, 101, bet);
+        String spin = "1";
+        double expectedOutput = 900 + (2*100);
+
+        //When:
+        RouletteGameManager.checkPlayerBetsForFrontOrBackBetWins(playerOne, spin);
+        double actualOutput = playerOne.getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
 }
