@@ -7,8 +7,7 @@ import java.util.ArrayList;
  */
 public abstract class CardGame extends CasinoGame {
 
-
-    ArrayList<Card> deck;
+    Deck deck = new Deck();
 
     public double placeBet(double bet){
         return bet;
