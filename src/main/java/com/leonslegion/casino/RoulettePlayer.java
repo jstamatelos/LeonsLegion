@@ -1,9 +1,13 @@
 package com.leonslegion.casino;
 
+import java.util.ArrayList;
+
 /**
  * Created by markbrown on 5/9/17.
  */
 public class RoulettePlayer extends Player {
+
+    private ArrayList<RouletteBet> betList = new ArrayList<RouletteBet>();
 
     public RoulettePlayer (double balance, long accountId) {super(balance, accountId);}
 
@@ -11,7 +15,10 @@ public class RoulettePlayer extends Player {
         if(super.getBalance() - bet < 0) {
             throw new Exception("Bet is too large.");
         }
-        setBalance(getBalance() - bet);
+        super.setBalance(super.getBalance() - bet);
         return bet;
     }
+
+
+
 }
