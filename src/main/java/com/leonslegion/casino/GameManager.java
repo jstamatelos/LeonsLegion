@@ -5,7 +5,6 @@ package com.leonslegion.casino;
  */
 
 public abstract class GameManager {
-    AccountManager accountManager;
 
 
 
@@ -21,13 +20,7 @@ public abstract class GameManager {
         return accountManager;
     }
 
-    public GameManager(AccountManager accountManager) {
-        this.accountManager = accountManager;
-    }
 
-    public AccountManager getAccountManager(){
-        return accountManager;
-    }
 
 
 }
