@@ -14,8 +14,8 @@ public class TestAccountFactory {
         //given
 
         AccountFactory factory = new AccountFactory();
-        Account acct = factory.getAccountHolderName("Leon");
-        Account acct2 = factory.getAccountHolderName("Hunter");
+        Account acct = factory.createAccountWithName("Leon");
+        Account acct2 = factory.createAccountWithName("Hunter");
 
         String expectedResult = "Account ID: 1\nAccount Holder: Leon\nAccount Balance: $1000.00";
 
