@@ -55,10 +55,10 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     boolean hasStraight() {
-        Card.Rank rank = getHand().get(0).getRank();
+        int ordinal = getHand().get(0).getRank().ordinal();
         for(int i = 1; i < 5; i++) {
-            //iterate through ranks
-            if(getHand().get(i).getRank() != rank) {
+            ordinal++;
+            if(getHand().get(i).getRank().ordinal() != ordinal) {
                 return false;
             }
         }
