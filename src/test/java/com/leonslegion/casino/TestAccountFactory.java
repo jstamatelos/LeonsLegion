@@ -12,9 +12,9 @@ public class TestAccountFactory {
     public void testAccountFactory() {
 
         //given
-        AccountFactory factory = new AccountFactory();
-        Account acct = factory.getAccountHolderName("Leon");
-        Account acct2 = factory.getAccountHolderName("Hunter");
+
+        Account acct = AccountFactory.createAccountWithName("Leon");
+        Account acct2 = AccountFactory.createAccountWithName("Hunter");
         String expectedResult = "Account ID: 1\nAccount Holder: Leon\nAccount Balance: $1000.00";
 
         //when
