@@ -1,9 +1,11 @@
 package com.leonslegion.casino;
 
+import java.util.ArrayList;
+
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
-public class BlackjackGame extends CasinoGame {
+public class BlackjackGame extends CardGame {
     // Take cards from deck
     // Deal cards
     // Show player initial total and Dealer  initial total
@@ -13,16 +15,13 @@ public class BlackjackGame extends CasinoGame {
     // Dealer hit - if 17 or over dealer stay, if dealer over 21, player win - add bet to player total
     // Restart game
 
-    Deck deck;
+    ArrayList<Card> deck;
 
-    public BlackjackGame() {}
+    public BlackjackGame() {
+        deck = Deck.createNewDeck();
+        this.setHasDealer(true);
 
-    public BlackjackGame(Deck deck) {
-        this.deck = deck;
     }
-
-
-
 
 
 

@@ -1,0 +1,57 @@
+package com.leonslegion.casino;
+
+import java.util.ArrayList;
+
+/**
+ * Created by danielprahl on 5/9/17.
+ */
+
+public abstract class GameManager {
+    private ArrayList<Player> players;
+
+<<<<<<< HEAD
+    @Deprecated
+    public GameManager(AccountManager accountManager){
+        this();
+    }
+=======
+    AccountManager accountManager;
+>>>>>>> upstream/master
+
+    public GameManager(){
+        players = new ArrayList<>(16);
+    }
+
+<<<<<<< HEAD
+    // dummy implementation, override in subclass
+    public void playGame(){
+        System.out.println("Playing game....");
+        System.out.println(".");
+        System.out.println("..");
+        System.out.println("...");
+        System.out.println("Game over, returning to lobby.");
+        System.out.println("");
+=======
+
+
+    public GameManager(AccountManager accountManager) {
+        this.accountManager = accountManager;
+>>>>>>> upstream/master
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
+
+    public void addPlayer(Player p){
+        players.add(p);
+    }
+
+    public void removePlayer(Player p){
+        players.remove(p);
+    }
+
+}
+
+
+
