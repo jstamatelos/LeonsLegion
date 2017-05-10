@@ -1,6 +1,7 @@
 package com.leonslegion.casino;
 
 public abstract class Player {
+
     private double balance;
     private long accountId;
 
