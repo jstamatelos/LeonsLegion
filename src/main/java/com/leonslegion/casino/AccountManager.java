@@ -55,4 +55,12 @@ public class AccountManager {
         return null;
     }
 
+    public int findAccountIndex(String accountHolderName) {
+        for (Account a : accounts) {
+            if (accountHolderName.equalsIgnoreCase(a.getAccountHolderName())) {
+                return accounts.indexOf(a);
+            }
+        }
+    }
+
 }
