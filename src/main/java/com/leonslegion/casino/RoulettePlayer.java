@@ -43,11 +43,10 @@ public class RoulettePlayer extends Player {
             String newBet = inputHandler.getStringInput("That's not a valid bet.");
             return placeBet(newBet);
         }
-        else if (super.getBalance() - Double.parseDouble(bet) < 0) {
+        else if (getBalance() - Double.parseDouble(bet) < 0) {
             String newBet = inputHandler.getStringInput("Your bet is greater than your balance!");
             return placeBet(newBet);
         }
-        super.setBalance(super.getBalance() - Double.parseDouble(bet));
         return bet;
     }
 
