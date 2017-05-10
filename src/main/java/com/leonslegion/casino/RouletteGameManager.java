@@ -18,7 +18,6 @@ public class RouletteGameManager extends GameManager {
 
     public RouletteGameManager(AccountManager accountManager){
 
-
         super(accountManager);
     }
 
