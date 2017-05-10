@@ -20,7 +20,7 @@ public class HandTests {
         for (int i = 0; i < 4; i++) {
             Card card1 = Deck.dealCard(deck);
             Card card2 = Deck.dealCard(deck);
-            hand1.addCard(card1);
+            hand1.(card1);
             hand2.addCard(card2);
 
         }
