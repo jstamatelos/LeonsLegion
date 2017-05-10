@@ -72,11 +72,11 @@ public class PokerHandTest {
     @Test
     public void hasStraightTrueTest() {
         PokerHand hand = new PokerHand();
-        hand.addCard(new Card(Card.Rank.ACE, Card.Suit.HEARTS));
-        hand.addCard(new Card(Card.Rank.KING, Card.Suit.HEARTS));
-        hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Rank.JACK, Card.Suit.HEARTS));
-        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.KING, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.ACE, Card.Suit.DIAMONDS));
 
         boolean result = hand.hasStraight();
 
@@ -198,6 +198,7 @@ public class PokerHandTest {
     /*
     The tests below aren't exactly unit tests.
      */
+    
     @Test
     public void fiveRankHandChooserTest() {
         PokerHand hand = new PokerHand();
@@ -207,14 +208,23 @@ public class PokerHandTest {
         hand.addCard(new Card(Card.Rank.SIX, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Rank.TEN, Card.Suit.DIAMONDS));
 
-        Hand result = hand.fiveRankHandChooser();
+        PokerHand.HandType result = hand.fiveRankHandChooser();
 
-        Assert.assertTrue(result == 5);
+        Assert.assertTrue(result == PokerHand.HandType.HIGHCARD);
     }
 
     @Test
     public void fourRankHandChooserTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.NINE, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS));
 
+        PokerHand.HandType result = hand.fiveRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.STRAIGHT);
     }
 
     @Test
