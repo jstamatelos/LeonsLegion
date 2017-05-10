@@ -28,26 +28,30 @@ public class Lobby {
             System.out.println("!! !! !! !! !! !! !! !! !! !!");
             System.out.println("Welcome to the Casino Lobby!");
             actionSelection();
-            selectGame();
 
         }
     }
 
     public void actionSelection(){
-        String selection = InputHandler.getStringInput("Would you like to play a game 'y' or 'n' ");
-        if(selection.equalsIgnoreCase("y")){
-            //do nothing, cascade down to selectGame
+        String selection = InputHandler.getStringInput("Would you like to play a game 'y' or 'n', 'Q' to quit ");
+        if(selection.equalsIgnoreCase("Q")) {
+            exit();
+        } else if(selection.equalsIgnoreCase("y")){
+            selectGame();
         }else if(selection.equalsIgnoreCase("n")){
             createAccountSelection();
         }else{
             System.out.println("selection unrecognized");
             actionSelection();
         }
+
     }
 
     public void createAccountSelection(){
-        String selection = InputHandler.getStringInput("Would you like to create a new account? 'y' or 'n' ");
-        if(selection.equalsIgnoreCase("y")){
+        String selection = InputHandler.getStringInput("Would you like to create a new account? 'y' or 'n', 'Q' to quit ");
+        if(selection.equalsIgnoreCase("Q")){
+            exit();
+        }else if(selection.equalsIgnoreCase("y")){
             createAccount();
             createAccountSelection();
         }else if(selection.equalsIgnoreCase("n")){
@@ -55,6 +59,7 @@ public class Lobby {
         }else{
             System.out.println("selection unrecognized");
             createAccountSelection();
+
         }
     }
 
