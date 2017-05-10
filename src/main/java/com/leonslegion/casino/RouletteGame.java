@@ -134,8 +134,8 @@ public class RouletteGame implements Spin {
     public static String handleDozenBet() {
         InputHandler input = new InputHandler();
         System.out.println("Which dozen bet type would you like to make?");
-        String bet = input.getStringInput("Select from '1st R', '2nd R', or '3rd R'.");
-        if (!bet.equals("1st R") && !bet.equals("2nd R") && !bet.equals("3rd R")) {
+        String bet = input.getStringInput("Select from '1st D', '2nd D', or '3rd D'.");
+        if (!bet.equals("1st D") && !bet.equals("2nd D") && !bet.equals("3rd D")) {
             return handleDozenBet();
         }
         else {return bet;}

@@ -1,6 +1,5 @@
 package com.leonslegion.casino;
 
-import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -110,6 +109,41 @@ public class RouletteGameManager extends GameManager {
         }
     }
 
+
+
+    public static void checkPlayerBetsForOutsideDozenBetWins(RoulettePlayer playerOne, String spinResult) {
+        for (RouletteBet bet : playerOne.getBetList()) {
+            if (Integer.parseInt(spinResult) > 0 && Integer.parseInt(spinResult) < 13 && bet.getBetType().equals("1st D")) {
+                System.out.println("You won a 2:1 Payout! You won: ");
+                System.out.printf("%,.2f", bet.getBetValue()*2);
+                System.out.println();
+                playerOne.setBalance(playerOne.getBalance() + (bet.getBetValue()*2));
+                System.out.println("Your new balance: ");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+
+            if (Integer.parseInt(spinResult) > 12 && Integer.parseInt(spinResult) < 25 && bet.getBetType().equals("2nd D")) {
+                System.out.println("You won a 2:1 Payout! You won: ");
+                System.out.printf("%,.2f", bet.getBetValue()*2);
+                System.out.println();
+                playerOne.setBalance(playerOne.getBalance() + (bet.getBetValue()*2));
+                System.out.println("Your new balance: ");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+
+            if (Integer.parseInt(spinResult) > 24 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("3rd D")) {
+                System.out.println("You won a 2:1 Payout! You won: ");
+                System.out.printf("%,.2f", bet.getBetValue()*2);
+                System.out.println();
+                playerOne.setBalance(playerOne.getBalance() + (bet.getBetValue()*2));
+                System.out.println("Your new balance: ");
+                System.out.printf("%,.2f", playerOne.getBalance());
+                System.out.println();
+            }
+        }
+    }
 
 
 
