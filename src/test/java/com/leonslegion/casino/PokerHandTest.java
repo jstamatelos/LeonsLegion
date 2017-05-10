@@ -71,12 +71,30 @@ public class PokerHandTest {
 
     @Test
     public void hasStraightTrueTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.ACE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.KING, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.DIAMONDS));
 
+        boolean result = hand.hasStraight();
+
+        Assert.assertTrue(result);
     }
 
     @Test
     public void hasStraightFalseTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.ACE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.THREE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.DIAMONDS));
 
+        boolean result = hand.hasStraight();
+
+        Assert.assertFalse(result);
     }
 
     @Test
@@ -182,7 +200,16 @@ public class PokerHandTest {
      */
     @Test
     public void fiveRankHandChooserTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.ACE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.SIX, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.DIAMONDS));
 
+        Hand result = hand.fiveRankHandChooser();
+
+        Assert.assertTrue(result == 5);
     }
 
     @Test
