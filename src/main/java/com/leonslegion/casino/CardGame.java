@@ -8,12 +8,6 @@ import java.util.ArrayList;
 public abstract class CardGame extends CasinoGame {
 
     ArrayList<Card> deck;
-    ArrayList<CardPlayer> players;
-
-    public CardGame() {
-        deck = Deck.createNewDeck();
-        players = new ArrayList<>();
-    }
 
     public abstract void initialDeal();
 
