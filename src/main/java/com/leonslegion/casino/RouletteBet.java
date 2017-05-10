@@ -9,4 +9,6 @@ public class RouletteBet {
     private String betType;
 
 
+
+
 }

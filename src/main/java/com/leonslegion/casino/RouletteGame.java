@@ -1,7 +1,6 @@
 package com.leonslegion.casino;
 
 import java.util.*;
-import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.math.NumberUtils;
 
 public class RouletteGame implements Spin {
@@ -122,16 +121,58 @@ public class RouletteGame implements Spin {
     public static String handleColumnBet() {
         InputHandler input = new InputHandler();
         System.out.println("Which column bet type would you like to make?");
-        String bet = input.getStringInput("Select from '1st', '2nd', or '3rd'.");
-        if (!bet.equals("1st") && !bet.equals("2nd") && !bet.equals("3rd")) {
+        String bet = input.getStringInput("Select from '1st C', '2nd C', or '3rd C'.");
+        if (!bet.equals("1st C") && !bet.equals("2nd C") && !bet.equals("3rd C")) {
             return handleColumnBet();
         }
         else {return bet;}
     }
-    public static String handleDozenBet() {}
-    public static String handleEvenOrOddBet() {}
-    public static String handleFrontOrBackBet() {}
-    public static String handleColorBet() {}
+
+    public static String handleDozenBet() {
+        InputHandler input = new InputHandler();
+        System.out.println("Which dozen bet type would you like to make?");
+        String bet = input.getStringInput("Select from '1st R', '2nd R', or '3rd R'.");
+        if (!bet.equals("1st R") && !bet.equals("2nd R") && !bet.equals("3rd R")) {
+            return handleDozenBet();
+        }
+        else {return bet;}
+    }
+
+
+
+    public static String handleEvenOrOddBet() {
+        InputHandler input = new InputHandler();
+        System.out.println("Which even or odd bet type would you like to make?");
+        String bet = input.getStringInput("Select from 'Even', or 'Odd'.");
+        if (!bet.equalsIgnoreCase("Even") && !bet.equalsIgnoreCase("Odd")) {
+            return handleEvenOrOddBet();
+        }
+        else {return bet.toLowerCase();}
+    }
+
+
+
+    public static String handleFrontOrBackBet() {
+        InputHandler input = new InputHandler();
+        System.out.println("Which front or back bet type would you like to make?");
+        String bet = input.getStringInput("Select from 'Front', or 'Back'.");
+        if (!bet.equalsIgnoreCase("Front") && !bet.equalsIgnoreCase("Back")) {
+            return handleFrontOrBackBet();
+        }
+        else {return bet.toLowerCase();}
+    }
+
+
+
+    public static String handleColorBet() {
+        InputHandler input = new InputHandler();
+        System.out.println("Which color odd bet type would you like to make?");
+        String bet = input.getStringInput("Select from 'Red', or 'Black'.");
+        if (!bet.equalsIgnoreCase("Red") && !bet.equalsIgnoreCase("Black")) {
+            return handleColorBet();
+        }
+        else {return bet.toLowerCase();}
+    }
 
 
 
