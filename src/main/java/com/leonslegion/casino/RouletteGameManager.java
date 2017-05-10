@@ -10,15 +10,7 @@ public class RouletteGameManager extends GameManager {
 
 
 
-    public RouletteGameManager() {
-        // no-arg constructor
-    }
-
-
-
-
     public RouletteGameManager(AccountManager accountManager){
-
         super(accountManager);
     }
 
@@ -29,12 +21,10 @@ public class RouletteGameManager extends GameManager {
         System.out.println("Welcome to Roulette!" + "\n");
         InputHandler input = new InputHandler();
         String numberOfPlayers = input.getStringInput("How many players? Max is 2.");
-        if (numberOfPlayers.equals(1)) {
+        if (numberOfPlayers.equals("1")) {
             rouletteGameEngineForOnePlayer();
         }
-        else if (numberOfPlayers.equals(2)) {
-            RoulettePlayer playerOne = RoulettePlayer.addRoulettePlayer();
-            RoulettePlayer playerTwo = RoulettePlayer.addRoulettePlayer();
+        else if (numberOfPlayers.equals("2")) {
             rouletteGameEngineForTwoPlayers();
         }
         else {
@@ -45,10 +35,39 @@ public class RouletteGameManager extends GameManager {
     }
 
 
-    public static String keepBettingLoop() {
+
+    public static void rouletteGameEngineForOnePlayer() {
         InputHandler inputHandler = new InputHandler();
-        return inputHandler.getStringInput("Do you want to place another bet? Type 'yes' or 'no'.");
+        boolean engineOn = true;
+        RouletteGame game = new RouletteGame();
+        RouletteGame.initializeGame();
+        while (engineOn) {
+            engineOn = exitOpportunity();
+            rouletteRoundEngineForOnePlayer();
+            String spinOutcome = game.spin();
+
+        }
     }
+
+
+    public static void rouletteRoundEngineForOnePlayer() {
+        boolean stillBetting = true;
+        while (stillBetting) {
+            rouletteRoundBettingEngineForOnePlayer();
+            String keepBetting = keepBettingLoop();
+            if (keepBetting.equalsIgnoreCase("Yes")) {
+                rouletteRoundBettingEngineForOnePlayer();
+            }
+            else if (keepBetting.equalsIgnoreCase("No")) {
+                stillBetting = false;
+            }
+            else {
+                System.out.println("Not a valid answer.");
+                keepBettingLoop();
+            }
+        }
+    }
+
 
 
     public static void rouletteRoundBettingEngineForOnePlayer() {
@@ -62,27 +81,9 @@ public class RouletteGameManager extends GameManager {
 
 
 
-    public static void rouletteRoundEngineForOnePlayer() {
-       boolean stillBetting = true;
-       while (stillBetting) {
-           rouletteRoundBettingEngineForOnePlayer();
-           String keepBetting = keepBettingLoop();
-           if (keepBetting.equalsIgnoreCase("Yes")) {
-
-           }
-       }
-    }
-
-
-
-    public static void rouletteGameEngineForOnePlayer() {
+    public static String keepBettingLoop() {
         InputHandler inputHandler = new InputHandler();
-        boolean engineOn = true;
-        RouletteGame.initializeGame();
-        while (engineOn) {
-            engineOn = RouletteGame.exitOpportunity();
-            rouletteRoundEngineForOnePlayer();
-        }
+        return inputHandler.getStringInput("Do you want to place another bet? Type 'yes' or 'no'.");
     }
 
 
@@ -91,5 +92,13 @@ public class RouletteGameManager extends GameManager {
         RouletteGame.initializeGame();
     }
 
+
+
+    public static boolean exitOpportunity() {
+        InputHandler inputHandler = new InputHandler();
+        String exitOpportunity = inputHandler.getStringInput("Type 'exit' before the round starts to leave game.");
+        if (exitOpportunity.equalsIgnoreCase("exit")) {return false;}
+        else {return true;}
+    }
 
 }
