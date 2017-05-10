@@ -5,7 +5,7 @@ package com.leonslegion.casino;
  */
 public class AccountFactory {
 
-    public Account createAccountWithName(String accountHolderName) {
+    public static Account createAccountWithName(String accountHolderName) {
         return new Account(accountHolderName);
     }
 
