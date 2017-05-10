@@ -178,4 +178,15 @@ public class RouletteGame implements Spin {
 
 
 
+    public static void initializeGame() {
+        printRouletteTable();
+        printInsideBets();
+        printOutsideBets();
+    }
+
+
+
+
+
+
 }

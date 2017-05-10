@@ -15,7 +15,26 @@ public class RouletteGameManager extends GameManager {
     }
 
 
+/*
+    public static void RouletteGameEngineSetup() {
+        System.out.println("Welcome to Roulette!" + "\n");
+        InputHandler input = new InputHandler();
+        String numberOfPlayers = input.getStringInput("How many players? Max is 2.");
+        if (numberOfPlayers.equals(1)) {
+            RoulettePlayer playerOne = RoulettePlayer.addRoulettePlayer();
+            RouletteGameEngineForOnePlayer();
+        }
+        else if (numberOfPlayers.equals(2)) {
+            RoulettePlayer playerOne = RoulettePlayer.addRoulettePlayer();
+            RoulettePlayer playerTwo = RoulettePlayer.addRoulettePlayer();
+            RouletteGameEngineForTwoPlayers();
+        }
+    }
 
 
 
+    public static void RouletteEngineForOnePlayer() {
+
+
+*/
 }

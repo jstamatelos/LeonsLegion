@@ -5,6 +5,8 @@ import java.util.ArrayList;
 /**
  * Created by markbrown on 5/9/17.
  */
+
+
 public class RoulettePlayer extends Player {
 
 
@@ -13,8 +15,23 @@ public class RoulettePlayer extends Player {
 
 
 
-    public RoulettePlayer (double balance, long accountId) {super(balance, accountId);}
+    private RoulettePlayer (double balance, long accountId, ArrayList<RouletteBet> betList) {
+        super(balance, accountId);
+        this.betList = betList;
+    }
 
+
+
+/*
+    public static RoulettePlayer addRoulettePlayer() {
+        InputHandler input = new InputHandler();
+        String roulettePlayerID = input.getStringInput("Please enter your ID.");
+
+        //Method to search account manager for name
+        //Method that returns player object with accountID that matches above input
+
+    }
+*/
 
     public ArrayList<RouletteBet> getBetList() {return betList;}
 
