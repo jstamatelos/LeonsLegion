@@ -9,12 +9,11 @@ public class RouletteGameManager extends GameManager {
         // no-arg constructor
     }
 
-    public RouletteGameManager(AccountManager accountManager){
+    /* public RouletteGameManager(AccountManager accountManager){
         super(accountManager);
     }
-<<<<<<< HEAD
-=======
 
+*/
 
 /*
     public static void RouletteGameEngineSetup() {
@@ -42,5 +41,5 @@ public class RouletteGameManager extends GameManager {
 
 
 */
->>>>>>> e6007cb4a6d856cdcbd1b295ddbd87e15fa85664
+
 }
