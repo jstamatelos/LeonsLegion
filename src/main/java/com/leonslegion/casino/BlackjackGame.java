@@ -13,6 +13,16 @@ public class BlackjackGame extends CasinoGame {
     // Dealer hit - if 17 or over dealer stay, if dealer over 21, player win - add bet to player total
     // Restart game
 
+    Deck deck;
+
+    public BlackjackGame() {}
+
+    public BlackjackGame(Deck deck) {
+        this.deck = deck;
+    }
+
+
+
 
 
 

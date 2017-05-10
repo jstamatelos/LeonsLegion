@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public abstract class Hand {
 
-    private ArrayList<Card> hand;
+    private ArrayList<Card> hand = new ArrayList<Card>();
 
     public Hand() {}
 
