@@ -6,22 +6,25 @@ package com.leonslegion.casino;
 public class RouletteBetChecker {
 
     public static void checkPlayerBetsForInsideBetWins(RoulettePlayer playerOne, String spinResult) {
+        boolean didPlayerWin = false;
         for (RouletteBet bet : playerOne.getBetList()) {
             if (bet.getBetType().equals(spinResult)) {
-                System.out.print("You won a 35:1 Payout! You won: ");
-                System.out.printf("%,.2f", bet.getBetValue()*35);
+                System.out.print("You won a 35:1 Payout! You won: $");
+                System.out.printf("%,.2f", bet.getBetValue() * 35);
                 System.out.println();
-                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue() + (bet.getBetValue()*35));
+                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue() + (bet.getBetValue() * 35));
                 System.out.print("Your new balance: $");
                 System.out.printf("%,.2f", playerOne.getBalance());
                 System.out.println();
+                didPlayerWin = true;
+                break;
             }
-            else {
-                playerOne.setBalance(playerOne.getBalance() - bet.getBetValue());
-                System.out.print("Your new balance: $");
-                System.out.printf("%,.2f", playerOne.getBalance());
-                System.out.println();
-            }
+        }
+        if (!didPlayerWin) {
+            playerOne.setBalance(playerOne.getBalance() - playerOne.get);
+            System.out.print("Your new balance: $");
+            System.out.printf("%,.2f", playerOne.getBalance());
+            System.out.println();
         }
     }
 
