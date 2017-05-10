@@ -11,7 +11,6 @@ public class RouletteGameManager extends GameManager {
 
     public RouletteGameManager(AccountManager accountManager){
         super(accountManager);
-        // todo
     }
 
 
@@ -35,6 +34,7 @@ public class RouletteGameManager extends GameManager {
 
     public static void RouletteEngineForOnePlayer() {
         RouletteGame.initializeGame();
+
 
 
 

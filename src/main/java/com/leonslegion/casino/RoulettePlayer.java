@@ -24,9 +24,7 @@ public class RoulettePlayer extends Player {
 
 
 
-    public static ArrayList<RouletteBet> returnEmptyRouletteBetList () {
-        return new ArrayList<RouletteBet>();
-    }
+    public static ArrayList<RouletteBet> returnEmptyRouletteBetList () {return new ArrayList<RouletteBet>();}
 
 
 
