@@ -15,10 +15,13 @@ public class RouletteGameManager extends GameManager {
 
 
 
+
     public RouletteGameManager(AccountManager accountManager){
+
         super(accountManager);
     }
 
+*/
 
     public static void RouletteGameEngineSetup() {
         System.out.println("Welcome to Roulette!" + "\n");
@@ -76,6 +79,7 @@ public class RouletteGameManager extends GameManager {
     public static void RouletteGameEngineForTwoPlayers() {
         RouletteGame.initializeGame();
     }
+
 
 
 }
