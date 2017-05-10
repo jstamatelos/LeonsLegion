@@ -186,6 +186,7 @@ public class RouletteGame implements Spin {
     }
 
 
+
     public static boolean exitOpportunity() {
         InputHandler inputHandler = new InputHandler();
         String exitOpportunity = inputHandler.getStringInput("Type 'exit' before the round starts to leave game.");

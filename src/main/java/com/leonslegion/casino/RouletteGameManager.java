@@ -1,5 +1,6 @@
 package com.leonslegion.casino;
 
+import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -24,28 +25,33 @@ public class RouletteGameManager extends GameManager {
 
 
 
-    public static void RouletteGameEngineSetup() {
+    public static void rouletteGameEngineSetup() {
         System.out.println("Welcome to Roulette!" + "\n");
         InputHandler input = new InputHandler();
         String numberOfPlayers = input.getStringInput("How many players? Max is 2.");
         if (numberOfPlayers.equals(1)) {
-            RouletteGameEngineForOnePlayer();
+            rouletteGameEngineForOnePlayer();
         }
         else if (numberOfPlayers.equals(2)) {
             RoulettePlayer playerOne = RoulettePlayer.addRoulettePlayer();
             RoulettePlayer playerTwo = RoulettePlayer.addRoulettePlayer();
-            RouletteGameEngineForTwoPlayers();
+            rouletteGameEngineForTwoPlayers();
         }
         else {
             System.out.println("That's not a valid number of players.");
             System.out.println();
-            RouletteGameEngineSetup();
+            rouletteGameEngineSetup();
         }
     }
 
 
+    public static String keepBettingLoop() {
+        InputHandler inputHandler = new InputHandler();
+        return inputHandler.getStringInput("Do you want to place another bet? Type 'yes' or 'no'.");
+    }
 
-    public static void RouletteRoundBettingEngineForOnePlayer() {
+
+    public static void rouletteRoundBettingEngineForOnePlayer() {
         InputHandler inputHandler = new InputHandler();
         RoulettePlayer playerOne = RoulettePlayer.addRoulettePlayer();
         String newBetType = RouletteGame.handleAnyBet();
@@ -56,28 +62,32 @@ public class RouletteGameManager extends GameManager {
 
 
 
-    public static void RouletteRoundEngineForOnePlayer() {
+    public static void rouletteRoundEngineForOnePlayer() {
        boolean stillBetting = true;
        while (stillBetting) {
-           RouletteRoundBettingEngineForOnePlayer();
+           rouletteRoundBettingEngineForOnePlayer();
+           String keepBetting = keepBettingLoop();
+           if (keepBetting.equalsIgnoreCase("Yes")) {
+
+           }
        }
     }
 
 
 
-    public static void RouletteGameEngineForOnePlayer() {
+    public static void rouletteGameEngineForOnePlayer() {
         InputHandler inputHandler = new InputHandler();
         boolean engineOn = true;
         RouletteGame.initializeGame();
         while (engineOn) {
             engineOn = RouletteGame.exitOpportunity();
-            RouletteRoundEngineForOnePlayer();
+            rouletteRoundEngineForOnePlayer();
         }
     }
 
 
 
-    public static void RouletteGameEngineForTwoPlayers() {
+    public static void rouletteGameEngineForTwoPlayers() {
         RouletteGame.initializeGame();
     }
 
