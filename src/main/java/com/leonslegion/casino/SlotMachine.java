@@ -21,7 +21,7 @@ public class SlotMachine {
 
     public void displayImages() {
 
-        System.out.println("Results: \t" + image1 + "\t" + image2 + "\t" + image3);
+        System.out.println("Results: \t" + image1 + "\t|\t" + image2 + "\t|\t" + image3);
 
     }
 
