@@ -26,18 +26,23 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     void determineHandType() {
-        this.handType = HandType.HIGHCARD;
-
-        /*
-          helper methods below.
-          first step will be to find
-          the total number of ranks
-          present.
-          that will determine how to
-          proceed.
-          this way doesn't provide for
-          tie-breakers.
-        */
+        int switchNum = numberOfRanksPresent();
+        switch(switchNum) {
+            case 2:
+                handType = twoRankHandChooser();
+                break;
+            case 3:
+                handType = threeRankHandChooser();
+                break;
+            case 4:
+                handType = fourRankHandChooser();
+                break;
+            case 5:
+                handType = fiveRankHandChooser();
+                break;
+            default:
+                break;
+        }
     }
 
     void setHandType(HandType type) {
@@ -104,8 +109,11 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     HandType threeRankHandChooser() {
-        //todo
-        return null;
+        if(hasTriple()) {
+            return HandType.THREEOFAKIND;
+        } else {
+            return HandType.TWOPAIR;
+        }
     }
 
     HandType twoRankHandChooser() {
@@ -114,6 +122,14 @@ public class PokerHand extends Hand implements Comparable {
             return HandType.FULLHOUSE;
         }
         return HandType.FOUROFAKIND;
+    }
+
+    boolean hasTriple() {
+        Card.Rank rank = getHand().get(2).getRank();
+        if(countRank(rank) == 3) {
+            return true;
+        }
+        return false;
     }
 
 }
