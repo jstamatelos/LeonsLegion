@@ -4,23 +4,30 @@ import java.util.Scanner;
 /**
  * Created by danielprahl on 5/9/17.
  */
-public class InputHandler {
+public final class InputHandler {
     private static final Scanner scanner = new Scanner(System.in);
 
-    // return String input
+    @Deprecated // do not instantiate, all methods are static
+    public InputHandler(){}
+
+    // return String from input string
     public static String getStringInput(String promptUserForInput) {
         System.out.println(promptUserForInput);
         String userInput = scanner.nextLine();
         return userInput;
     }
 
-    // return double input
+    // return double from input string
     public static Double getDoubleInput(String promptUserForInput) {
         return Double.parseDouble(getStringInput(promptUserForInput));
     }
 
+    // return long from input string
+    public static Long getLongInput(String promptUserForInput) {
+        return Long.parseLong(getStringInput(promptUserForInput));
+    }
 
-    // return int input
+    // return int from input string
     public static int getIntInput(String promptUserForInput) {
         return getDoubleInput(promptUserForInput).intValue();
     }
