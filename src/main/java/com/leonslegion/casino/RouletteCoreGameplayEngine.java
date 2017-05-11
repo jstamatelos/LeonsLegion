@@ -100,7 +100,7 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
             else {
                 System.out.println("Not a valid answer.");
-                keepBettingLoop();
+                continue;
             }
         }
     }

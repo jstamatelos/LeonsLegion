@@ -72,7 +72,7 @@ public class RouletteBetHandler {
     private static String handleColumnBet() {
         System.out.println("Which column bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from '1st C', '2nd C', or '3rd C'.");
-        if (bet.equals("1st C") || bet.equals("2nd C") || bet.equals("3rd C")) {
+        if (bet.equalsIgnoreCase("1st C") || bet.equalsIgnoreCase("2nd C") || bet.equalsIgnoreCase("3rd C")) {
             return bet;
         }
         else {return handleColumnBet();}
@@ -83,7 +83,7 @@ public class RouletteBetHandler {
     private static String handleDozenBet() {
         System.out.println("Which dozen bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from '1st D', '2nd D', or '3rd D'.");
-        if (!bet.equals("1st D") && !bet.equals("2nd D") && !bet.equals("3rd D")) {
+        if (!bet.equalsIgnoreCase("1st D") && !bet.equalsIgnoreCase("2nd D") && !bet.equalsIgnoreCase("3rd D")) {
             return handleDozenBet();
         }
         else {return bet;}
