@@ -1,8 +1,5 @@
 package com.leonslegion.casino;
-import jdk.internal.util.xml.impl.Input;
-import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -10,35 +7,35 @@ import java.util.Comparator;
  */
 
 public class WarGame extends CardGame implements Comparator {
-
-    // Initialize Game, dealer and player get deck each
     
 
-    Deck deck;
-    private ArrayList<Card> dealerDeck = new ArrayList<Card>();
-    private ArrayList<Card> playerDeck = new ArrayList<Card>();
+    Deck dealerDeck = new Deck();
+    Deck playerDeck = new Deck();
+
+    Card playerCard = new Card (playerShowCard().getRank(), playerShowCard().getSuit());
+    Card dealerCard = new Card(dealerShowCard().getRank(), dealerShowCard().getSuit());
 
 
     // Player bets initial bet
-    public static double placeBet() {
+    public double placeBet() {
         InputHandler input = new InputHandler();
         double bet = input.getDoubleInput("Please place a bet: ");
         return bet;
     }
 
-    // Dealer shows one card
-    public void dealerShowCard () {
-    // show a random card
+    public Card dealerShowCard() {
+        return dealerCard = dealerDeck.dealCard();
+
+    }
+
+    public Card playerShowCard () {
+        playerDeck.shuffleDeck();
+        return playerCard = playerDeck.dealCard();
+
     }
 
 
-    // Player shows one card
-    public void playerShowCard () {
-    //show a random card
-    }
-
-
-    // Compare cards - if tie - player bets again, adding to initial bet
+    // Win - Lose - Draw Messages
     private String dealerWinMessage(){
         return "Dealer wins, bet again or exit.";
     }
@@ -49,7 +46,9 @@ public class WarGame extends CardGame implements Comparator {
         return "Tie! You and dealer showed same card , bet again!";
     }
 
-    public String findTheHigherCard(Card dealerCard, Card playerCard){
+
+    public String pickHigherValue(Card playerCard,Card dealerCard){
+
         if (dealerCard.getPointValue() > playerCard.getPointValue()) {
             return dealerWinMessage();
         } else if (playerCard.getPointValue() > dealerCard.getPointValue()){
@@ -58,14 +57,7 @@ public class WarGame extends CardGame implements Comparator {
             return tieMessage();
         }
 
-
     }
-    public int compare(Object o1, Object o2) {
-        Card dealerCard = (Card) o1;
-        Card playerCard = (Card) o2;
-        return dealerCard.getRank().ordinal() - playerCard.getRank().ordinal();
-    }
-
 
 
     // Exit game
@@ -79,8 +71,31 @@ public class WarGame extends CardGame implements Comparator {
         }
     }
 
+    // Start game
+    public void startWar(){
+        placeBet();
+        dealerShowCard();
+        playerShowCard();
+        pickHigherValue(playerShowCard(), dealerShowCard());
+        exit();
+
+    }
+
+    // Needed for implementation of interface
+    public int compare(Object o1, Object o2) {
+        Card dealerCard = (Card) o1;
+        Card playerCard = (Card) o2;
+        return dealerCard.getRank().ordinal() - playerCard.getRank().ordinal();
+    }
+
+    // Needed for implementation of interface
     @Override
     public void initialDeal() {
        //
+    }
+
+    @Override
+    public void setHasDealer(boolean hasDealer) {
+        super.setHasDealer(true);
     }
 }

@@ -17,6 +17,14 @@ public class BlackjackHand extends Hand implements Comparable {
         return sum;
     }
 
+    public int evaluateHand() {
+        int sum = 0;
+        for (Card card: this.getHand()) {
+            sum += card.getPointValue();
+        }
+        return sum;
+    }
+
     @Override
     public int compareTo(Object otherHand) {
 

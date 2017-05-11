@@ -10,6 +10,10 @@ public abstract class Player {
         this.accountId = accountId;
     }
 
+    public long getAccountId() {
+        return accountId;
+    }
+
     public double getBalance() {
         return balance;
     }
