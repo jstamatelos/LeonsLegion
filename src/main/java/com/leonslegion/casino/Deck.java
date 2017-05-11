@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Deck {
 
-    ArrayList<Card> deck;
+    ArrayList<Card> deck = new ArrayList<>();
 
     public Deck() {
         for (Card.Rank rank: Card.Rank.values()) {

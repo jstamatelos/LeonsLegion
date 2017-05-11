@@ -17,7 +17,11 @@ public class BlackjackGame extends CardGame {
     // Restart game
 
     InputHandler ih = new InputHandler();
-    ArrayList<BlackjackPlayer> currentPlayers =  (ArrayList<BlackjackPlayer>)(ArrayList<?>) players;
+
+    @Override
+    public ArrayList<BlackjackPlayer> getPlayers() {
+        return ((ArrayList<BlackjackPlayer>)super.getPlayers());
+    }
 
     public void promptGame() {
 
@@ -35,7 +39,7 @@ public class BlackjackGame extends CardGame {
 
     }
 
-    private String buildPromptString(BlackjackHand hand) {
+    public String buildPromptString(BlackjackHand hand) {
 
         StringBuilder sb = buildHandString(hand);
         int points = hand.evaluateHand();
@@ -59,6 +63,7 @@ public class BlackjackGame extends CardGame {
         StringBuilder sb = new StringBuilder();
         sb.append("Your hand: ");
         for (Card card : hand.getHand()) {
+            sb.append(card.getRank());
             sb.append(" of ");
             sb.append(card.getSuit());
             sb.append("; ");
@@ -67,10 +72,9 @@ public class BlackjackGame extends CardGame {
         return sb;
     }
 
-
     public void initialDeal() {
 
-        for (BlackjackPlayer player : currentPlayers) {
+        for (BlackjackPlayer player : getPlayers()) {
             BlackjackHand hand = new BlackjackHand();
             buildInitialHand(player, hand);
             player.setHand(hand);
@@ -93,9 +97,6 @@ public class BlackjackGame extends CardGame {
 
     public BlackjackGame() {
         this.setHasDealer(true);
-
     }
-
-
 
 }
