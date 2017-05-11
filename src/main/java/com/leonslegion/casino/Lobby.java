@@ -12,7 +12,7 @@ public class Lobby {
         isRunning = true;
         populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
         System.out.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
-        System.out.println(" * * * * * * Welcome to our Casino !!! * * * * * *");
+        System.out.println(" * * * * * * Welcome to Leon's Casino !!! * * * * * *");
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
         System.out.println("        Please sign in or create an account. \n");
         createAccount();
@@ -143,8 +143,7 @@ public class Lobby {
                 break;
 
             case "slots":
-                System.out.println("Slots is currently unavailable, please make another selection. \n");
-                selectGame();
+                SlotGame.playSlots();
                 break;
 
             default:
