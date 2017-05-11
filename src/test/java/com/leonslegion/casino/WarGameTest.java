@@ -19,7 +19,8 @@ public class WarGameTest {
         Card expected = dealerCard;
         Card actual = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
 
-        Assert.assertEquals(actual.toString(), expected.toString() );
+        Assert.assertEquals(actual.toString(),expected.toString() );
+
 
     }
 
