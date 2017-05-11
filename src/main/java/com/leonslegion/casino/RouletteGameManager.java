@@ -7,7 +7,7 @@ import java.util.*;
 public class RouletteGameManager {
 
     public static void main(String[] args) {
-      Account sarah = AccountFactory.createAccountWithName("Brian");
+      Account sarah = AccountFactory.createAccountWithName("Sarah");
       System.out.println(sarah.getId());
       Account ziggy = AccountFactory.createAccountWithName("Ziggy");
       System.out.println(ziggy.getId());
@@ -58,6 +58,7 @@ public class RouletteGameManager {
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has no money!");
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " removed!");
                 roulettePlayers.remove(roulettePlayers.get(count));
+                count--;
             }
         }
     }
@@ -65,20 +66,26 @@ public class RouletteGameManager {
 
 
     public static void checkPlayerBetsForResults(ArrayList<RoulettePlayer> roulettePlayers, String spinResult) {
+        System.out.println();
         System.out.println("The ball landed in: " + spinResult);
         for (int count = 0; count < roulettePlayers.size(); count++) {
+            RoulettePlayer player = roulettePlayers.get(count);
             System.out.println();
-            System.out.println("Checking bets for Player #" + roulettePlayers.get(count).getAccountId());
+            System.out.println("Checking bets for Player #" + player.getAccountId());
             System.out.println();
-            RouletteBetHandler.checkPlayerBetsForInsideBetWins(roulettePlayers.get(count), spinResult);
-            RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(roulettePlayers.get(count), spinResult);
-            RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(roulettePlayers.get(count), spinResult);
-            RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(roulettePlayers.get(count), spinResult);
-            RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(roulettePlayers.get(count), spinResult);
-            RouletteBetHandler.checkPlayerBetsForColorBetWins(roulettePlayers.get(count), spinResult);
+            ArrayList<RouletteBet> betList = player.getBetList();
+            player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForInsideBetWins(betList, spinResult));
+            player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(betList, spinResult));
+            player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(betList, spinResult));
+            player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(betList, spinResult));
+            player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForColorBetWins(betList, spinResult));
+
             System.out.print("Player #" + roulettePlayers.get(count).getAccountId() + " new balance: $");
             System.out.printf("%,.2f", roulettePlayers.get(count).getBalance());
             System.out.println();
+
+            player.resetBetList();
+
         }
 
 

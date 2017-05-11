@@ -44,14 +44,11 @@ public class RouletteCoreGameplayEngine implements Spin {
                 System.out.println("ID not found!");
                 continue;
             }
-            for (int i = 0; i < roulettePlayers.size(); i++) {
-                if (roulettePlayerID.equals(Long.toString(roulettePlayers.get(i).getAccountId()))) {
-                    System.out.println();
-                    System.out.println("ID already in list!");
-                    System.out.println();
-                    continue;
-                }
+            if ((roulettePlayers.size() == 1) && roulettePlayerID.equalsIgnoreCase(Long.toString(roulettePlayers.get(0).getAccountId()))) {
+                System.out.println("ID already in list");
+                continue;
             }
+
             System.out.println();
             System.out.println("ID accepted!");
             System.out.println();
@@ -126,13 +123,11 @@ public class RouletteCoreGameplayEngine implements Spin {
         System.out.print("Your balance is now: $");
         System.out.printf("%,.2f", roulettePlayer.getBalance());
         System.out.println();
-        System.out.print("You have placed the following bets:");
+        System.out.println("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
-            System.out.println();
+            System.out.print("$");
             System.out.printf("%,.2f", roulettePlayer.getBetList().get(i).getBetValue());
-            System.out.print(" on " + roulettePlayer.getBetList().get(i).getBetType());
-            System.out.println();
-
+            System.out.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }
 
