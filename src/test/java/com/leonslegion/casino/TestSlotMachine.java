@@ -21,7 +21,7 @@ public class TestSlotMachine {
         boolean actualResult = machine.matchImages();
 
         //then
-        //Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
 
     }
 
@@ -106,6 +106,6 @@ public class TestSlotMachine {
 
             machine = new SlotMachine(sp);
             machine.pullLever();
-        } while (machine.matchImages() != true);
+        } while (machine.matchImages());
     }
 }
