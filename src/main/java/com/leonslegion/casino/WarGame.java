@@ -9,77 +9,66 @@ import java.util.Comparator;
 public class WarGame extends CardGame implements Comparator {
     
 
-    Deck dealerDeck = new Deck();
-    Deck playerDeck = new Deck();
+    static Deck dealerDeck = new Deck();
+    static Deck playerDeck = new Deck();
 
-    Card playerCard = new Card (playerShowCard().getRank(), playerShowCard().getSuit());
-    Card dealerCard = new Card(dealerShowCard().getRank(), dealerShowCard().getSuit());
+    static Card playerCard;
+    static Card dealerCard;
 
+    // Game starter
+    public static void startWarGame(){
+        System.out.println("WAR! WHAT IS IT GOOD FOR!");
+        System.out.println("Welcome to the game of War");
+        WarGame.placeBet();
+        System.out.println(setDealerCard());
+        System.out.println(setplayerCard());
+        System.out.println(determineWinner());
+        WarGame.exit();
 
-    // Player bets initial bet
-    public double placeBet() {
+    }
+
+    // Initial Bet
+    public static double placeBet() {
         InputHandler input = new InputHandler();
         double bet = input.getDoubleInput("Please place a bet: ");
         return bet;
     }
-
-    public Card dealerShowCard() {
-        return dealerCard = dealerDeck.dealCard();
-
+    // Dealer draws card from dealer deck (deck == hand)
+    public static String setDealerCard(){
+        dealerDeck.shuffleDeck();
+        dealerCard = dealerDeck.dealCard();
+        return "Dealer draws a : " + dealerCard.toString(dealerCard);
     }
-
-    public Card playerShowCard () {
+    // Player draws card from player deck (deck == hand)
+    public static String setplayerCard(){
         playerDeck.shuffleDeck();
-        return playerCard = playerDeck.dealCard();
-
+        playerCard = playerDeck.dealCard();
+        return "Player draws a : " + playerCard.toString(playerCard);
     }
-
-
-    // Win - Lose - Draw Messages
-    private String dealerWinMessage(){
-        return "Dealer wins, bet again or exit.";
-    }
-    private String playerWinMessage(){
-        return "You win! Bet again or exit.";
-    }
-    private String tieMessage(){
-        return "Tie! You and dealer showed same card , bet again!";
-    }
-
-
-    public String pickHigherValue(Card playerCard,Card dealerCard){
-
-        if (dealerCard.getPointValue() > playerCard.getPointValue()) {
-            return dealerWinMessage();
-        } else if (playerCard.getPointValue() > dealerCard.getPointValue()){
-            return playerWinMessage();
+    // Dealer card is compared to player card by point value
+    public static String determineWinner(){
+        if (playerCard.getPointValue() > dealerCard.getPointValue()){
+            return "You win! Nice!";
+        } else if (playerCard.getPointValue() < dealerCard.getPointValue()){
+            return "Dealer wins! Oh well.";
         } else {
-            return tieMessage();
+            return "Tie! WAR!!!!!!";
         }
-
     }
-
 
     // Exit game
     public static boolean exit() {
         InputHandler inputHandler = new InputHandler();
-        String exitOpportunity = inputHandler.getStringInput("Type exit to quit");
+        String exitOpportunity = inputHandler.getStringInput("Type 'exit' to return to lobby or 'stay' to play again");
         if (exitOpportunity.equalsIgnoreCase("exit")) {
             return false;
-        } else {
-            return true;
+        } else if (exitOpportunity.equalsIgnoreCase("stay")) {
+            WarGame.startWarGame();
         }
+        return false;
     }
 
-    // Start game
-    public void startWar(){
-        placeBet();
-        dealerShowCard();
-        playerShowCard();
-        pickHigherValue(playerShowCard(), dealerShowCard());
-        exit();
 
-    }
 
     // Needed for implementation of interface
     public int compare(Object o1, Object o2) {
