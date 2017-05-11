@@ -33,7 +33,7 @@ public class Lobby {
     }
 
     public void actionSelection(){
-        String question = "Would you like to play a game? 'y' or 'n' ";
+        String question = "\nWould you like to play a game? 'y' or 'n' ";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch(selection){
             case "q":
