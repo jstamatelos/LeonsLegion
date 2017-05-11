@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by markbrown on 5/10/17.
  */
-public class RouletteCoreGameplayEngine {
+public class RouletteCoreGameplayEngine implements Spin {
 
 
 
@@ -30,19 +30,20 @@ public class RouletteCoreGameplayEngine {
 
     public static ArrayList<RoulettePlayer> createRoulettePlayerList(int numberOfPlayers) {
         ArrayList<RoulettePlayer> roulettePlayers = new ArrayList<RoulettePlayer>();
-        for (int i = 0; i < numberOfPlayers; i++) {
+        int count = 0;
+        while (count < numberOfPlayers) {
             String roulettePlayerID = InputHandler.getStringInput("Please enter your ID.");
-            if (NumberUtils.isParsable(roulettePlayerID)) {
-                Account roulettePlayerAccount = AccountManager.findAccount(Long.parseLong(roulettePlayerID));
-                if (roulettePlayerAccount == null) {
-                    System.out.println("ID not found!");
-                    continue;
-                }
-                roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList()));
-            }
-            else {
+            if (!NumberUtils.isParsable(roulettePlayerID)) {
+                System.out.println("Not a valid ID");
                 continue;
             }
+            Account roulettePlayerAccount = AccountManager.findAccount(Long.parseLong(roulettePlayerID));
+            if (roulettePlayerAccount == null) {
+                System.out.println("ID not found!");
+                continue;
+            }
+            roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList()));
+            count++;
         }
         return roulettePlayers;
     }
@@ -74,6 +75,7 @@ public class RouletteCoreGameplayEngine {
 
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
+            printTableInformation();
             gatherEachPlayersBets(roulettePlayers.get(i));
 
         }
@@ -106,6 +108,15 @@ public class RouletteCoreGameplayEngine {
         String newBetType = RouletteBetHandler.handleAnyBet();
         String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
         String newBetValue = roulettePlayer.placeBet(betValue);
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
+        System.out.println("Your balance is now: $");
+        System.out.printf("%,.2f" + roulettePlayer.getBalance());
+        System.out.println("You have placed the following bets:");
+        for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
+            System.out.println(roulettePlayer.getBetList().get(i).getBetValue());
+            System.out.print(" on " + roulettePlayer.getBetList().get(i).getBetType());
+        }
     }
 
 
@@ -119,6 +130,11 @@ public class RouletteCoreGameplayEngine {
 
 
 
+    public String spin() {
+        ArrayList<String> rouletteWheel = RouletteTable.createRouletteWheel();
+        int randomNumber = (int) Math.floor(Math.random()*37);
+        return rouletteWheel.get(randomNumber);
+    }
 
 
 
