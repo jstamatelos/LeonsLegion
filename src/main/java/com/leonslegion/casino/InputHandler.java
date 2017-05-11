@@ -8,7 +8,7 @@ public final class InputHandler {
     private static final Scanner scanner = new Scanner(System.in);
 
     @Deprecated // do not instantiate, all methods are static
-    public InputHandler(){}
+    private InputHandler(){}
 
     // return String from input string
     public static String getStringInput(String promptUserForInput) {
