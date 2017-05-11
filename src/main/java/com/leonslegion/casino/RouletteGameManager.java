@@ -53,8 +53,6 @@ public class RouletteGameManager {
                         AccountManager.getAccounts().get(account).setAccountBalance(balanceDifference);
                     }
                 }
-
-
                 roulettePlayers.remove(roulettePlayers.get(count));
                 count --;
             }
@@ -68,6 +66,15 @@ public class RouletteGameManager {
             if (roulettePlayers.get(count).getBalance() <= 0) {
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has no money!");
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " removed!");
+                double remainingBalance = 0;
+                long accountID = roulettePlayers.get(count).getAccountId();
+                for (int account = 0; account < AccountManager.getAccounts().size(); account++) {
+                    if (AccountManager.getAccounts().get(account).getId() == accountID) {
+                        double originalBalance = AccountManager.getAccounts().get(account).getAccountBalance();
+                        double balanceDifference = -originalBalance;
+                        AccountManager.getAccounts().get(account).setAccountBalance(balanceDifference);
+                    }
+                }
                 roulettePlayers.remove(roulettePlayers.get(count));
                 count--;
             }
