@@ -44,14 +44,11 @@ public class RouletteCoreGameplayEngine implements Spin {
                 System.out.println("ID not found!");
                 continue;
             }
-            for (int i = 0; i < roulettePlayers.size(); i++) {
-                if (roulettePlayerID.equals(Long.toString(roulettePlayers.get(i).getAccountId()))) {
-                    System.out.println();
-                    System.out.println("ID already in list!");
-                    System.out.println();
-                    continue;
-                }
+            if ((roulettePlayers.size() == 1) && roulettePlayerID.equalsIgnoreCase(Long.toString(roulettePlayers.get(0).getAccountId()))) {
+                System.out.println("ID already in list");
+                continue;
             }
+
             System.out.println();
             System.out.println("ID accepted!");
             System.out.println();
