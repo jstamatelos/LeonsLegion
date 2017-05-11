@@ -77,7 +77,6 @@ public class RouletteCoreGameplayEngine implements Spin {
         for (int i = 0; i < roulettePlayers.size(); i++) {
             printTableInformation();
             gatherEachPlayersBets(roulettePlayers.get(i));
-
         }
     }
 

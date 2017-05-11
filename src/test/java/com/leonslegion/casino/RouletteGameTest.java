@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class RouletteGameTest {
-/*
+
     @Test
     public void testThatPlayerCanMakeBet() {
         //Given:
@@ -44,11 +44,14 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanWinInsideBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("00", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "00";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
         String spin = "00";
         double expectedOutput = 900 + (35*100);
 
@@ -72,7 +75,7 @@ public class RouletteGameTest {
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForInsideBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForInsideBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -92,7 +95,7 @@ public class RouletteGameTest {
 
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -112,7 +115,7 @@ public class RouletteGameTest {
 
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -131,7 +134,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (rouletteBet.getBetValue()*3);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -150,7 +153,7 @@ public class RouletteGameTest {
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -169,7 +172,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (rouletteBet.getBetValue()*2);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -188,7 +191,7 @@ public class RouletteGameTest {
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -207,7 +210,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (rouletteBet.getBetValue()*2);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -226,11 +229,11 @@ public class RouletteGameTest {
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
     }
-*/
+
 }
