@@ -35,14 +35,18 @@ public class BlackjackGameTests {
     public void testPromptString() {
 
         BlackjackHand hand = new BlackjackHand();
+        BlackjackHand dealerHand = new BlackjackHand();
         Card card1 = new Card(Card.Rank.TEN, Card.Suit.CLUBS);
         Card card2 = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS);
         hand.addCard(card1);
         hand.addCard(card2);
+        dealerHand.addCard(card1);
+        dealerHand.addCard(card2);
 
         BlackjackGame game = new BlackjackGame();
+        game.initialDeal();
 
-        String actualOutput = game.buildPromptString(hand);
+        String actualOutput = game.buildUserPromptString(hand, dealerHand);
 
         String expectedOutput = "Your hand: TEN of CLUBS; EIGHT of DIAMONDS; \n" +
                 "is worth 18 points. Hit or stay?";
@@ -53,15 +57,6 @@ public class BlackjackGameTests {
     @Test
     public void testInitialDeal() {
 
-        newGame.initialDeal();
-        ArrayList<BlackjackPlayer> players = newGame.getPlayers();
-
-        for (Player player : players) {
-            BlackjackPlayer p = (BlackjackPlayer) player;
-            System.out.println(p.getHand());
-        }
-        System.out.println();
-
-
+        newGame.play();
     }
 }
