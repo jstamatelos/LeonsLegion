@@ -30,7 +30,7 @@ public class PokerGame extends CardGame {
             if(account != null) {
                 players.add(new PokerPlayer(AccountManager.getBalance(account), accountid));
             } else {
-                //create new player and add to game?
+                i--;
             }
         }
     }
@@ -43,5 +43,15 @@ public class PokerGame extends CardGame {
         }
     }
 
+    public void run() {
+        promptGame();
+        while(players.size() > 1) {
+            initialDeal(); //initialize stillInGame
+            //betting round
+            //exchange
+            //betting round
+            //rake
+        }
+    }
 
 }
