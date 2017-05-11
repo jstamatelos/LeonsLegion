@@ -44,6 +44,17 @@ public class RouletteGameManager {
             System.out.println("Does Player #" + roulettePlayers.get(count).getAccountId() + " want to exit?");
             if (RouletteCoreGameplayEngine.exitInput()) {
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has exited.");
+                double remainingBalance = roulettePlayers.get(count).getBalance();
+                long accountID = roulettePlayers.get(count).getAccountId();
+                for (int account = 0; account < AccountManager.getAccounts().size(); account++) {
+                    if (AccountManager.getAccounts().get(account).getId() == accountID) {
+                        double originalBalance = AccountManager.getAccounts().get(account).getAccountBalance();
+                        double balanceDifference = remainingBalance - originalBalance;
+                        AccountManager.getAccounts().get(account).setAccountBalance(balanceDifference);
+                    }
+                }
+
+
                 roulettePlayers.remove(roulettePlayers.get(count));
                 count --;
             }
