@@ -3,18 +3,13 @@ package com.leonslegion.casino;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
 public class PokerGame extends CardGame {
-    // Take cards from deck
-    // Deal cards
-    // Remove selected cards from player hand
-    // Repopulate player hand with new cards
-    // Compare player hand to odds
-    // Payout
-    // Restart
+
 
     private void promptGame() {
         InputHandler ih = new InputHandler();
@@ -43,14 +38,37 @@ public class PokerGame extends CardGame {
         }
     }
 
+    public Player compareHands(ArrayList<Player> players) {
+        Player winner = players.get(0);
+        for(int i = 1; i < players.size(); i++) {
+            //if players.get(i) has better hand than winner
+            //winner = players.get(i)
+        }
+
+        return winner;
+    }
+
     public void run() {
         promptGame();
         while(players.size() > 1) {
-            initialDeal(); //initialize stillInGame
+            double pot = 0;
+            initialDeal();
+            PokerBettingRound round = new PokerBettingRound(players);
+            round.playersMakeBets();
+            for(PokerPlayerBettingRound p : round.outOfGame) {
+                pot += p.amountIn;
+                players.remove(p); //this will be useful when there are multiple rounds.
+            }
+            for(PokerPlayerBettingRound p : round.stillInGame) {
+                pot += p.amountIn;
+            }
+            //need to debit from the players' accounts
+            Player winner = compareHands(players);
+
+
+
+            //exchange - this can be implemented later
             //betting round
-            //exchange
-            //betting round
-            //rake
         }
     }
 

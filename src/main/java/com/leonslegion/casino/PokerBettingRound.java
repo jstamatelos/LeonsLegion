@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class PokerBettingRound {
 
     ArrayList<PokerPlayerBettingRound> stillInGame;
+    ArrayList<PokerPlayerBettingRound> outOfGame;
 
     PokerBettingRound(ArrayList<Player> players) {
         for(Player p : players) {
@@ -19,31 +20,46 @@ public class PokerBettingRound {
         InputHandler ih = new InputHandler();
         while(true) {
             int choice = ih.getIntInput("To fold, enter 0. To call, enter 1. To raise, enter 2.");
-            switch(choice) {
-                case 0:
-                    stillInGame.remove(player);
-                    return 0;
-                case 1:
-                    player.placeBet(highBet - player.amountIn);
-                    return 0;
-                case 2:
-                    double raise = ih.getDoubleInput("How much would you like to raise?");
-                    highBet = player.placeBet(highBet + raise);
-                    return highBet;
-                default:
-                    System.out.println("Not a valid choice. Read the instructions again.");
-                    break;
+            try {
+                switch(choice) {
+                    case 0:
+                        stillInGame.remove(player);
+                        outOfGame.add(player);
+                        return 0;
+                    case 1:
+                        player.player.placeBet(highBet - player.amountIn);
+                        player.amountIn = highBet;
+                        return 0;
+                    case 2:
+                        double raise = ih.getDoubleInput("How much would you like to raise?");
+                        highBet = player.player.placeBet(highBet + raise);
+                        player.amountIn = highBet;
+                        return highBet;
+                    default:
+                        System.out.println("Not a valid choice. Read the instructions again.");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
 
     void playersMakeBets() {
         PokerPlayerBettingRound player = stillInGame.get(0);
+        int turnIndex = 0;
         int lastRaiseIndex = 0;
         double highBet = 0;
-        while(turnIndex != lastRaiseIndex) {
-            playerChoice();
-        }
+
+        do {
+            double amount = playerChoice(player, highBet);
+            if(amount > highBet) {
+                highBet = amount;
+                lastRaiseIndex = turnIndex;
+            }
+            turnIndex++;
+            player = stillInGame.get(turnIndex);
+        } while(turnIndex != lastRaiseIndex);
     }
 
 }
