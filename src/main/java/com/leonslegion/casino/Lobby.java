@@ -100,28 +100,27 @@ public class Lobby {
                 break;
 
             case "poker":
-                System.out.println("Dummy Poker Game Played \n");
+                System.out.println("Poker is currently unavailable, please make another selection. \n");
                 break;
 
             case "blackjack":
-                System.out.println("Dummy Blackjack Game Played \n");
+                System.out.println("Blackjack is currently unavailable, please make another selection. \n");
                 break;
 
             case "war":
-                System.out.println("Dummy War Game Played \n");
+                System.out.println("War is currently unavailable, please make another selection. \n");
                 break;
 
             case "roulette":
                 RouletteGameManager.playRoulette();
-                //System.out.println("Dummy Roulette Game Played \n");
                 break;
 
             case "slots":
-                System.out.println("Dummy Slots Game Played \n");
+                System.out.println("Slots is currently unavailable, please make another selection. \n");
                 break;
 
             default:
-                System.out.println("We do not offer " + selectedGame + " as a selection yet, please try another game.");
+                System.out.println("We do not currently offer " + selectedGame + ", please make another selection.");
                 selectGame();
         }
     }
