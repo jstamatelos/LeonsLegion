@@ -10,6 +10,9 @@ public class PokerHand extends Hand implements Comparable {
 
     HandType handType;
 
+    /*
+    Necessary to sort in constructor?
+     */
     PokerHand() {
         Collections.sort(getHand(), new CardComparator());
     }
@@ -26,6 +29,7 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     void determineHandType() {
+        Collections.sort(getHand(), new CardComparator());
         int switchNum = numberOfRanksPresent();
         switch(switchNum) {
             case 2:
