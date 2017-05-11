@@ -11,6 +11,11 @@ public class Lobby {
     public void start(){
         isRunning = true;
         populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
+        System.out.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
+        System.out.println(" * * * * * * Welcome to our Casino !!! * * * * * *");
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
+        System.out.println("        Please sign in or create an account. \n");
+        createAccount();
         startLobby();
     }
 
@@ -18,7 +23,7 @@ public class Lobby {
     public void startLobby(){
         while(isRunning){
             System.out.println("\n------------------------------------------------");
-            System.out.println("~~~~~~!!! Welcome to the Casino Lobby! !!!~~~~~~ ");
+            System.out.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
             System.out.println("------------------------------------------------");
             System.out.println("         (Enter 'Q' at any time to quit) \n");
             actionSelection();
@@ -100,28 +105,31 @@ public class Lobby {
                 break;
 
             case "poker":
-                System.out.println("Dummy Poker Game Played \n");
+                System.out.println("Poker is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             case "blackjack":
-                System.out.println("Dummy Blackjack Game Played \n");
+                System.out.println("Blackjack is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             case "war":
-                System.out.println("Dummy War Game Played \n");
+                System.out.println("War is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             case "roulette":
                 RouletteGameManager.playRoulette();
-                //System.out.println("Dummy Roulette Game Played \n");
                 break;
 
             case "slots":
-                System.out.println("Dummy Slots Game Played \n");
+                System.out.println("Slots is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             default:
-                System.out.println("We do not offer " + selectedGame + " as a selection yet, please try another game.");
+                System.out.println("We do not currently offer " + selectedGame + ", please make another selection.");
                 selectGame();
         }
     }
