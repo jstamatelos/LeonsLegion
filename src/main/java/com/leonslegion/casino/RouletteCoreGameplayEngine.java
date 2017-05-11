@@ -21,6 +21,8 @@ public class RouletteCoreGameplayEngine implements Spin {
             case "2":
                 return "2";
             default:
+                System.out.println("Not a valid selection");
+                System.out.println();
                 return rouletteGameEngineSetup();
         }
     }
@@ -42,6 +44,9 @@ public class RouletteCoreGameplayEngine implements Spin {
                 System.out.println("ID not found!");
                 continue;
             }
+            System.out.println();
+            System.out.println("ID accepted!");
+            System.out.println();
             roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList()));
             count++;
         }
@@ -66,7 +71,7 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
     public static boolean exitInput() {
-        String exitOpportunity = InputHandler.getStringInput("Type 'exit' before the round starts to leave game.");
+        String exitOpportunity = InputHandler.getStringInput("Type 'exit' before the round starts to leave game. Or type any other letter to stay.");
         if (exitOpportunity.equalsIgnoreCase("exit")) {return true;}
         else {return false;}
     }
@@ -76,6 +81,7 @@ public class RouletteCoreGameplayEngine implements Spin {
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
             printTableInformation();
+            System.out.println("Now Betting For Player #" + roulettePlayers.get(i).getAccountId());
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
     }
@@ -85,7 +91,6 @@ public class RouletteCoreGameplayEngine implements Spin {
     private static void gatherEachPlayersBets(RoulettePlayer roulettePlayer) {
         boolean stillBetting = true;
         while (stillBetting) {
-            rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
             String keepBetting = keepBettingLoop();
             if (keepBetting.equalsIgnoreCase("Yes")) {
                 rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
@@ -109,12 +114,17 @@ public class RouletteCoreGameplayEngine implements Spin {
         String newBetValue = roulettePlayer.placeBet(betValue);
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
         roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
-        System.out.println("Your balance is now: $");
-        System.out.printf("%,.2f" + roulettePlayer.getBalance());
-        System.out.println("You have placed the following bets:");
+        System.out.println();
+        System.out.print("Your balance is now: $");
+        System.out.printf("%,.2f", roulettePlayer.getBalance());
+        System.out.println();
+        System.out.print("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
-            System.out.println(roulettePlayer.getBetList().get(i).getBetValue());
+            System.out.println();
+            System.out.printf("%,.2f", roulettePlayer.getBetList().get(i).getBetValue());
             System.out.print(" on " + roulettePlayer.getBetList().get(i).getBetType());
+            System.out.println();
+
         }
     }
 

@@ -6,7 +6,18 @@ import java.util.*;
 
 public class RouletteGameManager {
 
-
+    public static void main(String[] args) {
+      Account sarah = AccountFactory.createAccountWithName("Brian");
+      System.out.println(sarah.getId());
+      Account ziggy = AccountFactory.createAccountWithName("Ziggy");
+      System.out.println(ziggy.getId());
+      Account cameron = AccountFactory.createAccountWithName("Cameron");
+      System.out.println(cameron.getId());
+      AccountManager.addAccount(sarah);
+      AccountManager.addAccount(ziggy);
+      AccountManager.addAccount(cameron);
+      playRoulette();
+    }
 
     public static void playRoulette() {
         RouletteCoreGameplayEngine core = new RouletteCoreGameplayEngine();
@@ -14,6 +25,7 @@ public class RouletteGameManager {
         ArrayList<RoulettePlayer> roulettePlayers = RouletteCoreGameplayEngine.createRoulettePlayerList(Integer.parseInt(numberOfPlayers));
         boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {
+            doesPlayerHaveABalance(roulettePlayers);
             doesPlayerWantToExit(roulettePlayers);
             if (roulettePlayers.size() == 0) {
                 System.out.println("No more players! Leaving roulette table!");
@@ -28,11 +40,24 @@ public class RouletteGameManager {
 
 
     public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers) {
-        for (RoulettePlayer roulettePlayer : roulettePlayers) {
-            System.out.println("Does Player #" + roulettePlayer.getAccountId() + " want to exit?");
+        for (int count = 0; count < roulettePlayers.size(); count++) {
+            System.out.println("Does Player #" + roulettePlayers.get(count).getAccountId() + " want to exit?");
             if (RouletteCoreGameplayEngine.exitInput()) {
-                System.out.println("Player #" + roulettePlayer.getAccountId() + " has exited.");
-                roulettePlayers.remove(roulettePlayer);
+                System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has exited.");
+                roulettePlayers.remove(roulettePlayers.get(count));
+                count --;
+            }
+        }
+    }
+
+
+
+    public static void doesPlayerHaveABalance (ArrayList<RoulettePlayer> roulettePlayers) {
+        for (int count = 0; count < roulettePlayers.size(); count++) {
+            if (roulettePlayers.get(count).getBalance() <= 0) {
+                System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has no money!");
+                System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " removed!");
+                roulettePlayers.remove(roulettePlayers.get(count));
             }
         }
     }
@@ -41,14 +66,19 @@ public class RouletteGameManager {
 
     public static void checkPlayerBetsForResults(ArrayList<RoulettePlayer> roulettePlayers, String spinResult) {
         System.out.println("The ball landed in: " + spinResult);
-        System.out.println();
-        for (RoulettePlayer player : roulettePlayers) {
-            RouletteBetHandler.checkPlayerBetsForInsideBetWins(player, spinResult);
-            RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player, spinResult);
-            RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player, spinResult);
-            RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player, spinResult);
-            RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player, spinResult);
-            RouletteBetHandler.checkPlayerBetsForColorBetWins(player, spinResult);
+        for (int count = 0; count < roulettePlayers.size(); count++) {
+            System.out.println();
+            System.out.println("Checking bets for Player #" + roulettePlayers.get(count).getAccountId());
+            System.out.println();
+            RouletteBetHandler.checkPlayerBetsForInsideBetWins(roulettePlayers.get(count), spinResult);
+            RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(roulettePlayers.get(count), spinResult);
+            RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(roulettePlayers.get(count), spinResult);
+            RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(roulettePlayers.get(count), spinResult);
+            RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(roulettePlayers.get(count), spinResult);
+            RouletteBetHandler.checkPlayerBetsForColorBetWins(roulettePlayers.get(count), spinResult);
+            System.out.print("Player #" + roulettePlayers.get(count).getAccountId() + " new balance: $");
+            System.out.printf("%,.2f", roulettePlayers.get(count).getBalance());
+            System.out.println();
         }
 
 

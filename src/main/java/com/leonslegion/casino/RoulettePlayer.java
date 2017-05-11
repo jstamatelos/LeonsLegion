@@ -50,9 +50,6 @@ public class RoulettePlayer extends Player {
         else {
             double newBalance = getBalance() - Double.parseDouble(bet);
             super.setBalance(newBalance);
-            System.out.print("New Balance: $");
-            System.out.printf("%,.2f", getBalance());
-            System.out.println();
         }
         return bet;
     }

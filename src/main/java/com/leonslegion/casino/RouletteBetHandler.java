@@ -9,7 +9,7 @@ public class RouletteBetHandler {
 
 
     public static String handleAnyBet() {
-        String bet = InputHandler.getStringInput("Pick a bet to make by typing 'inside' or 'outside'");
+        String bet = InputHandler.getStringInput("Pick a bet to make by typing 'inside' or 'outside'.");
         if (bet.equalsIgnoreCase("inside")) {
             return handleInsideBet();
         }
@@ -24,15 +24,21 @@ public class RouletteBetHandler {
 
 
     private static String handleInsideBet() {
-        String bet = InputHandler.getStringInput("Enter which number you'd like to bet on");
+        String bet = InputHandler.getStringInput("Enter which number you'd like to bet on.");
         if (NumberUtils.isParsable(bet)) {
             if (Integer.parseInt(bet) < 0 || Integer.parseInt(bet) > 36) {
-                return bet;
-            } else {
+                System.out.println("Bet not accepted.");
+                System.out.println();
                 return handleInsideBet();
+            } else {
+                System.out.println("Bet accepted.");
+                System.out.println();
+                return bet;
             }
         }
-        else {return handleInsideBet();}
+        else {
+            System.out.println("Bet must be a number!");
+            return handleInsideBet();}
     }
 
 
@@ -41,19 +47,23 @@ public class RouletteBetHandler {
     private static String handleOutsideBet() {
         System.out.println("Which outside bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from 'Column', 'Dozen', 'Even Or Odd', 'Front or Back', or 'Color'.");
-        switch (bet) {
-            case "Column":
-                return handleColumnBet();
-            case "Dozen":
-                return handleDozenBet();
-            case "Even or Odd":
-                return handleEvenOrOddBet();
-            case "Front or Back":
-                return handleFrontOrBackBet();
-            case "Color":
-                return handleColorBet();
-            default:
-                return handleOutsideBet();
+        if (bet.equalsIgnoreCase("Column")) {
+            return handleColumnBet();
+        }
+        else if (bet.equalsIgnoreCase("Dozen")) {
+            return handleDozenBet();
+        }
+        else if (bet.equalsIgnoreCase("Even or Odd")) {
+            return handleEvenOrOddBet();
+        }
+        else if (bet.equalsIgnoreCase("Front or Back")) {
+            return handleFrontOrBackBet();
+        }
+        else if (bet.equalsIgnoreCase("Color")) {
+            return handleColorBet();
+        }
+        else {
+            return handleOutsideBet();
         }
     }
 
@@ -62,10 +72,10 @@ public class RouletteBetHandler {
     private static String handleColumnBet() {
         System.out.println("Which column bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from '1st C', '2nd C', or '3rd C'.");
-        if (!bet.equals("1st C") && !bet.equals("2nd C") && !bet.equals("3rd C")) {
-            return handleColumnBet();
+        if (bet.equals("1st C") || bet.equals("2nd C") || bet.equals("3rd C")) {
+            return bet;
         }
-        else {return bet;}
+        else {return handleColumnBet();}
     }
 
 
@@ -121,9 +131,6 @@ public class RouletteBetHandler {
                 System.out.printf("%,.2f", bet.getBetValue() * 34);
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue() * 35));
-                System.out.print("Your new balance: $");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
                 break;
             }
         }
@@ -138,27 +145,18 @@ public class RouletteBetHandler {
                 System.out.printf("%,.2f", bet.getBetValue()*2);
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*3));
-                System.out.print("Your new balance: $");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
             if (Integer.parseInt(spinResult) > 12 && Integer.parseInt(spinResult) < 25 && bet.getBetType().equals("2nd D")) {
                 System.out.print("You won a 2:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue()*2);
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*3));
-                System.out.print("Your new balance: $");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
             if (Integer.parseInt(spinResult) > 24 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("3rd D")) {
                 System.out.print("You won a 2:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue()*2);
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*3));
-                System.out.print("Your new balance: $");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
         }
     }
@@ -173,9 +171,6 @@ public class RouletteBetHandler {
                     System.out.printf("%,.2f", bet.getBetValue() * 2);
                     System.out.println();
                     player.setBalance(player.getBalance() + (bet.getBetValue() * 3));
-                    System.out.print("Your new balance: $");
-                    System.out.printf("%,.2f", player.getBalance());
-                    System.out.println();
                 }
             }
             for (int columnStart = 2; columnStart < 36; columnStart += 3) {
@@ -184,9 +179,6 @@ public class RouletteBetHandler {
                     System.out.printf("%,.2f", bet.getBetValue() * 2);
                     System.out.println();
                     player.setBalance(player.getBalance() + (bet.getBetValue() * 3));
-                    System.out.print("Your new balance: ");
-                    System.out.printf("%,.2f", player.getBalance());
-                    System.out.println();
                 }
             }
             for (int columnStart = 3; columnStart < 37; columnStart += 3) {
@@ -195,9 +187,6 @@ public class RouletteBetHandler {
                     System.out.printf("%,.2f", bet.getBetValue() * 2);
                     System.out.println();
                     player.setBalance(player.getBalance() + (bet.getBetValue() * 3));
-                    System.out.print("Your new balance: ");
-                    System.out.printf("%,.2f", player.getBalance());
-                    System.out.println();
                 }
             }
         }
@@ -212,18 +201,12 @@ public class RouletteBetHandler {
                 System.out.printf("%,.2f", bet.getBetValue());
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*2));
-                System.out.print("Your new balance: ");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
             if (Integer.parseInt(spinResult) % 2 == 1 && Integer.parseInt(spinResult) != 0 && bet.getBetType().equals("Odd")) {
                 System.out.print("You won a 1:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue());
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*2));
-                System.out.print("Your new balance: ");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
         }
     }
@@ -237,18 +220,12 @@ public class RouletteBetHandler {
                 System.out.printf("%,.2f", bet.getBetValue());
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*2));
-                System.out.print("Your new balance: ");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
             if (Integer.parseInt(spinResult) > 18 && Integer.parseInt(spinResult) < 37 && bet.getBetType().equals("Back")) {
                 System.out.print("You won a 1:1 Payout! You won: ");
                 System.out.printf("%,.2f", bet.getBetValue());
                 System.out.println();
                 player.setBalance(player.getBalance() + (bet.getBetValue()*2));
-                System.out.print("Your new balance: ");
-                System.out.printf("%,.2f", player.getBalance());
-                System.out.println();
             }
         }
     }
@@ -264,9 +241,6 @@ public class RouletteBetHandler {
                         System.out.printf("%,.2f", bet.getBetValue());
                         System.out.println();
                         player.setBalance(player.getBalance() + (bet.getBetValue()*2));
-                        System.out.print("Your new balance: ");
-                        System.out.printf("%,.2f", player.getBalance());
-                        System.out.println();
                     }
                 }
             }
@@ -277,9 +251,6 @@ public class RouletteBetHandler {
                         System.out.printf("%,.2f", bet.getBetValue());
                         System.out.println();
                         player.setBalance(player.getBalance() + (bet.getBetValue()*2));
-                        System.out.print("Your new balance: ");
-                        System.out.printf("%,.2f", player.getBalance());
-                        System.out.println();
                     }
                 }
             }
