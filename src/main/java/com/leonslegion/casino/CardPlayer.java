@@ -2,7 +2,7 @@ package com.leonslegion.casino;
 
 public abstract class CardPlayer extends Player {
 
-    Hand hand;
+    protected Hand hand;
 
     CardPlayer(double balance, long accountId) {
         super(balance, accountId);

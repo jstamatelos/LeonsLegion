@@ -26,7 +26,7 @@ public class PokerHandTest {
 
         int result = hand1.compareTo(hand2);
 
-        Assert.assertTrue(result < 0);
+        Assert.assertTrue(result > 0);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class PokerHandTest {
 
         int result = hand1.compareTo(hand2);
 
-        Assert.assertTrue(result < 0);
+        Assert.assertTrue(result == 0);
     }
 
     @Test
@@ -200,7 +200,7 @@ public class PokerHandTest {
      */
     
     @Test
-    public void fiveRankHandChooserTest() {
+    public void fiveRankHandChooserHighCardTest() {
         PokerHand hand = new PokerHand();
         hand.addCard(new Card(Card.Rank.ACE, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.HEARTS));
@@ -214,7 +214,21 @@ public class PokerHandTest {
     }
 
     @Test
-    public void fourRankHandChooserTest() {
+    public void fiveRankHandChooserFlushTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.ACE, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.QUEEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.SIX, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+
+        PokerHand.HandType result = hand.fiveRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.FLUSH);
+    }
+
+    @Test
+    public void fiveRankHandChooserStraightTest() {
         PokerHand hand = new PokerHand();
         hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
         hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
@@ -228,15 +242,73 @@ public class PokerHandTest {
     }
 
     @Test
-    public void threeRankHandChooserTest() {
+    public void fourRankHandChooserTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS));
 
+        PokerHand.HandType result = hand.fourRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.PAIR);
     }
 
     @Test
-    public void twoRankHandChooserTest() {
+    public void threeRankHandChooserThreeOfAKindTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS));
 
+        PokerHand.HandType result = hand.threeRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.THREEOFAKIND);
     }
 
+    @Test
+    public void threeRankHandChooserTwoPairTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.EIGHT, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS));
 
+        PokerHand.HandType result = hand.threeRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.TWOPAIR);
+    }
+
+    @Test
+    public void twoRankHandChooserFourOfAKindTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS));
+
+        PokerHand.HandType result = hand.twoRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.FOUROFAKIND);
+    }
+
+    @Test
+    public void twoRankHandChooserFullHouseTest() {
+        PokerHand hand = new PokerHand();
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.HEARTS));
+        hand.addCard(new Card(Card.Rank.SEVEN, Card.Suit.DIAMONDS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.SPADES));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.CLUBS));
+        hand.addCard(new Card(Card.Rank.JACK, Card.Suit.DIAMONDS));
+
+        PokerHand.HandType result = hand.twoRankHandChooser();
+
+        Assert.assertTrue(result == PokerHand.HandType.FULLHOUSE);
+    }
 
 }
