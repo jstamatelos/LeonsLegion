@@ -12,7 +12,7 @@ public class Lobby {
         isRunning = true;
         populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
         System.out.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
-        System.out.println(" * * * * * * Welcome to our Casino !!! * * * * * *");
+        System.out.println(" * * * * * * Welcome to Leon's Casino !!! * * * * * *");
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
         System.out.println("        Please sign in or create an account. \n");
         createAccount();
@@ -33,7 +33,7 @@ public class Lobby {
     }
 
     public void actionSelection(){
-        String question = "Would you like to play a game? 'y' or 'n' ";
+        String question = "\nWould you like to play a game? 'y' or 'n' ";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch(selection){
             case "q":
@@ -45,7 +45,7 @@ public class Lobby {
                 break;
 
             case "n":
-                chooseToCreate();
+                askToBuyMoreChips();
                 break;
 
             case "a":
@@ -60,8 +60,8 @@ public class Lobby {
         }
     }
 
-    public void chooseToCreate(){
-        String question = "Would you like to create a new account? 'y' or 'n' ";
+    public void askToBuyMoreChips(){
+        String question = "\nWould you like to buy more chips? 'y' or 'n' ";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch(selection){
             case "q":
@@ -69,7 +69,7 @@ public class Lobby {
                 break;
 
             case "y":
-                createAccount();
+                buyMoreChips();
                 actionSelection();
                 break;
 
@@ -77,13 +77,9 @@ public class Lobby {
                 actionSelection();
                 break;
 
-            case "a":
-                System.out.println(getNumAccounts() + " accounts on record.");
-                break;
-
             default:
                 System.out.println("That selection was unrecognized. Please enter a valid selection.");
-                chooseToCreate();
+                askToBuyMoreChips();
                 break;
         }
     }
@@ -92,7 +88,31 @@ public class Lobby {
         String newName = InputHandler.getStringInput("What is your name?");
         Account newAccount = AccountFactory.createAccountWithName(newName);
         AccountManager.addAccount(newAccount);
-        System.out.println("Account has been created for '" + newName + "' with the ID: " + newAccount.getId());
+        System.out.println(newAccount.toString());
+        askToBuyMoreChips();
+    }
+
+    public void buyMoreChips(){
+        String stringID = InputHandler.getStringInput("Please enter your account ID.");
+        if(stringID.equalsIgnoreCase("q")){
+            exit();
+            return;
+        }
+        long id = Long.parseLong(stringID);
+        if(AccountManager.findAccountIndex(id) != -1){
+            buyMoreChips(id);
+        }else{
+            System.out.println("Account not found.");
+            buyMoreChips();
+        }
+    }
+
+    public void buyMoreChips(long ID){
+        Account account = AccountManager.findAccount(ID);
+        System.out.format("This account has a balance of: $%.2f \n",  account.getAccountBalance() );
+        double bal = InputHandler.getDoubleInput("How much money would you like to add to your account?");
+        account.setAccountBalance(bal);
+        System.out.format("This account now has a balance of: $%.2f \n", account.getAccountBalance() );
     }
 
     public void selectGame(){
@@ -115,8 +135,7 @@ public class Lobby {
                 break;
 
             case "war":
-                System.out.println("War is currently unavailable, please make another selection. \n");
-                selectGame();
+                WarGame.startWarGame();
                 break;
 
             case "roulette":
@@ -124,8 +143,7 @@ public class Lobby {
                 break;
 
             case "slots":
-                System.out.println("Slots is currently unavailable, please make another selection. \n");
-                selectGame();
+                SlotGame.playSlots();
                 break;
 
             default:
