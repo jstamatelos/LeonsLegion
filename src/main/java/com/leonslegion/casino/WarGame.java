@@ -29,21 +29,20 @@ public class WarGame extends CardGame implements Comparator {
 
     // Initial Bet
     public static double placeBet() {
-        InputHandler input = new InputHandler();
-        double bet = input.getDoubleInput("Please place a bet: ");
+        double bet = InputHandler.getDoubleInput("Please place a bet: ");
         return bet;
     }
     // Dealer draws card from dealer deck (deck == hand)
     public static String setDealerCard(){
         dealerDeck.shuffleDeck();
         dealerCard = dealerDeck.dealCard();
-        return "Dealer draws a : " + dealerCard.toString(dealerCard);
+        return "Dealer draws a : " + dealerCard.toString();
     }
     // Player draws card from player deck (deck == hand)
     public static String setplayerCard(){
         playerDeck.shuffleDeck();
         playerCard = playerDeck.dealCard();
-        return "Player draws a : " + playerCard.toString(playerCard);
+        return "Player draws a : " + playerCard.toString();
     }
     // Dealer card is compared to player card by point value
     public static String determineWinner(){
@@ -58,8 +57,7 @@ public class WarGame extends CardGame implements Comparator {
 
     // Exit game
     public static boolean exit() {
-        InputHandler inputHandler = new InputHandler();
-        String exitOpportunity = inputHandler.getStringInput("Type 'exit' to return to lobby or 'stay' to play again");
+        String exitOpportunity = InputHandler.getStringInput("Type 'exit' to return to lobby or 'stay' to play again");
         if (exitOpportunity.equalsIgnoreCase("exit")) {
             return false;
         } else if (exitOpportunity.equalsIgnoreCase("stay")) {

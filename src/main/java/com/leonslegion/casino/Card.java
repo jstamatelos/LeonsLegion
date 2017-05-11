@@ -44,8 +44,8 @@ public class Card {
         }
     }
 
-    public String toString(Card card) {
-        return card.rank + " of " + card.suit;
+    public String toString() {
+        return rank + " of " + suit;
     }
 
 }

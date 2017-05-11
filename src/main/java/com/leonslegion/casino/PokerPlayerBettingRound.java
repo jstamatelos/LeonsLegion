@@ -4,11 +4,15 @@ package com.leonslegion.casino;
  * Created by danzygmund-felt on 5/11/17.
  */
 public class PokerPlayerBettingRound {
-    Player player;
+    PokerPlayer player;
     double amountIn;
 
-    PokerPlayerBettingRound(Player player) {
+    PokerPlayerBettingRound(PokerPlayer player) {
         this.player = player;
         amountIn = 0;
+    }
+
+    String showHand() {
+        return player.getHand().toString();
     }
 }
