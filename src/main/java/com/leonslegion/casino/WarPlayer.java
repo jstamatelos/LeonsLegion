@@ -13,7 +13,7 @@ public class WarPlayer extends CardPlayer {
         return card.toString();
     }
 
-    public String CPUShowCard(Card card){
+    public String dealerShowCard(Card card){
         return card.toString();
     }
 

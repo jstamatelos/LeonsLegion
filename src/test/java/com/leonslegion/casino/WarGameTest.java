@@ -17,24 +17,12 @@ public class WarGameTest {
         Deck dealerDeck = new Deck();
         Card dealerCard = dealerDeck.dealCard();
         Card expected = dealerCard;
-        System.out.println(expected.toString());
+        Card actual = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
 
-
-    }
-
-    @Test
-    public void testPlayerShowCard()  {
-//
-//        Deck playerDeck = new Deck();
-//        Card playerCard = playerDeck.dealCard();
-//
-//        Card expected = playerCard;
-//        System.out.println(expected);
-//        System.out.println(playerCard.toString(playerCard));
-//
-//        Getting null pointer here - may need getCard?
+        Assert.assertEquals(actual.toString(actual),expected.toString(dealerCard) );
 
     }
+
 
     @Test
     public void testPickHigherValue()  {

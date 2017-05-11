@@ -25,7 +25,9 @@ public class RoulettePlayer extends Player {
 
 
     public ArrayList<RouletteBet> getBetList() {return betList;}
-
+    public void resetBetList() {
+        betList = RouletteCoreGameplayEngine.returnEmptyRouletteBetList();
+    }
 
 
     public double placeBet (double bet) {
@@ -41,6 +43,10 @@ public class RoulettePlayer extends Player {
     public String placeBet (String bet) {
         if (!NumberUtils.isParsable(bet)) {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");
+            return placeBet(newBet);
+        }
+        else if (Double.parseDouble(bet) < 0) {
+            String newBet = InputHandler.getStringInput("You cannot make a negative bet!");
             return placeBet(newBet);
         }
         else if (getBalance() - Double.parseDouble(bet) < 0) {
