@@ -25,7 +25,7 @@ public class RoulettePlayer extends Player {
 
 
     public ArrayList<RouletteBet> getBetList() {return betList;}
-    public ArrayList<RouletteBet> resetBetList() {return RouletteCoreGameplayEngine.returnEmptyRouletteBetList();}
+    public void resetBetList() {}
 
 
     public double placeBet (double bet) {
