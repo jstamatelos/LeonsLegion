@@ -1,10 +1,119 @@
 package com.leonslegion.casino;
 
-/**
- * Created by markbrown on 5/10/17.
- */
-public class RouletteBetChecker {
-/*
+import java.util.*;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
+public class RouletteBetHandler {
+
+
+
+    public static String handleAnyBet() {
+        String bet = InputHandler.getStringInput("Pick a bet to make by typing 'inside' or 'outside'");
+        if (bet.equalsIgnoreCase("inside")) {
+            return handleInsideBet();
+        }
+        else if (bet.equalsIgnoreCase("outside")) {
+            return handleOutsideBet();
+        }
+        else {
+            return handleAnyBet();
+        }
+    }
+
+
+
+    public static String handleInsideBet() {
+        String bet = InputHandler.getStringInput("Enter which number you'd like to bet on");
+        if (NumberUtils.isParsable(bet)) {
+            if (Integer.parseInt(bet) < 0 || Integer.parseInt(bet) > 36) {
+                return bet;
+            } else {
+                return handleInsideBet();
+            }
+        }
+        else {return handleInsideBet();}
+    }
+
+
+
+
+    public static String handleOutsideBet() {
+        System.out.println("Which outside bet type would you like to make?");
+        String bet = InputHandler.getStringInput("Select from 'Column', 'Dozen', 'Even Or Odd', 'Front or Back', or 'Color'.");
+        switch (bet) {
+            case "Column":
+                return handleColumnBet();
+            case "Dozen":
+                return handleDozenBet();
+            case "Even or Odd":
+                return handleEvenOrOddBet();
+            case "Front or Back":
+                return handleFrontOrBackBet();
+            case "Color":
+                return handleColorBet();
+            default:
+                return handleOutsideBet();
+        }
+    }
+
+
+
+    public static String handleColumnBet() {
+        System.out.println("Which column bet type would you like to make?");
+        String bet = InputHandler.getStringInput("Select from '1st C', '2nd C', or '3rd C'.");
+        if (!bet.equals("1st C") && !bet.equals("2nd C") && !bet.equals("3rd C")) {
+            return handleColumnBet();
+        }
+        else {return bet;}
+    }
+
+
+
+    public static String handleDozenBet() {
+        System.out.println("Which dozen bet type would you like to make?");
+        String bet = InputHandler.getStringInput("Select from '1st D', '2nd D', or '3rd D'.");
+        if (!bet.equals("1st D") && !bet.equals("2nd D") && !bet.equals("3rd D")) {
+            return handleDozenBet();
+        }
+        else {return bet;}
+    }
+
+
+
+    public static String handleEvenOrOddBet() {
+        System.out.println("Which even or odd bet type would you like to make?");
+        String bet = InputHandler.getStringInput("Select from 'Even', or 'Odd'.");
+        if (!bet.equalsIgnoreCase("Even") && !bet.equalsIgnoreCase("Odd")) {
+            return handleEvenOrOddBet();
+        }
+        else {return bet.toLowerCase();}
+    }
+
+
+
+    public static String handleFrontOrBackBet() {
+        System.out.println("Which front or back bet type would you like to make?");
+        String bet = InputHandler.getStringInput("Select from 'Front', or 'Back'.");
+        if (!bet.equalsIgnoreCase("Front") && !bet.equalsIgnoreCase("Back")) {
+            return handleFrontOrBackBet();
+        }
+        else {return bet.toLowerCase();}
+    }
+
+
+
+    public static String handleColorBet() {
+        System.out.println("Which color odd bet type would you like to make?");
+        String bet = InputHandler.getStringInput("Select from 'Red', or 'Black'.");
+        if (!bet.equalsIgnoreCase("Red") && !bet.equalsIgnoreCase("Black")) {
+            return handleColorBet();
+        }
+        else {return bet.toLowerCase();}
+    }
+
+
+    /*
     public static void checkPlayerBetsForInsideBetWins(RoulettePlayer playerOne, String spinResult) {
         boolean didPlayerWin = false;
         for (RouletteBet bet : playerOne.getBetList()) {
@@ -214,4 +323,7 @@ public class RouletteBetChecker {
         }
     }
 */
+
+
+
 }
