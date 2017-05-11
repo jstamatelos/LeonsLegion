@@ -13,7 +13,7 @@ public class TestSlotPlayer {
 
         //given
         Account acct = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(acct.getAccountBalance(), acct.getId());
+        SlotPlayer sp = new SlotPlayer(acct);
         try {
             sp.placeBet(sp.getBet());
         }

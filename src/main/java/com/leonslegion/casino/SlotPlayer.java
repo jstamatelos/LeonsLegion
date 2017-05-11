@@ -9,24 +9,27 @@ public class SlotPlayer extends Player {
 
     private double bet = 5;
 
-    public SlotPlayer (double balance, long accountId) {
-        super(balance, accountId);
+    public SlotPlayer (Account account) {
+        super(account.getAccountBalance(),account.getId());
     }
 
     public double getBet() {
         return bet;
     }
 
-    public double placeBet(double bet) throws Exception {
+    public boolean placeBet() {
         if (super.getBalance() < 5) {
             System.out.println("It is $5.00 to play this machine.");
             System.out.println("You do not have enough in your account to play.");
+            return false;
         }
         else {
             this.setBalance(this.getBalance() - 5);
+            return true;
         }
-        return 0;
     }
+
+    public double placeBet(double bet) {return 0;}
 
 
 }
