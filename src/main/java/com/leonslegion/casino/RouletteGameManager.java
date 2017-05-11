@@ -7,7 +7,7 @@ import java.util.*;
 public class RouletteGameManager {
 
     public static void main(String[] args) {
-      Account sarah = AccountFactory.createAccountWithName("Brian");
+      Account sarah = AccountFactory.createAccountWithName("Sarah");
       System.out.println(sarah.getId());
       Account ziggy = AccountFactory.createAccountWithName("Ziggy");
       System.out.println(ziggy.getId());
@@ -58,6 +58,7 @@ public class RouletteGameManager {
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has no money!");
                 System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " removed!");
                 roulettePlayers.remove(roulettePlayers.get(count));
+                count--;
             }
         }
     }
@@ -65,6 +66,7 @@ public class RouletteGameManager {
 
 
     public static void checkPlayerBetsForResults(ArrayList<RoulettePlayer> roulettePlayers, String spinResult) {
+        System.out.println();
         System.out.println("The ball landed in: " + spinResult);
         for (int count = 0; count < roulettePlayers.size(); count++) {
             RoulettePlayer player = roulettePlayers.get(count);
