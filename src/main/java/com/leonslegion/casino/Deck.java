@@ -7,6 +7,7 @@ public class Deck {
     ArrayList<Card> deck;
 
     public Deck() {
+        deck = new ArrayList<Card>();
         for (Card.Rank rank: Card.Rank.values()) {
             for (Card.Suit suit: Card.Suit.values()) {
                 deck.add(new Card(rank, suit));

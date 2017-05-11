@@ -9,6 +9,10 @@ public abstract class CardGame extends CasinoGame {
 
     Deck deck = new Deck();
 
+    public Deck getDeck() {
+        return deck;
+    }
+
     public double placeBet(double bet){
         return bet;
     }

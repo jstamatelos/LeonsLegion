@@ -5,6 +5,8 @@ package com.leonslegion.casino;
  */
 public class PokerGameManager{
 
+    //DEPRECATED. May not be necessary.
+
     public PokerGameManager(){
         // no-arg constructor
     }
