@@ -10,13 +10,13 @@ public class WarHand extends Hand implements Comparable {
 
     WarGame war = new WarGame();
 
-    
+
 
     public ArrayList<Card> dealerDeck = new ArrayList<>();
     public ArrayList<Card> playerDeck = new ArrayList<>();
 
 
-
+    // Needed for implementation
     @Override
     public int compareTo(Object otherHand) {
         return 0;

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Deck {
 
-    ArrayList<Card> deck;
+    ArrayList<Card> deck = new ArrayList<>();
 
     public Deck() {
         deck = new ArrayList<Card>();
@@ -27,7 +27,9 @@ public class Deck {
 
 
 
-    public void shuffleDeck () {Collections.shuffle(deck);}
+    public void shuffleDeck () {
+        Collections.shuffle(deck);
+    }
 
 
 
