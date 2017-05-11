@@ -12,7 +12,9 @@ public class TestSlotMachine {
     public void testMatchImages() {
 
         //given
-        SlotMachine machine = new SlotMachine();
+        Account account = new Account("Leon");
+        SlotPlayer sp = new SlotPlayer(account);
+        SlotMachine machine = new SlotMachine(sp);
         boolean expectedResult = true;
 
         //when
@@ -27,7 +29,9 @@ public class TestSlotMachine {
     public void testDetermineWinningsLemon() {
 
         //given
-        SlotMachine machine = new SlotMachine();
+        Account account = new Account("Leon");
+        SlotPlayer sp = new SlotPlayer(account);
+        SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 500;
 
         //when
@@ -42,7 +46,9 @@ public class TestSlotMachine {
     public void testDetermineWinningsDoubleBar() {
 
         //given
-        SlotMachine machine = new SlotMachine();
+        Account account = new Account("Leon");
+        SlotPlayer sp = new SlotPlayer(account);
+        SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 1000;
 
         //when
@@ -57,7 +63,9 @@ public class TestSlotMachine {
     public void testDetermineWinningsTripleBar() {
 
         //given
-        SlotMachine machine = new SlotMachine();
+        Account account = new Account("Leon");
+        SlotPlayer sp = new SlotPlayer(account);
+        SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 2000;
 
         //when
@@ -72,7 +80,9 @@ public class TestSlotMachine {
     public void testDetermineWinningsLuckySeven() {
 
         //given
-        SlotMachine machine = new SlotMachine();
+        Account account = new Account("Leon");
+        SlotPlayer sp = new SlotPlayer(account);
+        SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 5000;
 
         //when
@@ -88,11 +98,13 @@ public class TestSlotMachine {
 
         //given
 
-        SlotMachine machine = new SlotMachine();
+        Account account = new Account("Leon");
+        SlotPlayer sp = new SlotPlayer(account);
+        SlotMachine machine = new SlotMachine(sp);
 
         do {
 
-            machine = new SlotMachine();
+            machine = new SlotMachine(sp);
             machine.pullLever();
         } while (machine.matchImages() != true);
     }
