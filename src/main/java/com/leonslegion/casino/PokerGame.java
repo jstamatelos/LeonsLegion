@@ -51,9 +51,6 @@ public class PokerGame extends CardGame {
     public PokerPlayer compareHands(ArrayList<PokerPlayer> players) {
         PokerPlayer winner = players.get(0);
         for (int i = 1; i < players.size(); i++) {
-            /*
-            Not sure if the below condition should be <0 or >0.
-             */
             if(winner.getHand().compareTo(players.get(i).getHand()) < 0) {
                 winner = players.get(i);
             }
@@ -96,7 +93,8 @@ public class PokerGame extends CardGame {
      */
     public void run() {
         promptGame();
-        while (players.size() > 1) {
+        boolean ends = true;
+        while (ends) { //players.size() > 1
             pot = 0;
             initialDeal();
             PokerBettingRound round = new PokerBettingRound(getPlayers());
@@ -115,7 +113,17 @@ public class PokerGame extends CardGame {
 
             PokerPlayer winner = compareHands(getPlayers());
             payToWinnersAccount(winner);
+            ends = false;
         }
+    }
+
+    public static void main(String[] args) {
+        for(int i = 1; i <= 10; i++){
+            AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));
+        }
+
+        PokerGame game = new PokerGame();
+        game.run();
     }
 
 }

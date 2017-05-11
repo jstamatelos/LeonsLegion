@@ -2,6 +2,7 @@ package com.leonslegion.casino;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by cameronsima on 5/9/17.
@@ -9,13 +10,6 @@ import java.util.Collections;
 public class PokerHand extends Hand implements Comparable {
 
     HandType handType;
-
-    /*
-    Necessary to sort in constructor?
-     */
-    PokerHand() {
-        Collections.sort(getHand(), new CardComparator());
-    }
 
     public int compareTo(Object other) {
         PokerHand otherHand = (PokerHand) other;
