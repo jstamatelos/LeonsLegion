@@ -23,7 +23,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleInsideBet() {
+    private static String handleInsideBet() {
         String bet = InputHandler.getStringInput("Enter which number you'd like to bet on");
         if (NumberUtils.isParsable(bet)) {
             if (Integer.parseInt(bet) < 0 || Integer.parseInt(bet) > 36) {
@@ -38,7 +38,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleOutsideBet() {
+    private static String handleOutsideBet() {
         System.out.println("Which outside bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from 'Column', 'Dozen', 'Even Or Odd', 'Front or Back', or 'Color'.");
         switch (bet) {
@@ -59,7 +59,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleColumnBet() {
+    private static String handleColumnBet() {
         System.out.println("Which column bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from '1st C', '2nd C', or '3rd C'.");
         if (!bet.equals("1st C") && !bet.equals("2nd C") && !bet.equals("3rd C")) {
@@ -70,7 +70,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleDozenBet() {
+    private static String handleDozenBet() {
         System.out.println("Which dozen bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from '1st D', '2nd D', or '3rd D'.");
         if (!bet.equals("1st D") && !bet.equals("2nd D") && !bet.equals("3rd D")) {
@@ -81,7 +81,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleEvenOrOddBet() {
+    private static String handleEvenOrOddBet() {
         System.out.println("Which even or odd bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from 'Even', or 'Odd'.");
         if (!bet.equalsIgnoreCase("Even") && !bet.equalsIgnoreCase("Odd")) {
@@ -92,7 +92,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleFrontOrBackBet() {
+    private static String handleFrontOrBackBet() {
         System.out.println("Which front or back bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from 'Front', or 'Back'.");
         if (!bet.equalsIgnoreCase("Front") && !bet.equalsIgnoreCase("Back")) {
@@ -103,7 +103,7 @@ public class RouletteBetHandler {
 
 
 
-    public static String handleColorBet() {
+    private static String handleColorBet() {
         System.out.println("Which color odd bet type would you like to make?");
         String bet = InputHandler.getStringInput("Select from 'Red', or 'Black'.");
         if (!bet.equalsIgnoreCase("Red") && !bet.equalsIgnoreCase("Black")) {

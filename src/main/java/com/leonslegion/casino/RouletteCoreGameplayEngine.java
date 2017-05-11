@@ -74,21 +74,20 @@ public class RouletteCoreGameplayEngine {
 
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
-
-
+            gatherEachPlayersBets(roulettePlayers.get(i));
 
         }
     }
 
 
 
-    private static void rouletteRoundEngineForOnePlayer() {
+    private static void gatherEachPlayersBets(RoulettePlayer roulettePlayer) {
         boolean stillBetting = true;
         while (stillBetting) {
-            rouletteRoundBettingEngineForOnePlayer();
+            rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
             String keepBetting = keepBettingLoop();
             if (keepBetting.equalsIgnoreCase("Yes")) {
-                rouletteRoundBettingEngineForOnePlayer();
+                rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
             }
             else if (keepBetting.equalsIgnoreCase("No")) {
                 stillBetting = false;
@@ -102,18 +101,21 @@ public class RouletteCoreGameplayEngine {
 
 
 
+
+    private static void rouletteRoundBettingEngineForOnePlayer(RoulettePlayer roulettePlayer) {
+        String newBetType = RouletteBetHandler.handleAnyBet();
+        String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
+        String newBetValue = roulettePlayer.placeBet(betValue);
+    }
+
+
+
+
+
     public static String keepBettingLoop() {
         return InputHandler.getStringInput("Do you want to place another bet? Type 'yes' or 'no'.");
     }
 
-
-
-    public static void rouletteRoundBettingEngineForOnePlayer() {
-        String newBetType = RouletteBetHandler.handleAnyBet();
-        String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
-        double betValueAsDouble = Double.parseDouble(roulettePlayers.get(0).placeBet(betValue));
-        roulettePlayers.get(0).makeRouletteBet(newBetType, betValueAsDouble);
-    }
 
 
 
