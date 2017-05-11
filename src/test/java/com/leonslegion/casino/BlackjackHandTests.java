@@ -57,4 +57,5 @@ public class BlackjackHandTests {
 
         Assert.assertEquals(1, result);
     }
+
 }

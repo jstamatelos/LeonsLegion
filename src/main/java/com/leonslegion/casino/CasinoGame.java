@@ -11,7 +11,11 @@ public abstract class CasinoGame {
     private boolean hasDealer;
 
 
-    ArrayList<Player> players = new ArrayList<Player>();
+    protected ArrayList<Player> players = new ArrayList<>();
+
+    public ArrayList<? extends Player> getPlayers() {
+        return players;
+    }
 
 
     public int getNumberOfPlayers() {
@@ -37,5 +41,7 @@ public abstract class CasinoGame {
     public void setPlayers(ArrayList<Player> somePlayers) {
         players.addAll(somePlayers);
     }
+
+
 
 }

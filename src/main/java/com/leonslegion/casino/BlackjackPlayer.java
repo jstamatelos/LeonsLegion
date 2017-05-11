@@ -6,8 +6,8 @@ public class BlackjackPlayer extends CardPlayer {
         super(balance, accountId);
     }
 
-    void hit() {
-        //add a card from the deck to hand
+    void hit(Card card) {
+        hand.addCard(card);
     }
 
     void stay() {
