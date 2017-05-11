@@ -80,6 +80,10 @@ public class RouletteGameManager {
             System.out.printf("%,.2f", roulettePlayers.get(count).getBalance());
             System.out.println();
         }
+        for (int count = 0; count < roulettePlayers.size(); count++) {
+            RoulettePlayer player = roulettePlayers.get(0);
+            player.resetBetList();
+        }
 
 
     }
