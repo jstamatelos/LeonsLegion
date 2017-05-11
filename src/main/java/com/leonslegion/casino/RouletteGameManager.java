@@ -14,11 +14,26 @@ public class RouletteGameManager {
         ArrayList<RoulettePlayer> roulettePlayers = RouletteCoreGameplayEngine.createRoulettePlayerList(Integer.parseInt(numberOfPlayers));
         boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {
-            if (!RouletteCoreGameplayEngine.exitOpportunity()) {break;}
+            doesPlayerWantToExit(roulettePlayers);
+            if (roulettePlayers.size() == 0) {
+                System.out.println("No more players! Leaving roulette table!");
+                break;
+            }
             RouletteCoreGameplayEngine.gatherPlayerBets(roulettePlayers);
             String spinResult = core.spin();
             checkPlayerBetsForResults(roulettePlayers, spinResult);
+        }
+    }
 
+
+
+    public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers) {
+        for (RoulettePlayer roulettePlayer : roulettePlayers) {
+            System.out.println("Does Player #" + roulettePlayer.getAccountId() + " want to exit?");
+            if (RouletteCoreGameplayEngine.exitInput()) {
+                System.out.println("Player #" + roulettePlayer.getAccountId() + " has exited.");
+                roulettePlayers.remove(roulettePlayer);
+            }
         }
     }
 

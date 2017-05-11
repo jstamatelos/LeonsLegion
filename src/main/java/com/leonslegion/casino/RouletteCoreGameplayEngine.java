@@ -65,10 +65,10 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
 
-    public static boolean exitOpportunity() {
+    public static boolean exitInput() {
         String exitOpportunity = InputHandler.getStringInput("Type 'exit' before the round starts to leave game.");
-        if (exitOpportunity.equalsIgnoreCase("exit")) {return false;}
-        else {return true;}
+        if (exitOpportunity.equalsIgnoreCase("exit")) {return true;}
+        else {return false;}
     }
 
 
