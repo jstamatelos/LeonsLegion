@@ -6,60 +6,80 @@ package com.leonslegion.casino;
 
 
 public class Lobby {
-    public boolean isRunning;
-
-
-    public Lobby(){
-        // no-arg constructor
-    }
+    private boolean isRunning;
 
     public void start(){
-        initLobby();
-        startLobby();
-    }
-
-    public void initLobby(){
         isRunning = true;
+        populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
+        startLobby();
     }
 
     // this is the main game loop
     public void startLobby(){
         while(isRunning){
-            System.out.println("!! !! !! !! !! !! !! !! !! !!");
-            System.out.println("Welcome to the Casino Lobby!");
+            System.out.println("\n------------------------------------------------");
+            System.out.println("~~~~~~!!! Welcome to the Casino Lobby! !!!~~~~~~ ");
+            System.out.println("------------------------------------------------");
+            System.out.println("         (Enter 'Q' at any time to quit) \n");
             actionSelection();
 
         }
+        System.out.println("\nThanks for playing!  Have a nice day! \n");
     }
 
     public void actionSelection(){
-        String selection = InputHandler.getStringInput("Would you like to play a game 'y' or 'n', 'Q' to quit ");
-        if(selection.equalsIgnoreCase("Q")) {
-            exit();
-        } else if(selection.equalsIgnoreCase("y")){
-            selectGame();
-        }else if(selection.equalsIgnoreCase("n")){
-            createAccountSelection();
-        }else{
-            System.out.println("selection unrecognized");
-            actionSelection();
-        }
+        String question = "Would you like to play a game? 'y' or 'n' ";
+        String selection = InputHandler.getStringInput(question).toLowerCase();
+        switch(selection){
+            case "q":
+                exit();
+                break;
 
+            case "y":
+                selectGame();
+                break;
+
+            case "n":
+                chooseToCreate();
+                break;
+
+            case "a":
+                System.out.println(getNumAccounts() + " accounts on record.");
+                actionSelection();
+                break;
+
+            default:
+                System.out.println("That selection was unrecognized. Please enter a valid selection.");
+                actionSelection();
+                break;
+        }
     }
 
-    public void createAccountSelection(){
-        String selection = InputHandler.getStringInput("Would you like to create a new account? 'y' or 'n', 'Q' to quit ");
-        if(selection.equalsIgnoreCase("Q")){
-            exit();
-        }else if(selection.equalsIgnoreCase("y")){
-            createAccount();
-            createAccountSelection();
-        }else if(selection.equalsIgnoreCase("n")){
-            actionSelection();
-        }else{
-            System.out.println("selection unrecognized");
-            createAccountSelection();
+    public void chooseToCreate(){
+        String question = "Would you like to create a new account? 'y' or 'n' ";
+        String selection = InputHandler.getStringInput(question).toLowerCase();
+        switch(selection){
+            case "q":
+                exit();
+                break;
 
+            case "y":
+                createAccount();
+                actionSelection();
+                break;
+
+            case "n":
+                actionSelection();
+                break;
+
+            case "a":
+                System.out.println(getNumAccounts() + " accounts on record.");
+                break;
+
+            default:
+                System.out.println("That selection was unrecognized. Please enter a valid selection.");
+                chooseToCreate();
+                break;
         }
     }
 
@@ -71,36 +91,37 @@ public class Lobby {
     }
 
     public void selectGame(){
-        System.out.println("Which game would you like to play? Please select a number.");
-        System.out.println("Poker = 1, Blackjack = 2, War = 3, Roulette = 4, Slots = 5");
-        int selectedGame = InputHandler.getIntInput("Enter 0 to exit.");
+        System.out.println("Which game would you like to play? Please select from the following: ");
+        String gamesList = "Poker, Blackjack, War, Roulette, Slots";
+        String selectedGame = InputHandler.getStringInput(gamesList).toLowerCase();
         switch (selectedGame){
-            case 0:
+            case "q":
                 exit();
                 break;
 
-            case 1:
-                System.out.println("Dummy Poker Game Played");
+            case "poker":
+                System.out.println("Dummy Poker Game Played \n");
                 break;
 
-            case 2:
-                System.out.println("Dummy Blackjack Game Played");
+            case "blackjack":
+                System.out.println("Dummy Blackjack Game Played \n");
                 break;
 
-            case 3:
-                System.out.println("Dummy War Game Played");
+            case "war":
+                System.out.println("Dummy War Game Played \n");
                 break;
 
-            case 4:
-                System.out.println("Dummy Roulette Game Played");
+            case "roulette":
+                RouletteGameManager.playRoulette();
+                //System.out.println("Dummy Roulette Game Played \n");
                 break;
 
-            case 5:
-                System.out.println("Dummy Slots Game Played");
+            case "slots":
+                System.out.println("Dummy Slots Game Played \n");
                 break;
 
             default:
-                System.out.println(selectedGame + " is not a valid selection, please try again.");
+                System.out.println("We do not offer " + selectedGame + " as a selection yet, please try another game.");
                 selectGame();
         }
     }
@@ -109,4 +130,16 @@ public class Lobby {
         isRunning = false;
     }
 
-}
+    @Deprecated // backdoor method to check how many accounts have been created
+    private int getNumAccounts(){
+        return  AccountManager.getAccounts().size();
+    }
+
+    @Deprecated // convenience method to generate generic accounts for testing
+    private void populateAccounts(int count){
+        for(int i = 1; i <= count; i++){
+            AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));
+        }
+    }
+
+}// End of Class
