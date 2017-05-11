@@ -11,6 +11,11 @@ public class Lobby {
     public void start(){
         isRunning = true;
         populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
+        System.out.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
+        System.out.println(" * * * * * * Welcome to our Casino !!! * * * * * *");
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
+        System.out.println("        Please sign in or create an account. \n");
+        createAccount();
         startLobby();
     }
 
@@ -101,14 +106,17 @@ public class Lobby {
 
             case "poker":
                 System.out.println("Poker is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             case "blackjack":
                 System.out.println("Blackjack is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             case "war":
                 System.out.println("War is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             case "roulette":
@@ -117,6 +125,7 @@ public class Lobby {
 
             case "slots":
                 System.out.println("Slots is currently unavailable, please make another selection. \n");
+                selectGame();
                 break;
 
             default:
