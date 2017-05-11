@@ -5,6 +5,8 @@ package com.leonslegion.casino;
  */
 public class SlotMachine {
 
+    private SlotPlayer sp;
+
     Reel reel1 = new Reel();
     Reel reel2 = new Reel();
     Reel reel3 = new Reel();
@@ -12,6 +14,10 @@ public class SlotMachine {
     String image1 = reel1.spinReel();
     String image2 = reel2.spinReel();
     String image3 = reel3.spinReel();
+
+    public SlotMachine(SlotPlayer sp) {
+        this.sp = sp;
+    }
 
     public void displayImages() {
 
@@ -57,6 +63,7 @@ public class SlotMachine {
         displayImages();
         if(matchImages()) {
             System.out.printf("You won: $%.2f\n", determineWinnings(image1));
+            sp.setBalance(sp.getBalance() + determineWinnings(image1));
             return determineWinnings(image1);
         }
         else {
