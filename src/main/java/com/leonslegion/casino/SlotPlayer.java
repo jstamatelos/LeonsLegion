@@ -9,8 +9,8 @@ public class SlotPlayer extends Player {
 
     private double bet = 5;
 
-    public SlotPlayer (Account account) {
-        super(account.getAccountBalance(),account.getId());
+    public SlotPlayer (double balance, long accountId) {
+        super(balance, accountId);
     }
 
     public double getBet() {

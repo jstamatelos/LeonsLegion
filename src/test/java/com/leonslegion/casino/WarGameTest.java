@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by jarrydstamatelos on 5/10/17.
  */
+
 public class WarGameTest {
 
     @Test
@@ -68,3 +69,4 @@ public class WarGameTest {
     }
 
 }
+
