@@ -23,7 +23,7 @@ public class Lobby {
     public void startLobby(){
         while(isRunning){
             System.out.println("\n------------------------------------------------");
-            System.out.println("~~~~~~!!! Welcome to the Casino Lobby! !!!~~~~~~ ");
+            System.out.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
             System.out.println("------------------------------------------------");
             System.out.println("         (Enter 'Q' at any time to quit) \n");
             actionSelection();
