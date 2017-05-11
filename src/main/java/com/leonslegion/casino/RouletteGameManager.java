@@ -6,18 +6,7 @@ import java.util.*;
 
 public class RouletteGameManager {
 
-    public static void main(String[] args) {
-      Account sarah = AccountFactory.createAccountWithName("Sarah");
-      System.out.println(sarah.getId());
-      Account ziggy = AccountFactory.createAccountWithName("Ziggy");
-      System.out.println(ziggy.getId());
-      Account cameron = AccountFactory.createAccountWithName("Cameron");
-      System.out.println(cameron.getId());
-      AccountManager.addAccount(sarah);
-      AccountManager.addAccount(ziggy);
-      AccountManager.addAccount(cameron);
-      playRoulette();
-    }
+
 
     public static void playRoulette() {
         RouletteCoreGameplayEngine core = new RouletteCoreGameplayEngine();
@@ -97,11 +86,9 @@ public class RouletteGameManager {
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(betList, spinResult));
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(betList, spinResult));
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForColorBetWins(betList, spinResult));
-
             System.out.print("Player #" + roulettePlayers.get(count).getAccountId() + " new balance: $");
             System.out.printf("%,.2f", roulettePlayers.get(count).getBalance());
             System.out.println();
-
             player.resetBetList();
 
         }
