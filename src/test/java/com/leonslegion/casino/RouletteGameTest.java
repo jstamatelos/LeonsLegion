@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class RouletteGameTest {
-/*
+
     @Test
     public void testThatPlayerCanMakeBet() {
         //Given:
@@ -44,16 +44,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanWinInsideBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("00", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "00";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
         String spin = "00";
         double expectedOutput = 900 + (35*100);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForInsideBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForInsideBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -63,16 +66,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanLoseInsideBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("00", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
-        String spin = "1";
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "5";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
+        String spin = "00";
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForInsideBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForInsideBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -82,17 +88,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanWinOutsideDozenBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("1st D", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
-        String spin = "1";
-        double expectedOutput = 900 + (rouletteBet.getBetValue()*3);
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "1st D";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
 
+        String spin = "1";
+        double expectedOutput = 900 + (3*100);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -102,17 +110,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanLoseOutsideDozenBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("1st D", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
-        String spin = "19";
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "1st D";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
+        String spin = "31";
         double expectedOutput = 900;
 
-
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -122,16 +132,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanWinOutsideColumnBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("1st C", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "1st C";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
         String spin = "1";
-        double expectedOutput = 900 + (rouletteBet.getBetValue()*3);
+        double expectedOutput = 900 + (3*100);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -141,16 +154,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanLoseOutsideColumnBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("1st C", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "1st C";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
         String spin = "2";
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -160,16 +176,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanWinOutsideEvenOrOddBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("Even", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "Even";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
         String spin = "2";
-        double expectedOutput = 900 + (rouletteBet.getBetValue()*2);
+        double expectedOutput = 900 + (2*100);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -179,16 +198,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanLoseOutsideEvenOrOddBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("Even", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "Even";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
         String spin = "1";
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -198,16 +220,19 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanWinOutsideFrontOrBackBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("Front", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
-        String spin = "1";
-        double expectedOutput = 900 + (rouletteBet.getBetValue()*2);
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "Front";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
+        String spin = "2";
+        double expectedOutput = 900 + (2*100);
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
@@ -217,20 +242,66 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanLoseOutsideFrontOrBackBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        RouletteBet rouletteBet = new RouletteBet("Front", 100);
-        bet.add(rouletteBet);
         ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
-        players.add(new RoulettePlayer(1000, 101, bet));
-        String spin = "19";
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "Front";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
+        String spin = "29";
         double expectedOutput = 900;
 
         //When:
-        RouletteBetChecker.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
+        RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(players.get(0), spin);
         double actualOutput = players.get(0).getBalance();
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
     }
-*/
+
+    @Test
+    public void testThatPlayerCanWinOutsideColorBet() {
+        //Given:
+        ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "Red";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
+        String spin = "1";
+        double expectedOutput = 900 + (2*100);
+
+        //When:
+        RouletteBetHandler.checkPlayerBetsForColorBetWins(players.get(0), spin);
+        double actualOutput = players.get(0).getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseOutsideColorBet() {
+        ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
+        RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        players.add(player);
+        String newBetType = "Red";
+        String newBetValue = players.get(0).placeBet("100");
+        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        players.get(0).makeRouletteBet(newBetType, newBetValueAsDouble);
+
+        String spin = "2";
+        double expectedOutput = 900;
+
+        //When:
+        RouletteBetHandler.checkPlayerBetsForColorBetWins(players.get(0), spin);
+        double actualOutput = players.get(0).getBalance();
+
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
 }

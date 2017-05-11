@@ -10,7 +10,7 @@ public class InputHandler {
     // return String input
     public static String getStringInput(String promptUserForInput) {
         System.out.println(promptUserForInput);
-        String userInput = scanner.next();
+        String userInput = scanner.nextLine();
         return userInput;
     }
 
@@ -18,6 +18,7 @@ public class InputHandler {
     public static Double getDoubleInput(String promptUserForInput) {
         return Double.parseDouble(getStringInput(promptUserForInput));
     }
+
 
     // return int input
     public static int getIntInput(String promptUserForInput) {
