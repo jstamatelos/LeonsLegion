@@ -47,6 +47,10 @@ public class RoulettePlayer extends Player {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");
             return placeBet(newBet);
         }
+        else if (Double.parseDouble(bet) < 0.01 && Double.parseDouble(bet) > 0) {
+            String newBet = InputHandler.getStringInput("Minimum bet is one cent!");
+            return placeBet(newBet);
+        }
         else if (Double.parseDouble(bet) < 0) {
             String newBet = InputHandler.getStringInput("You cannot make a negative bet!");
             return placeBet(newBet);
