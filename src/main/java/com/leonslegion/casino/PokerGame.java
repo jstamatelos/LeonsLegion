@@ -19,6 +19,9 @@ public class PokerGame extends CardGame {
      */
     private void promptGame() {
         int numPlayers = InputHandler.getIntInput("How many players?");
+        while(numPlayers > 9) {
+            numPlayers = InputHandler.getIntInput("That's too many players. Try again.");
+        }
         loadPlayers(numPlayers);
     }
 
@@ -38,6 +41,7 @@ public class PokerGame extends CardGame {
     Called at the beginning of each round to repopulate PokerPlayers' Hands.
      */
     public void initialDeal() {
+        deck.shuffleDeck(); //I want to put this in the Deck constructor.
         for (PokerPlayer p : getPlayers()) {
             for (int i = 0; i < 5; i++) {
                 p.getHand().addCard(deck.dealCard());
@@ -78,6 +82,13 @@ public class PokerGame extends CardGame {
     }
 
     /*
+    For getting a PokerPlayer's name.
+     */
+    public String getPokerPlayerName(PokerPlayer player) {
+        return AccountManager.findAccount(player.getAccountId()).getAccountHolderName();
+    }
+
+    /*
     Sets into motion the logic behind a game of poker.
     The while loop will terminate when all players but
     one leave.
@@ -100,23 +111,32 @@ public class PokerGame extends CardGame {
             PokerBettingRound round = new PokerBettingRound(getPlayers());
             round.playersMakeBets();
 
-            for (PokerPlayerBettingRound p : round.playersOutOfGame) {
-                pot += p.amountIn;
-                players.remove(p);
-                debitFromAccount(p);
-            }
+            ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
 
-            for (PokerPlayerBettingRound p : round.playersStillInGame) {
+            for (PokerPlayerBettingRound p : round.playersInRound) {
                 pot += p.amountIn;
                 debitFromAccount(p);
+                if(!p.folded) {
+                    remainingPlayers.add(p.player);
+                }
             }
 
-            PokerPlayer winner = compareHands(getPlayers());
+            for(PokerPlayer p : remainingPlayers) {
+                p.getHand().determineHandType();
+                System.out.println(p.getHand().handType);
+            }
+
+            PokerPlayer winner = compareHands(remainingPlayers);
+            System.out.println("The winner is " + getPokerPlayerName(winner));
             payToWinnersAccount(winner);
             ends = false;
         }
     }
 
+    /*
+    Needed to create this main for testing. There are so
+    many dependencies that it's hard to isolate a method.
+     */
     public static void main(String[] args) {
         for(int i = 1; i <= 10; i++){
             AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));
