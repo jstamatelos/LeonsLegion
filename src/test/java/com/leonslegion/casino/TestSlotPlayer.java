@@ -16,19 +16,13 @@ public class TestSlotPlayer {
         //given
         Account acct = new Account("Leon");
         SlotPlayer sp = new SlotPlayer(acct.getAccountBalance(), acct.getId());
-        try {
-            sp.placeBet(sp.getBet());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        double expectedResult = 995;
+        boolean expectedResult = true;
 
         //when
-        double actualResult = sp.getBalance();
+        boolean actualResult = sp.placeBet();
 
         //then
-        Assert.assertEquals(expectedResult, actualResult, 0);
+        Assert.assertEquals(expectedResult, actualResult);
 
     }
 }
