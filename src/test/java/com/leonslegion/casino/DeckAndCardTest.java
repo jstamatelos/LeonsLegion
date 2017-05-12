@@ -1,8 +1,8 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.CardGamePackage.Deck;
 import org.junit.Assert;
 import org.junit.Test;
-import java.util.*;
 
 
 public class DeckAndCardTest {

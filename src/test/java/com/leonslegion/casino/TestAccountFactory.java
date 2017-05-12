@@ -1,5 +1,6 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.AccountPackage.Account;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class TestAccountFactory {
 
         //given
 
-        AccountFactory factory = new AccountFactory();
+        Account.AccountFactory factory = new Account.AccountFactory();
         Account acct = factory.createAccountWithName("Leon");
         Account acct2 = factory.createAccountWithName("Hunter");
 

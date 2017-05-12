@@ -1,10 +1,9 @@
 package com.leonslegion.casino;
 
-import com.sun.tools.internal.xjc.model.CAdapter;
+import com.leonslegion.casino.CardGamePackage.BlackjackHand;
+import com.leonslegion.casino.CardGamePackage.Card;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 /**
  * Created by cameronsima on 5/9/17.

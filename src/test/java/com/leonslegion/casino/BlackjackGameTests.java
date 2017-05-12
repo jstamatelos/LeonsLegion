@@ -1,10 +1,12 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.CardGamePackage.BlackjackGame;
+import com.leonslegion.casino.CardGamePackage.BlackjackHand;
+import com.leonslegion.casino.CardGamePackage.BlackjackPlayer;
+import com.leonslegion.casino.CardGamePackage.Card;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 /**
  * Created by cameronsima on 5/10/17.

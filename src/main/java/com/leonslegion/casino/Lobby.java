@@ -1,5 +1,12 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.AccountPackage.Account;
+import com.leonslegion.casino.CardGamePackage.BlackjackGame;
+import com.leonslegion.casino.CardGamePackage.PokerGame;
+import com.leonslegion.casino.CardGamePackage.WarGame;
+import com.leonslegion.casino.RoulettePackage.RouletteGameManager;
+import com.leonslegion.casino.SlotPackage.SlotGame;
+
 /**
  * Created by danielprahl on 5/9/17.
  */
@@ -56,7 +63,7 @@ public class Lobby {
                 break;
 
             case "check":
-                Account account = AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
+                Account account = Account.AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
                 System.out.format("This account has a balance of: $%.2f \n", account.getAccountBalance());
                 actionSelection();
                 break;
@@ -98,8 +105,8 @@ public class Lobby {
 
     public void createAccount(){
         String newName = InputHandler.getStringInput("What is your name?");
-        Account newAccount = AccountFactory.createAccountWithName(newName);
-        AccountManager.addAccount(newAccount);
+        Account newAccount = Account.AccountFactory.createAccountWithName(newName);
+        Account.AccountManager.addAccount(newAccount);
         System.out.println(newAccount.toString());
         askToBuyMoreChips();
     }
@@ -111,7 +118,7 @@ public class Lobby {
             return;
         }
         long id = Long.parseLong(stringID);
-        if(AccountManager.findAccountIndex(id) != -1){
+        if(Account.AccountManager.findAccountIndex(id) != -1){
             buyMoreChips(id);
         }else{
             System.out.println("Account not found.");
@@ -120,7 +127,7 @@ public class Lobby {
     }
 
     public void buyMoreChips(long ID){
-        Account account = AccountManager.findAccount(ID);
+        Account account = Account.AccountManager.findAccount(ID);
         System.out.format("This account has a balance of: $%.2f \n",  account.getAccountBalance() );
         double bal = InputHandler.getDoubleInput("How much money would you like to add to your account?");
         account.setAccountBalance(bal);
@@ -169,13 +176,13 @@ public class Lobby {
 
     @Deprecated // backdoor method to check how many accounts have been created
     private int getNumAccounts(){
-        return  AccountManager.getAccounts().size();
+        return  Account.AccountManager.getAccounts().size();
     }
 
     @Deprecated // convenience method to generate generic accounts for testing
     private void populateAccounts(int count){
         for(int i = 1; i <= count; i++){
-            AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));
+            Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Guest" + i));
         }
     }
 

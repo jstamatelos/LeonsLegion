@@ -1,5 +1,6 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.AccountPackage.Account;
 import org.junit.Assert;
 import org.junit.Test;
 

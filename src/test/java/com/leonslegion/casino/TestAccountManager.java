@@ -1,5 +1,6 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.AccountPackage.Account;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,12 +15,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.getAccounts().add(acct);
-        AccountManager.getAccounts().add(acct2);
+        Account.AccountManager.getAccounts().add(acct);
+        Account.AccountManager.getAccounts().add(acct2);
         String expectedResult = "Account ID: 1\nAccount Holder: Leon\nAccount Balance: $1000.00";
 
         //when
-        String actualResult = AccountManager.getAccounts().get(0).toString();
+        String actualResult = Account.AccountManager.getAccounts().get(0).toString();
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -32,12 +33,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         Account expectedResult = acct2;
 
         //when
-        Account actualResult = AccountManager.getAccounts().get(1);
+        Account actualResult = Account.AccountManager.getAccounts().get(1);
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -50,13 +51,13 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
-        AccountManager.removeAccount(acct);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
+        Account.AccountManager.removeAccount(acct);
         Account expectedResult = acct2;
 
         //when
-        Account actualResult = AccountManager.getAccounts().get(0);
+        Account actualResult = Account.AccountManager.getAccounts().get(0);
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -69,12 +70,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         double expectedResult = 1000;
 
         //when
-        double actualResult = AccountManager.getBalance(acct);
+        double actualResult = Account.AccountManager.getBalance(acct);
 
         //then
         Assert.assertEquals(expectedResult, actualResult, 0);
@@ -87,12 +88,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         String expectedResult = "Leon";
 
         //when
-        String actualResult = AccountManager.getAccountHolderName(acct);
+        String actualResult = Account.AccountManager.getAccountHolderName(acct);
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -105,13 +106,13 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
-        AccountManager.adjustAccountBalance(acct, 2000);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
+        Account.AccountManager.adjustAccountBalance(acct, 2000);
         double expectedResult = 3000.00;
 
         //when
-        double actualResult = AccountManager.getBalance(acct);
+        double actualResult = Account.AccountManager.getBalance(acct);
 
         //then
         Assert.assertEquals(expectedResult, actualResult, 0);
@@ -124,12 +125,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         Account expectedResult = acct2;
 
         //when
-        Account actualResult = AccountManager.findAccount("Hunter");
+        Account actualResult = Account.AccountManager.findAccount("Hunter");
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -142,12 +143,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         Account expectedResult = acct;
 
         //when
-        Account actualResult = AccountManager.findAccount(1);
+        Account actualResult = Account.AccountManager.findAccount(1);
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -160,12 +161,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         int expectedResult = 1;
 
         //when
-        int actualResult = AccountManager.findAccountIndex("Hunter");
+        int actualResult = Account.AccountManager.findAccountIndex("Hunter");
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
@@ -178,12 +179,12 @@ public class TestAccountManager {
         //given
         Account acct = new Account("Leon");
         Account acct2 = new Account("Hunter");
-        AccountManager.addAccount(acct);
-        AccountManager.addAccount(acct2);
+        Account.AccountManager.addAccount(acct);
+        Account.AccountManager.addAccount(acct2);
         int expectedResult = 1;
 
         //when
-        int actualResult = AccountManager.findAccountIndex(2);
+        int actualResult = Account.AccountManager.findAccountIndex(2);
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
