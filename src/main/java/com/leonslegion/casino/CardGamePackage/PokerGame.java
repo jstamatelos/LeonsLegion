@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class PokerGame extends CardGame {
 
     private double pot;
+    private double ante = 10;  //For the time being, ante is set to 10 automatically.
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
@@ -22,10 +23,14 @@ public class PokerGame extends CardGame {
     private void printRules() {
         System.out.println( "Unfortunately for you, this is a degenerate form\n" +
                             "of poker, wherein tiebreakers are determined by\n" +
-                            "who I like the best. So your pair of aces might\n" +
+                            "whom I like the best. So your pair of aces might\n" +
                             "lose to a pair of twos. Sucks, but if you wanted\n" +
                             "to win money, you should've gone on Price Is Right\n" +
-                            "or become an Instagram model.\n\n");
+                            "or become an Instagram model.\n\n" +
+                            "We will, however, let you play by yourself. You\n" +
+                            "won't win any money, but it'll feel kind of like\n" +
+                            "you're gambling.\n\n" +
+                            "...Kind of.\n\n");
     }
 
     /*
@@ -82,10 +87,10 @@ public class PokerGame extends CardGame {
     object and deducts the amount they committed to the
     last pot from their account.
      */
-    private void debitFromPokerPlayerBettingRoundPlayerAccount(PokerPlayerBettingRound p) {
-        Account account = Account.AccountManager.findAccount(p.player.getAccountId());
-        account.setAccountBalance(-1 * p.amountIn);
-        System.out.println(getPokerPlayerName(p.player) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+    private void debitFromPokerPlayerAccount(PokerPlayer p, double amount) {
+        Account account = Account.AccountManager.findAccount(p.getAccountId());
+        account.setAccountBalance(-1 * amount);
+        System.out.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
@@ -112,6 +117,7 @@ public class PokerGame extends CardGame {
             p.getHand().determineHandType();
             System.out.println(p.getHand().handType);
         }
+        System.out.println();
     }
 
     /*
@@ -119,8 +125,35 @@ public class PokerGame extends CardGame {
      */
     private void resolveWinner(ArrayList<PokerPlayer> remainingPlayers) {
         PokerPlayer winner = compareHands(remainingPlayers);
-        System.out.println("The winner is " + getPokerPlayerName(winner));
+        System.out.println("The winner is " + getPokerPlayerName(winner) + "!\n");
         payToWinnersAccount(winner);
+    }
+
+    /*
+    Ante up!
+     */
+    private void anteUp() {
+        for(PokerPlayer p : getPlayers()) {
+            pot += ante;
+            debitFromPokerPlayerAccount(p, ante);
+        }
+    }
+
+    /*
+    This method doesn't adhere to SRP. It rakes the bets
+    into the pot and adds the non-folded players into
+    an ArrayList to compare hands and choose winner.
+     */
+    private ArrayList<PokerPlayer> resolveRound(PokerBettingRound round) {
+        ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
+        for (PokerPlayerBettingRound p : round.playersInRound) {
+            pot += p.amountIn;
+            debitFromPokerPlayerAccount(p.player, p.amountIn);
+            if(!p.folded) {
+                remainingPlayers.add(p.player);
+            }
+        }
+        return  remainingPlayers;
     }
 
     /*
@@ -141,27 +174,22 @@ public class PokerGame extends CardGame {
         promptGame();
         printRules();
 
-        //The boolean ends is used here to make the game terminate after
-        //one hand. The condition that might be best to use long term
-        //is the one commented out below.
+        /*The boolean ends is used here to make the game terminate after
+        one hand. The condition that might be best to use long term
+        is the one commented out below. Future versions of this class
+        will include giving players the option to leave a game, where
+        enough players leaving will terminate the PokerGame.
+        */
         boolean ends = true;
 
         while (ends) { //players.size() > 1
             pot = 0;
             initialDeal();
             PokerBettingRound round = new PokerBettingRound(getPlayers());
+            anteUp();
             round.playersMakeBets();
 
-            ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
-
-            for (PokerPlayerBettingRound p : round.playersInRound) {
-                pot += p.amountIn;
-                debitFromPokerPlayerBettingRoundPlayerAccount(p);
-                if(!p.folded) {
-                    remainingPlayers.add(p.player);
-                }
-            }
-
+            ArrayList<PokerPlayer> remainingPlayers = resolveRound(round);
             System.out.println("There's currently $" + pot + " in the pot.\n");
 
             setPlayerHandTypes(remainingPlayers);
@@ -170,7 +198,6 @@ public class PokerGame extends CardGame {
             ends = false;
         }
     }
-
 
     /*
     Needed to create this main for testing. There are so
