@@ -75,12 +75,12 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideColumnBet() {
         //Given:
         RoulettePlayer player = new RoulettePlayer(1000, 101, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
-        String newBetType = "1st C";
+        String newBetType = "2nd C";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
-        String spin = "1";
+        String spin = "20";
         double expectedOutput = 900 + (3*100);
 
         //When:
