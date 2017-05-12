@@ -1,4 +1,4 @@
-~~~~~~~~~~~~ . Welcome to Leons Casino.  ~~~~~~~~~~~~
+~~~~~~~~~~~~ Welcome to Leons Casino  ~~~~~~~~~~~~
             We hope you enjoy your stay.
             
             
