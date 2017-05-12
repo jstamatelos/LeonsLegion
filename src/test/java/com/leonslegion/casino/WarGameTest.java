@@ -33,7 +33,7 @@ public class WarGameTest {
         CardComparator comp = new CardComparator();
 
         Card card0 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
-        Card card1 = new Card(Card.Rank.TWO, Card.Suit.CLUBS);
+        Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
 
 
         Assert.assertTrue("Card zero is has greater point value than card one",

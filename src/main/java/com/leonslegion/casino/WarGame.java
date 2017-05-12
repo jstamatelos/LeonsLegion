@@ -1,5 +1,7 @@
 package com.leonslegion.casino;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.util.Comparator;
 
 /**
@@ -17,14 +19,16 @@ public class WarGame extends CardGame implements Comparator {
 
     // Game starter
     public static void startWarGame(){
+
         System.out.println("WAR! WHAT IS IT GOOD FOR!");
         System.out.println("Welcome to the game of War");
+        WarPlayer newPlayer = createWarPlayer();
         WarGame.placeBet();
         System.out.println(setDealerCard());
         System.out.println(setplayerCard());
         System.out.println(determineWinner());
+        adjustBalance(newPlayer);
         WarGame.exit();
-
     }
 
     // Initial Bet
@@ -44,6 +48,8 @@ public class WarGame extends CardGame implements Comparator {
         playerCard = playerDeck.dealCard();
         return "Player draws a : " + playerCard.toString();
     }
+
+
     // Dealer card is compared to player card by point value
     public static String determineWinner(){
         if (playerCard.getPointValue() > dealerCard.getPointValue()){
@@ -54,6 +60,9 @@ public class WarGame extends CardGame implements Comparator {
             return "Tie! WAR!!!!!!";
         }
     }
+
+
+
 
     // Exit game
     public static boolean exit() {
@@ -66,6 +75,36 @@ public class WarGame extends CardGame implements Comparator {
         return false;
     }
 
+    public static WarPlayer createWarPlayer() {
+        while (true) {
+            String warPlayerID = InputHandler.getStringInput("Please enter your ID.");
+            if (!NumberUtils.isParsable(warPlayerID)) {
+                System.out.println("Not a valid ID");
+                continue;
+            }
+            Account warPlayerAccount = AccountManager.findAccount(Long.parseLong(warPlayerID));
+            if (warPlayerAccount == null) {
+                System.out.println("ID not found!");
+                continue;
+            }
+            System.out.println();
+            System.out.println("ID accepted!");
+            System.out.println();
+            WarPlayer newWarPlayer = new WarPlayer(warPlayerAccount.getAccountBalance(), warPlayerAccount.getId());
+            return newWarPlayer;
+        }
+    }
+    public static void adjustBalance(WarPlayer newPlayer) {
+        double remainingBalance = newPlayer.getBalance();
+        long accountID = newPlayer.getAccountId();
+        for (int account = 0; account < AccountManager.getAccounts().size(); account++) {
+            if (AccountManager.getAccounts().get(account).getId() == accountID) {
+                double originalBalance = AccountManager.getAccounts().get(account).getAccountBalance();
+                double balanceDifference = remainingBalance - originalBalance;
+                AccountManager.getAccounts().get(account).setAccountBalance(balanceDifference);
+            }
+        }
+    }
 
 
     // Needed for implementation of interface
