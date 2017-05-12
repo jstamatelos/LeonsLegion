@@ -257,7 +257,7 @@ public class BlackjackGame extends CardGame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void startBlackJack() {
 
         for (int i = 1; i <= 5; i++){
                 AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));
