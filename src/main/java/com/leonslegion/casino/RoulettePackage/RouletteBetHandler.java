@@ -25,16 +25,18 @@ public class RouletteBetHandler {
 
 
     private static String handleInsideBet() {
-        String bet = InputHandler.getStringInput("Enter which number you'd like to bet on.");
+        String bet = InputHandler.getStringInput("Enter which number you'd like to bet on. Only the integer portions of fractional inputs are taken.");
         if (NumberUtils.isParsable(bet)) {
-            if (Integer.parseInt(bet) < 0 || Integer.parseInt(bet) > 36) {
+            if (Double.parseDouble(bet) < 0 || Double.parseDouble(bet) > 36) {
                 System.out.println("Bet not accepted.");
                 System.out.println();
                 return handleInsideBet();
-            } else {
+            }
+            else {
                 System.out.println("Bet accepted.");
                 System.out.println();
-                return bet;
+                int integerBet = (int) Double.parseDouble(bet);
+                return Integer.toString(integerBet);
             }
         }
         else {
