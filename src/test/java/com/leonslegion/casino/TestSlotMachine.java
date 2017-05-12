@@ -7,7 +7,7 @@ import org.junit.Test;
  * Created by sarahweisser on 5/11/17.
  */
 public class TestSlotMachine {
-
+/*
     @Test
     public void testMatchImages() {
 
@@ -24,7 +24,7 @@ public class TestSlotMachine {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-
+*/
     @Test
     public void testDetermineWinningsLemon() {
 
