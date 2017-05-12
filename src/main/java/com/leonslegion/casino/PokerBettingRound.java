@@ -15,6 +15,7 @@ class PokerBettingRound {
         for (PokerPlayer p : players) {
             playersInRound.add(new PokerPlayerBettingRound(p));
         }
+        highBet = 0;
     }
 
     /*
@@ -62,17 +63,18 @@ class PokerBettingRound {
         PokerPlayerBettingRound player = playersInRound.get(0);
         int turnIndex = 0;
         PokerPlayerBettingRound lastToRaise = player;
-        highBet = 0;
 
         do { // an iteration represents a single move for
              // a player
+            if(player.folded) {
+                continue;
+            }
             double amount = playerChoice(player);
             if(amount > highBet) {                  //this is a raise
                 highBet = amount;
                 lastToRaise = player;
-            } else if(amount == -1) {               //this is a fold
-                turnIndex--;
             }
+
             turnIndex = (turnIndex + 1) % playersInRound.size();
             player = playersInRound.get(turnIndex);
         } while(player != lastToRaise);

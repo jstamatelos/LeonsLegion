@@ -7,11 +7,22 @@ import java.util.ArrayList;
  */
 public class PokerGame extends CardGame {
 
-    double pot;
+    private double pot;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
         return (ArrayList<PokerPlayer>)super.getPlayers();
+    }
+
+
+    private void printRules() {
+        System.out.println( "Unfortunately for you, this is a degenerate form\n" +
+                            "of poker, wherein tiebreakers are determined by\n" +
+                            "who showed their cards first. So your pair of aces\n" +
+                            "will lose to a pair of twos that the player before\n" +
+                            "you had. Sucks, but if you wanted to win money, you\n" +
+                            "should've gone on Price Is Right or become an IG\n" +
+                            "model selling Flat Tummy Tea.");
     }
 
     /*
@@ -52,7 +63,7 @@ public class PokerGame extends CardGame {
     /*
     Calls compareTo method from PokerHand to find a winner.
      */
-    public PokerPlayer compareHands(ArrayList<PokerPlayer> players) {
+    private PokerPlayer compareHands(ArrayList<PokerPlayer> players) {
         PokerPlayer winner = players.get(0);
         for (int i = 1; i < players.size(); i++) {
             if(winner.getHand().compareTo(players.get(i).getHand()) < 0) {
@@ -68,7 +79,7 @@ public class PokerGame extends CardGame {
     object and deducts the amount they committed to the
     last pot from their account.
      */
-    public void debitFromAccount(PokerPlayerBettingRound p) {
+    private void debitFromPokerPlayerBettingRoundPlayerAccount(PokerPlayerBettingRound p) {
         Account account = AccountManager.findAccount(p.player.getAccountId());
         account.setAccountBalance(-1 * p.amountIn);
     }
@@ -76,7 +87,7 @@ public class PokerGame extends CardGame {
     /*
     Pays the pot to the Account of the winner.
      */
-    public void payToWinnersAccount(PokerPlayer p) {
+    private void payToWinnersAccount(PokerPlayer p) {
         Account account = AccountManager.findAccount(p.getAccountId());
         account.setAccountBalance(pot);
     }
@@ -84,7 +95,7 @@ public class PokerGame extends CardGame {
     /*
     For getting a PokerPlayer's name.
      */
-    public String getPokerPlayerName(PokerPlayer player) {
+    private String getPokerPlayerName(PokerPlayer player) {
         return AccountManager.findAccount(player.getAccountId()).getAccountHolderName();
     }
 
@@ -104,6 +115,7 @@ public class PokerGame extends CardGame {
      */
     public void run() {
         promptGame();
+        printRules();
         boolean ends = true;
         while (ends) { //players.size() > 1
             pot = 0;
@@ -115,7 +127,7 @@ public class PokerGame extends CardGame {
 
             for (PokerPlayerBettingRound p : round.playersInRound) {
                 pot += p.amountIn;
-                debitFromAccount(p);
+                debitFromPokerPlayerBettingRoundPlayerAccount(p);
                 if(!p.folded) {
                     remainingPlayers.add(p.player);
                 }
