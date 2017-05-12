@@ -83,6 +83,7 @@ public class RouletteGameManager {
             System.out.println();
             ArrayList<RouletteBet> betList = player.getBetList();
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForInsideBetWins(betList, spinResult));
+            player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(betList, spinResult));
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(betList, spinResult));
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(betList, spinResult));
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(betList, spinResult));
