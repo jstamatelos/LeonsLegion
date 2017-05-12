@@ -142,7 +142,7 @@ public class Lobby {
                 break;
 
             case "blackjack":
-                System.out.println("Blackjack is currently unavailable, please make another selection. \n");
+                BlackjackGame.startBlackJack();
                 selectGame();
                 break;
 
