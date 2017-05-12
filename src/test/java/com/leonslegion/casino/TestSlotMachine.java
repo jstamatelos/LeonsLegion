@@ -24,6 +24,8 @@ public class TestSlotMachine {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
+    //Deprecated Test
+
 */
     @Test
     public void testDetermineWinningsLemon() {
