@@ -46,7 +46,7 @@ public class PokerGame extends CardGame {
 
     private void loadPlayers(int numPlayers) {
         for (int i = 0; i < numPlayers; i++) {
-            long accountid = InputHandler.getDoubleInput("Please enter Player " + (i + 1) + "'s ID.").longValue();
+            long accountid = InputHandler.getLongInput("Please enter Player " + (i + 1) + "'s ID.");
             Account account = Account.AccountManager.findAccount(accountid);
             if (account != null) {
                 players.add(new PokerPlayer(account));
