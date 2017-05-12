@@ -30,16 +30,23 @@ public class BlackjackGame extends CardGame {
         };
     }
 
+    private String dealerAction() {
+        BlackjackHand dealerHand = (BlackjackHand) dealer.getHand();
+        if (dealerHand.evaluateHand() <= 17) {
+            System.out.println("Dealer Hits...");
+            return "hit";
+        }
+        else {
+            System.out.println("Dealer stays with " + dealerHand);
+            return "stay";
+
+        }
+    }
+
     public BlackjackGame() {
         dealer = createDealer();
         playing = true;
     }
-
- /*   @Override
-    public ArrayList<BlackjackPlayer> getPlayers() {
-        return ((ArrayList<BlackjackPlayer>) super.getPlayers());
-    }
-*/
 
     public String promptTurnAction() {
 
@@ -51,18 +58,30 @@ public class BlackjackGame extends CardGame {
 
     }
 
-    private void handlePlayerAction(String action) {
+    private void handleTurn(BlackjackPlayer player, String action) {
         switch (action) {
             case "hit":
                 dealCard(player.getHand());
+                System.out.println("Your hand: ");
+                System.out.println(player.getHand());
                 break;
             case "stay":
+                handleStayAction(player);
                 break;
             default:
                 promptTurnAction();
-
+                break;
         }
+    }
 
+    private void handleStayAction(BlackjackPlayer player) {
+
+        if (player.equals(dealer)) {
+        }
+        while(dealerAction().equals("hit")) {
+            handleTurn(dealer, dealerAction());
+        }
+        compareHands();
     }
 
 
@@ -94,14 +113,20 @@ public class BlackjackGame extends CardGame {
 
 
     private String buildUserActionPrompt(BlackjackHand playerHand, BlackjackHand dealerHand, StringBuilder sb) {
-        switch (compareHands(playerHand, dealerHand)) {
+        switch (check21(playerHand, dealerHand)) {
             case "loser":
                 sb.append(" you lose!");
+                deductBetFromAccount();
+                sb.append("\n New balance: ");
                 sb.append(returnBalance());
+                promptPlayAgain();
                 break;
 
             case "winner":
                 sb.append(" you win!");
+                System.out.println(sb.toString());
+                addBetToAccount();
+                promptPlayAgain();
                 break;
 
             case "":
@@ -111,31 +136,36 @@ public class BlackjackGame extends CardGame {
         return sb.toString();
     }
 
-    public String compareHands(BlackjackHand playerHand, BlackjackHand dealerHand) {
+    public String check21(BlackjackHand playerHand, BlackjackHand dealerHand) {
         int dealerHandValue = dealerHand.evaluateHand();
         int playerHandValue = playerHand.evaluateHand();
         if (dealerHandValue == 21 || playerHandValue > 21) {
+            deductBetFromAccount();
             return "loser";
-        } else if (dealerHandValue  > 21 || playerHandValue== 21) {
+        } else if (dealerHandValue  > 21 || playerHandValue == 21) {
+            addBetToAccount();
             return "winner";
         } else {
             return "";
         }
     }
 
-    private String playerLost(StringBuilder sb) {
-        sb.append("You Lose!");
-        sb.append(returnBalance());
-        deductBetFromAccount();
-        return sb.toString();
-    }
+    public void compareHands() {
+        BlackjackHand playerHand = (BlackjackHand) player.getHand();
+        BlackjackHand dealerHand = (BlackjackHand) dealer.getHand();
+        String result = check21(playerHand, dealerHand);
 
-    private String playerWon(StringBuilder sb) {
-        sb.append("You won!");
-        addBetToAccount();
-        return sb.toString();
+        if (result == "") {
+            if (playerHand.evaluateHand() > dealerHand.evaluateHand()) {
+                addBetToAccount();
+                System.out.println("You Win!");
+            } else {
+                deductBetFromAccount();
+                System.out.println("You lose!");
+            }
+            promptPlayAgain();
+        }
     }
-
 
     private StringBuilder buildHandString(BlackjackHand hand, String playerIdentifier) {
 
@@ -180,9 +210,6 @@ public class BlackjackGame extends CardGame {
         hand.addCard(card);
     }
 
-    private Card dealCard() {
-        return deck.dealCard();
-    }
 
     private void loadPlayer() {
         long accountId = Long.parseLong(InputHandler.getStringInput("Enter ID number: "));
@@ -193,20 +220,41 @@ public class BlackjackGame extends CardGame {
 
     private void placeBet() {
 
-        bet = InputHandler.getDoubleInput("How much would you like to bet?");
+        String b = InputHandler.getStringInput("How much would you like to bet?");
+       // player.placeBet(b);
+        bet = Double.parseDouble(b);
     }
 
     public void play() {
 
-        loadPlayer();
+        if (player == null) {
+            loadPlayer();
+        }
+
         placeBet();
         initialDeal();
 
         while (playing) {
             String playerAction = promptTurnAction();
-            handlePlayerAction(playerAction);
-        }
 
+            handleTurn(player, playerAction);
+            handleTurn(dealer, dealerAction());
+        }
+    }
+
+    public void promptPlayAgain() {
+        System.out.println(player.getBalance());
+        String playAgain = InputHandler.getStringInput("Play again?");
+        switch (playAgain) {
+            case "yes":
+                play();
+                break;
+            case "no":
+                playing = false;
+                break;
+            default:
+                promptPlayAgain();
+        }
     }
 
     public static void main(String[] args) {
