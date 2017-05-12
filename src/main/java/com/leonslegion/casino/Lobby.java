@@ -33,7 +33,7 @@ public class Lobby {
     }
 
     public void actionSelection(){
-        String question = "\nWould you like to play a game? 'y' or 'n' ";
+        String question = "\nWould you like to play a game? 'y' or 'n'. Or 'c' to create another account.";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch(selection){
             case "q":
@@ -51,6 +51,10 @@ public class Lobby {
             case "a":
                 System.out.println(getNumAccounts() + " accounts on record.");
                 actionSelection();
+                break;
+
+            case "c":
+                createAccount();
                 break;
 
             default:
