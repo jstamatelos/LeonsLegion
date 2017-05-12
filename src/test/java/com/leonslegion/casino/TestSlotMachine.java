@@ -13,7 +13,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
         SlotMachine machine = new SlotMachine(sp);
         boolean expectedResult = true;
 
@@ -21,7 +21,7 @@ public class TestSlotMachine {
         boolean actualResult = machine.matchImages();
 
         //then
-        //Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
 
     }
 
@@ -30,7 +30,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 500;
 
@@ -47,7 +47,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 1000;
 
@@ -64,7 +64,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 2000;
 
@@ -81,7 +81,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 5000;
 
@@ -99,13 +99,13 @@ public class TestSlotMachine {
         //given
 
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
         SlotMachine machine = new SlotMachine(sp);
 
         do {
 
             machine = new SlotMachine(sp);
             machine.pullLever();
-        } while (machine.matchImages() != true);
+        } while (machine.matchImages());
     }
 }

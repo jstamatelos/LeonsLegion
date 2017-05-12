@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by jarrydstamatelos on 5/10/17.
  */
+
 public class WarGameTest {
 
     @Test
@@ -21,6 +22,7 @@ public class WarGameTest {
 
         Assert.assertEquals(actual.toString(),expected.toString() );
 
+
     }
 
 
@@ -31,7 +33,7 @@ public class WarGameTest {
         CardComparator comp = new CardComparator();
 
         Card card0 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
-        Card card1 = new Card(Card.Rank.TWO, Card.Suit.CLUBS);
+        Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
 
 
         Assert.assertTrue("Card zero is has greater point value than card one",
@@ -67,3 +69,4 @@ public class WarGameTest {
     }
 
 }
+
