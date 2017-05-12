@@ -18,11 +18,10 @@ public class PokerGame extends CardGame {
     private void printRules() {
         System.out.println( "Unfortunately for you, this is a degenerate form\n" +
                             "of poker, wherein tiebreakers are determined by\n" +
-                            "who showed their cards first. So your pair of aces\n" +
-                            "will lose to a pair of twos that the player before\n" +
-                            "you had. Sucks, but if you wanted to win money, you\n" +
-                            "should've gone on Price Is Right or become an IG\n" +
-                            "model selling Flat Tummy Tea.");
+                            "who I like the best. So your pair of aces might\n" +
+                            "lose to a pair of twos. Sucks, but if you wanted\n" +
+                            "to win money, you should've gone on Price Is Right\n" +
+                            "or become an Instagram model.\n\n");
     }
 
     /*
@@ -82,6 +81,7 @@ public class PokerGame extends CardGame {
     private void debitFromPokerPlayerBettingRoundPlayerAccount(PokerPlayerBettingRound p) {
         Account account = AccountManager.findAccount(p.player.getAccountId());
         account.setAccountBalance(-1 * p.amountIn);
+        System.out.println("After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
@@ -90,6 +90,7 @@ public class PokerGame extends CardGame {
     private void payToWinnersAccount(PokerPlayer p) {
         Account account = AccountManager.findAccount(p.getAccountId());
         account.setAccountBalance(pot);
+        System.out.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
@@ -116,7 +117,12 @@ public class PokerGame extends CardGame {
     public void run() {
         promptGame();
         printRules();
+
+        //The boolean ends is used here to make the game terminate after
+        //one hand. The condition that might be best to use long term
+        //is the one commented out below.
         boolean ends = true;
+
         while (ends) { //players.size() > 1
             pot = 0;
             initialDeal();
@@ -133,6 +139,8 @@ public class PokerGame extends CardGame {
                 }
             }
 
+            System.out.println("There's currently $" + pot + " in the pot.");
+
             for(PokerPlayer p : remainingPlayers) {
                 p.getHand().determineHandType();
                 System.out.println(p.getHand().handType);
@@ -146,8 +154,13 @@ public class PokerGame extends CardGame {
     }
 
     /*
+    For now, the end condition of a poker game is any player deciding to leave.
+     */
+
+
+    /*
     Needed to create this main for testing. There are so
-    many dependencies that it's hard to isolate a method.
+    many dependencies that it's hard to test a method.
      */
     public static void main(String[] args) {
         for(int i = 1; i <= 10; i++){
