@@ -30,6 +30,11 @@ public class BlackjackGame extends CardGame {
         };
     }
 
+    public BlackjackGame(BlackjackPlayer player, BlackjackPlayer dealer) {
+        this.player = player;
+        this.dealer = dealer;
+    }
+
     private String dealerAction() {
         BlackjackHand dealerHand = (BlackjackHand) dealer.getHand();
         if (dealerHand.evaluateHand() <= 17) {
@@ -234,7 +239,7 @@ public class BlackjackGame extends CardGame {
         placeBet();
         initialDeal();
 
-        while (playing) {
+        while (playing == true) {
             String playerAction = promptTurnAction();
 
             handleTurn(player, playerAction);
@@ -262,7 +267,6 @@ public class BlackjackGame extends CardGame {
         for (int i = 1; i <= 5; i++){
                 AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));
         }
-
         BlackjackGame b = new BlackjackGame();
         b.play();
     }

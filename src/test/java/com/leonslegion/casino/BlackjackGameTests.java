@@ -18,11 +18,10 @@ public class BlackjackGameTests {
     @Before
     public void setUp() {
         sam = new BlackjackPlayer(100, 1);
-        bob = new BlackjackPlayer(100, 2);
+        bob = new BlackjackPlayer(100000000, 2);
 
-        newGame = new BlackjackGame();
-        newGame.setPlayer(bob);
-        newGame.setPlayer(sam);
+        newGame = new BlackjackGame(sam, bob);
+
     }
 
     @Test
@@ -57,6 +56,11 @@ public class BlackjackGameTests {
     @Test
     public void testInitialDeal() {
 
-        newGame.play();
+
+    }
+
+    @Test
+    public void testCheck21() {
+
     }
 }
