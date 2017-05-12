@@ -22,7 +22,11 @@ public class BlackjackGame extends CardGame {
     private double bet;
 
     public BlackjackPlayer createDealer() {
-        return new BlackjackPlayer(1000000000, 0) {
+        Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
+        Account.AccountManager.addAccount(newDealerAccount);
+        newDealerAccount.setAccountBalance(1000000);
+
+        return new BlackjackPlayer(newDealerAccount.getAccountBalance(), newDealerAccount.getId()) {
             @Override
             public double placeBet(double d) {
                 // do nothing
@@ -43,9 +47,8 @@ public class BlackjackGame extends CardGame {
             return "hit";
         }
         else {
-            System.out.println("Dealer stays with " + dealerHand);
+            System.out.println("Dealer stays with " + dealerHand.evaluateHand());
             return "stay";
-
         }
     }
 
@@ -68,8 +71,13 @@ public class BlackjackGame extends CardGame {
         switch (action) {
             case "hit":
                 dealCard(player.getHand());
-                System.out.println("Your hand: ");
-                System.out.println(player.getHand());
+                if (Account.AccountManager.findAccount(player.getAccountId()).getAccountHolderName().equalsIgnoreCase("dealer")) {
+                    System.out.println("Dealer's hand: ");
+                } else {
+                    System.out.println("Your hand: ");
+                }
+                BlackjackHand playerHand = (BlackjackHand)player.getHand();
+                System.out.println(playerHand + " total = " + playerHand.evaluateHand());
                 break;
             case "stay":
                 handleStayAction(player);
@@ -78,16 +86,18 @@ public class BlackjackGame extends CardGame {
                 promptTurnAction();
                 break;
         }
+
     }
 
     private void handleStayAction(BlackjackPlayer player) {
 
         if (player.equals(dealer)) {
+
+            while (dealerAction().equals("hit")) {
+                handleTurn(dealer, dealerAction());
+            }
+            compareHands();
         }
-        while(dealerAction().equals("hit")) {
-            handleTurn(dealer, dealerAction());
-        }
-        compareHands();
     }
 
 
@@ -125,14 +135,16 @@ public class BlackjackGame extends CardGame {
                 deductBetFromAccount();
                 sb.append("\n New balance: ");
                 sb.append(returnBalance());
-                promptPlayAgain();
+                playing = false;
+                //promptPlayAgain();
                 break;
 
             case "winner":
                 sb.append(" you win!");
                 System.out.println(sb.toString());
                 addBetToAccount();
-                promptPlayAgain();
+                playing = false;
+                //promptPlayAgain();
                 break;
 
             case "":
@@ -161,7 +173,7 @@ public class BlackjackGame extends CardGame {
         BlackjackHand dealerHand = (BlackjackHand) dealer.getHand();
         String result = check21(playerHand, dealerHand);
 
-        if (result == "") {
+        if (result.equals("") || result.equals("winner")) {
             if (playerHand.evaluateHand() > dealerHand.evaluateHand()) {
                 addBetToAccount();
                 System.out.println("You Win!");
@@ -169,7 +181,7 @@ public class BlackjackGame extends CardGame {
                 deductBetFromAccount();
                 System.out.println("You lose!");
             }
-            promptPlayAgain();
+            //promptPlayAgain();
         }
     }
 
@@ -246,28 +258,34 @@ public class BlackjackGame extends CardGame {
             handleTurn(player, playerAction);
             handleTurn(dealer, dealerAction());
         }
+        System.out.println("play loop iteration completed");
+        promptPlayAgain();
+
     }
 
     public void promptPlayAgain() {
-        System.out.println(player.getBalance());
-        String playAgain = InputHandler.getStringInput("Play again?");
+        System.out.println(" Your new balance is " + returnBalance());
+        String playAgain = InputHandler.getStringInput("Play again?").toLowerCase();
         switch (playAgain) {
             case "yes":
-                play();
+                //play();
                 break;
+
             case "no":
                 playing = false;
                 break;
+
             default:
                 promptPlayAgain();
+                break;
         }
     }
 
     public static void startBlackJack() {
 
-        for (int i = 1; i <= 5; i++){
-                Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Guest" + i));
-        }
+
+
+
         BlackjackGame b = new BlackjackGame();
         b.play();
     }

@@ -25,7 +25,7 @@ class PokerBettingRound {
      */
     private double playerChoice(PokerPlayerBettingRound player) {
         System.out.println(player.showHand());
-        String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.\n");
+        String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.\n").toUpperCase();
         try {
             switch(choice) {
                 case "FOLD": // fold
@@ -46,14 +46,12 @@ class PokerBettingRound {
                     }
                     return 0;
                 default:
-                    System.out.println("Not a valid choice. Read the instructions again.");
-                    break;
+                    throw new Exception("Not a valid choice. Read the instructions again.");
                 }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return playerChoice(player);
         }
-        return 0;
     }
 
     /*
@@ -74,7 +72,7 @@ class PokerBettingRound {
                 continue;
             }
             double amount = playerChoice(player);
-            if(amount == highBet) {                  //this is a raise
+            if(amount > 0 && amount == highBet) {   //this is a raise
                 lastToRaise = player;
             }
 
