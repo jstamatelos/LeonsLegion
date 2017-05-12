@@ -55,13 +55,23 @@ public class WarGame extends CardGame implements Comparator {
     // Initial Bet
     public static double placeBet(WarPlayer warPlayer) {
         double bet = InputHandler.getDoubleInput("Please place a bet: ");
-        if (bet > warPlayer.getBalance()) {
-            System.out.println("Your bet is greater than your balance!");
-            return placeBet(warPlayer);
-        }
-        else if (bet < 0) {
-            System.out.println("You can bet a negative value.");
-            return placeBet(warPlayer);
+        long accountID = warPlayer.getAccountId();
+        for (int account = 0; account < AccountManager.getAccounts().size(); account++) {
+            if (AccountManager.getAccounts().get(account).getId() == accountID) {
+                double balance = AccountManager.getAccounts().get(account).getAccountBalance();
+                if (balance == 0) {
+                    System.out.println("You have a balance of 0!");
+                    return 0;
+                }
+                if (bet > balance) {
+                    System.out.println("Your bet is greater than your balance!");
+                    return placeBet(warPlayer);
+                }
+                if (bet < 0) {
+                    System.out.println("You can bet a negative value.");
+                    return placeBet(warPlayer);
+                }
+            }
         }
         return bet;
     }
