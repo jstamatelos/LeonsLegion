@@ -25,7 +25,7 @@ class PokerBettingRound {
      */
     private double playerChoice(PokerPlayerBettingRound player) {
         System.out.println(player.showHand());
-        String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.");
+        String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.\n");
         try {
             switch(choice) {
                 case "FOLD": // fold
@@ -67,13 +67,14 @@ class PokerBettingRound {
         PokerPlayerBettingRound lastToRaise = player;
 
         do { // an iteration represents a single move for
-             // a player
-            if(player.folded) {
+             // a player. Players who folded are skipped.
+            if(player.folded) {                     //this is a fold
+                turnIndex = (turnIndex + 1) % playersInRound.size();
+                player = playersInRound.get(turnIndex);
                 continue;
             }
             double amount = playerChoice(player);
-            if(amount > highBet) {                  //this is a raise
-                highBet = amount;
+            if(amount == highBet) {                  //this is a raise
                 lastToRaise = player;
             }
 
