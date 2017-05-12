@@ -55,6 +55,21 @@ class PokerBettingRound {
     }
 
     /*
+    An exception will be generated if all the players
+    fold consecutively, so this will control for that
+    possibility.
+     */
+    private int countFolds() {
+        int count = 0;
+        for(PokerPlayerBettingRound player : playersInRound) {
+            if(player.folded) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*
     This method holds the logic that ends a round
     of betting when it becomes the turn of the last
     player who raised.
@@ -78,7 +93,7 @@ class PokerBettingRound {
 
             turnIndex = (turnIndex + 1) % playersInRound.size();
             player = playersInRound.get(turnIndex);
-        } while(player != lastToRaise);
+        } while(countFolds() < playersInRound.size() - 1 && player != lastToRaise);
         // end of round
     }
 
