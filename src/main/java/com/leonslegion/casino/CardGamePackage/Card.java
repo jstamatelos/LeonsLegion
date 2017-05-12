@@ -29,7 +29,28 @@ public class Card {
 
 
 
-    public enum Suit {SPADES, HEARTS, DIAMONDS, CLUBS}
+    public enum Suit {
+        SPADES {
+            public String toString() {
+                return "\u2660";
+            }
+        },
+        HEARTS{
+            public String toString() {
+                return "\u2665";
+            }
+        },
+        DIAMONDS{
+            public String toString() {
+                return "\u2666";
+            }
+        },
+        CLUBS{
+            public String toString() {
+                return "\u2663";
+            }
+        }
+    }
     public enum Rank {TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE}
 
     public int getPointValue() {
@@ -43,7 +64,7 @@ public class Card {
     }
 
     public String toString() {
-        return String.format("|%s| of |%s|", rank.name(), suit.name());
+        return String.format("|%s| of |%s|", rank.name(), suit.toString());
     }
 
 }
