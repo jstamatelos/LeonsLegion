@@ -43,7 +43,7 @@ public class Card {
     }
 
     public String toString() {
-        return rank + " of " + suit;
+        return String.format("|%s| of |%s|", rank.name(), suit.name());
     }
 
 }

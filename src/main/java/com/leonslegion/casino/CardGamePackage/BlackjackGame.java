@@ -1,6 +1,7 @@
 package com.leonslegion.casino.CardGamePackage;
 
 import com.leonslegion.casino.AccountPackage.Account;
+import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 
 /**
@@ -43,11 +44,11 @@ public class BlackjackGame extends CardGame {
     private String dealerAction() {
         BlackjackHand dealerHand = (BlackjackHand) dealer.getHand();
         if (dealerHand.evaluateHand() <= 17) {
-            System.out.println("Dealer Hits...");
+            Console.println("Dealer Hits...");
             return "hit";
         }
         else {
-            System.out.println("Dealer stays with " + dealerHand.evaluateHand());
+            Console.println("Dealer stays with " + dealerHand.evaluateHand());
             return "stay";
         }
     }
@@ -72,12 +73,12 @@ public class BlackjackGame extends CardGame {
             case "hit":
                 dealCard(player.getHand());
                 if (Account.AccountManager.findAccount(player.getAccountId()).getAccountHolderName().equalsIgnoreCase("dealer")) {
-                    System.out.println("Dealer's hand: ");
+                    Console.println("Dealer's hand: ");
                 } else {
-                    System.out.println("Your hand: ");
+                    Console.println("Your hand: ");
                 }
                 BlackjackHand playerHand = (BlackjackHand)player.getHand();
-                System.out.println(playerHand + " total = " + playerHand.evaluateHand());
+                Console.println(playerHand + " total = " + playerHand.evaluateHand());
                 break;
             case "stay":
                 handleStayAction(player);
@@ -141,7 +142,7 @@ public class BlackjackGame extends CardGame {
 
             case "winner":
                 sb.append(" you win!");
-                System.out.println(sb.toString());
+                Console.println(sb.toString());
                 addBetToAccount();
                 playing = false;
                 //promptPlayAgain();
@@ -176,10 +177,10 @@ public class BlackjackGame extends CardGame {
         if (result.equals("") || result.equals("winner")) {
             if (playerHand.evaluateHand() > dealerHand.evaluateHand()) {
                 addBetToAccount();
-                System.out.println("You Win!");
+                Console.println("You Win!");
             } else {
                 deductBetFromAccount();
-                System.out.println("You lose!");
+                Console.println("You lose!");
             }
             //promptPlayAgain();
         }
@@ -258,13 +259,13 @@ public class BlackjackGame extends CardGame {
             handleTurn(player, playerAction);
             handleTurn(dealer, dealerAction());
         }
-        System.out.println("play loop iteration completed");
+        Console.println("play loop iteration completed");
         promptPlayAgain();
 
     }
 
     public void promptPlayAgain() {
-        System.out.println(" Your new balance is " + returnBalance());
+        Console.println(" Your new balance is " + returnBalance());
         String playAgain = InputHandler.getStringInput("Play again?").toLowerCase();
         switch (playAgain) {
             case "yes":

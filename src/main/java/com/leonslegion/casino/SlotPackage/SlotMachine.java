@@ -1,5 +1,7 @@
 package com.leonslegion.casino.SlotPackage;
 
+import com.leonslegion.casino.Console;
+
 /**
  * Created by sarahweisser on 5/11/17.
  */
@@ -21,7 +23,7 @@ public class SlotMachine {
 
     public void displayImages() {
 
-        System.out.println("Results: \t" + image1 + "\t|\t" + image2 + "\t|\t" + image3);
+        Console.println("Results: \t" + image1 + "\t|\t" + image2 + "\t|\t" + image3);
 
     }
 
@@ -67,7 +69,7 @@ public class SlotMachine {
             return determineWinnings(image1);
         }
         else {
-            System.out.println("No Match.  Please try again.");
+            Console.println("No Match.  Please try again.");
             return 0;
         }
     }

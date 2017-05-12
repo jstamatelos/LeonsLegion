@@ -2,6 +2,7 @@ package com.leonslegion.casino.RoulettePackage;
 
 import com.leonslegion.casino.Abstracts.Spin;
 import com.leonslegion.casino.AccountPackage.Account;
+import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -16,7 +17,7 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
     public static String rouletteGameEngineSetup() {
-        System.out.println("Welcome to Roulette!");
+        Console.println("Welcome to Roulette!");
         String numberOfPlayers = InputHandler.getStringInput("How many players? Max is 2.");
         switch (numberOfPlayers) {
             case "1":
@@ -24,8 +25,8 @@ public class RouletteCoreGameplayEngine implements Spin {
             case "2":
                 return "2";
             default:
-                System.out.println("Not a valid selection");
-                System.out.println();
+                Console.println("Not a valid selection");
+                Console.printDashes();
                 return rouletteGameEngineSetup();
         }
     }
@@ -39,22 +40,22 @@ public class RouletteCoreGameplayEngine implements Spin {
         while (count < numberOfPlayers) {
             String roulettePlayerID = InputHandler.getStringInput("Please enter your ID.");
             if (!NumberUtils.isParsable(roulettePlayerID)) {
-                System.out.println("Not a valid ID");
+                Console.println("Not a valid ID");
                 continue;
             }
             Account roulettePlayerAccount = Account.AccountManager.findAccount(Long.parseLong(roulettePlayerID));
             if (roulettePlayerAccount == null) {
-                System.out.println("ID not found!");
+                Console.println("ID not found!");
                 continue;
             }
             if ((roulettePlayers.size() == 1) && roulettePlayerID.equalsIgnoreCase(Long.toString(roulettePlayers.get(0).getAccountId()))) {
-                System.out.println("ID already in list");
+                Console.println("ID already in list");
                 continue;
             }
 
-            System.out.println();
-            System.out.println("ID accepted!");
-            System.out.println();
+            Console.printDashes();
+            Console.println("ID accepted!");
+            Console.printDashes();
             roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList()));
             count++;
         }
@@ -89,7 +90,7 @@ public class RouletteCoreGameplayEngine implements Spin {
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
             printTableInformation();
-            System.out.println("Now Betting For Player #" + roulettePlayers.get(i).getAccountId());
+            Console.println("Now Betting For Player #" + roulettePlayers.get(i).getAccountId());
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
     }
@@ -107,7 +108,7 @@ public class RouletteCoreGameplayEngine implements Spin {
                 stillBetting = false;
             }
             else {
-                System.out.println("Not a valid answer.");
+                Console.println("Not a valid answer.");
                 continue;
             }
         }
@@ -122,15 +123,15 @@ public class RouletteCoreGameplayEngine implements Spin {
         String newBetValue = roulettePlayer.placeBet(betValue);
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
         roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
-        System.out.println();
+        Console.printDashes();
         System.out.print("Your balance is now: $");
         System.out.printf("%,.2f", roulettePlayer.getBalance());
-        System.out.println();
-        System.out.println("You have placed the following bets:");
+        Console.printDashes();
+        Console.println("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
             System.out.print("$");
             System.out.printf("%,.2f", roulettePlayer.getBetList().get(i).getBetValue());
-            System.out.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
+            Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }
 

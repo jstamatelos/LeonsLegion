@@ -20,10 +20,10 @@ public class Lobby {
     public void start(){
         isRunning = true;
         populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
-        System.out.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
-        System.out.println(" * * * * * * Welcome to Leon's Casino !!! * * * * * *");
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
-        System.out.println("        Please sign in or create an account. \n");
+        Console.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
+        Console.println(" * * * * * * Welcome to Leon's Casino !!! * * * * * *");
+        Console.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
+        Console.println("        Please sign in or create an account. \n");
         createAccount();
         startLobby();
     }
@@ -31,19 +31,19 @@ public class Lobby {
     // this is the main game loop
     public void startLobby(){
         while(isRunning){
-            System.out.println("\n------------------------------------------------");
-            System.out.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
-            System.out.println("------------------------------------------------");
-            System.out.println("         (Enter 'Q' at any time to quit) \n");
+            Console.println("\n------------------------------------------------");
+            Console.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
+            Console.println("------------------------------------------------");
+            Console.println("         (Enter 'Q' at any time to quit) \n");
             actionSelection();
 
         }
-        System.out.println("\nThanks for playing!  Have a nice day! \n");
+        Console.println("\nThanks for playing!  Have a nice day! \n");
     }
 
     public void actionSelection() {
-        System.out.println("\nWhat would you like to do?");
-        System.out.println("*'play' a game \n*'create' an account \n*'check' balance \n*'buy' more chips \n*'exit' casino");
+        Console.println("\nWhat would you like to do?");
+        Console.println("*'play' a game \n*'create' an account \n*'check' balance \n*'buy' more chips \n*'exit' casino");
         String question = "Please enter a keyword to select";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch (selection) {
@@ -75,7 +75,7 @@ public class Lobby {
                 break;
 
             default:
-                System.out.println("That selection was unrecognized. Please enter a valid selection.");
+                Console.println("That selection was unrecognized. Please enter a valid selection.");
                 actionSelection();
                 break;
         }
@@ -99,7 +99,7 @@ public class Lobby {
                 break;
 
             default:
-                System.out.println("That selection was unrecognized. Please enter a valid selection.");
+                Console.println("That selection was unrecognized. Please enter a valid selection.");
                 askToBuyMoreChips();
                 break;
         }
@@ -109,7 +109,7 @@ public class Lobby {
         String newName = InputHandler.getStringInput("What is your name?");
         Account newAccount = Account.AccountFactory.createAccountWithName(newName);
         Account.AccountManager.addAccount(newAccount);
-        System.out.println(newAccount.toString());
+        Console.println(newAccount.toString());
         askToBuyMoreChips();
     }
 
@@ -120,14 +120,14 @@ public class Lobby {
             return;
         }
         if (!NumberUtils.isParsable(stringID)) {
-            System.out.println("I don't recognize that as an account number.");
+            Console.println("I don't recognize that as an account number.");
             return;
         }
         long id = Long.parseLong(stringID);
         if(Account.AccountManager.findAccountIndex(id) != -1){
             buyMoreChips(id);
         }else{
-            System.out.println("Account not found.");
+            Console.println("Account not found.");
             buyMoreChips();
         }
     }
@@ -141,7 +141,7 @@ public class Lobby {
     }
 
     public void selectGame(){
-        System.out.println("Which game would you like to play? Please select from the following: ");
+        Console.println("Which game would you like to play? Please select from the following: ");
         String gamesList = "Poker, Blackjack, War, Roulette, Slots";
         String selectedGame = InputHandler.getStringInput(gamesList).toLowerCase();
         switch (selectedGame){
@@ -171,7 +171,7 @@ public class Lobby {
                 break;
 
             default:
-                System.out.println("We do not currently offer " + selectedGame + ", please make another selection.");
+                Console.println("We do not currently offer " + selectedGame + ", please make another selection.");
                 selectGame();
         }
     }

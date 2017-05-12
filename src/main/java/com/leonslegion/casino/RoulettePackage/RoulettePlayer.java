@@ -3,6 +3,7 @@ package com.leonslegion.casino.RoulettePackage;
 import java.util.ArrayList;
 
 import com.leonslegion.casino.Abstracts.Player;
+import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -34,7 +35,7 @@ public class RoulettePlayer extends Player {
 
     public double placeBet (double bet) {
         if (super.getBalance() - bet < 0) {
-            System.out.println("Bet greater than current Balance!");
+            Console.println("Bet greater than current Balance!");
         }
         setBalance(getBalance() - bet);
         return bet;

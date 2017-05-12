@@ -11,6 +11,33 @@ import org.junit.Test;
  */
 
 public class WarGameTest {
+    @Test
+    public void startWarGame() throws Exception {
+    }
+
+    @Test
+    public void createWarPlayer() throws Exception {
+    }
+
+    @Test
+    public void placeBet() throws Exception {
+    }
+
+    @Test
+    public void setDealerCard() throws Exception {
+    }
+
+    @Test
+    public void setplayerCard() throws Exception {
+    }
+
+    @Test
+    public void determineWinner() throws Exception {
+    }
+
+    @Test
+    public void setHasDealer() throws Exception {
+    }
 
     @Test
     public void testDealerShowCard() {
@@ -51,7 +78,7 @@ public class WarGameTest {
         Card card1 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
 
         int actual = comp.compare(card0, card1);
-        System.out.println(actual);
+        Console.printDouble(actual);
         Assert.assertEquals(expected, actual);
     }
     @Test

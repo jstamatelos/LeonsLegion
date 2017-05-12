@@ -1,6 +1,7 @@
 package com.leonslegion.casino.RoulettePackage;
 
 import com.leonslegion.casino.AccountPackage.Account;
+import com.leonslegion.casino.Console;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class RouletteGameManager {
             doesPlayerHaveABalance(roulettePlayers);
             doesPlayerWantToExit(roulettePlayers);
             if (roulettePlayers.size() == 0) {
-                System.out.println("No more players! Leaving roulette table!");
+                Console.println("No more players! Leaving roulette table!");
                 break;
             }
             RouletteCoreGameplayEngine.gatherPlayerBets(roulettePlayers);
@@ -31,9 +32,9 @@ public class RouletteGameManager {
 
     public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
-            System.out.println("Does Player #" + roulettePlayers.get(count).getAccountId() + " want to exit?");
+            Console.println("Does Player #" + roulettePlayers.get(count).getAccountId() + " want to exit?");
             if (RouletteCoreGameplayEngine.exitInput()) {
-                System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has exited.");
+                Console.println("Player #" + roulettePlayers.get(count).getAccountId() + " has exited.");
                 double remainingBalance = roulettePlayers.get(count).getBalance();
                 long accountID = roulettePlayers.get(count).getAccountId();
                 for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
@@ -54,8 +55,8 @@ public class RouletteGameManager {
     public static void doesPlayerHaveABalance (ArrayList<RoulettePlayer> roulettePlayers) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
             if (roulettePlayers.get(count).getBalance() <= 0) {
-                System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " has no money!");
-                System.out.println("Player #" + roulettePlayers.get(count).getAccountId() + " removed!");
+                Console.println("Player #" + roulettePlayers.get(count).getAccountId() + " has no money!");
+                Console.println("Player #" + roulettePlayers.get(count).getAccountId() + " removed!");
                 double remainingBalance = 0;
                 long accountID = roulettePlayers.get(count).getAccountId();
                 for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
@@ -74,13 +75,13 @@ public class RouletteGameManager {
 
 
     public static void checkPlayerBetsForResults(ArrayList<RoulettePlayer> roulettePlayers, String spinResult) {
-        System.out.println();
-        System.out.println("The ball landed in: " + spinResult);
+        Console.printDashes();
+        Console.println("The ball landed in: " + spinResult);
         for (int count = 0; count < roulettePlayers.size(); count++) {
             RoulettePlayer player = roulettePlayers.get(count);
-            System.out.println();
-            System.out.println("Checking bets for Player #" + player.getAccountId());
-            System.out.println();
+            Console.printDashes();
+            Console.println("Checking bets for Player #" + player.getAccountId());
+            Console.printDashes();
             ArrayList<RouletteBet> betList = player.getBetList();
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForInsideBetWins(betList, spinResult));
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(betList, spinResult));
@@ -90,7 +91,7 @@ public class RouletteGameManager {
             player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForColorBetWins(betList, spinResult));
             System.out.print("Player #" + roulettePlayers.get(count).getAccountId() + " new balance: $");
             System.out.printf("%,.2f", roulettePlayers.get(count).getBalance());
-            System.out.println();
+            Console.printDashes();
             player.resetBetList();
 
         }

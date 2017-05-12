@@ -1,6 +1,7 @@
 package com.leonslegion.casino.SlotPackage;
 
 import com.leonslegion.casino.Abstracts.Player;
+import com.leonslegion.casino.Console;
 
 /**
  * Created by sarahweisser on 5/11/17.
@@ -19,8 +20,8 @@ public class SlotPlayer extends Player {
 
     public boolean placeBet() {
         if (super.getBalance() < 5) {
-            System.out.println("It is $5.00 to play this machine.");
-            System.out.println("You do not have enough in your account to play.");
+            Console.println("It is $5.00 to play this machine.");
+            Console.println("You do not have enough in your account to play.");
             return false;
         }
         else {

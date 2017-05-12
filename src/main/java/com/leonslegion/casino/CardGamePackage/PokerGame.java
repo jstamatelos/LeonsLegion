@@ -1,6 +1,7 @@
 package com.leonslegion.casino.CardGamePackage;
 
 import com.leonslegion.casino.AccountPackage.Account;
+import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 
 import java.lang.reflect.Array;
@@ -21,7 +22,7 @@ public class PokerGame extends CardGame {
 
 
     private void printRules() {
-        System.out.println( "Unfortunately for you, this is a degenerate form\n" +
+        Console.println( "Unfortunately for you, this is a degenerate form\n" +
                             "of poker, wherein tiebreakers are determined by\n" +
                             "whom I like the best. So your pair of aces might\n" +
                             "lose to a pair of twos. Sucks, but if you wanted\n" +
@@ -90,7 +91,7 @@ public class PokerGame extends CardGame {
     private void debitFromPokerPlayerAccount(PokerPlayer p, double amount) {
         Account account = Account.AccountManager.findAccount(p.getAccountId());
         account.setAccountBalance(-1 * amount);
-        System.out.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
@@ -99,7 +100,7 @@ public class PokerGame extends CardGame {
     private void payToWinnersAccount(PokerPlayer p) {
         Account account = Account.AccountManager.findAccount(p.getAccountId());
         account.setAccountBalance(pot);
-        System.out.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        Console.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
@@ -115,9 +116,9 @@ public class PokerGame extends CardGame {
     private void setPlayerHandTypes(ArrayList<PokerPlayer> remainingPlayers) {
         for(PokerPlayer p : remainingPlayers) {
             p.getHand().determineHandType();
-            System.out.println(p.getHand().handType);
+            Console.println(p.getHand().handType.toString());
         }
-        System.out.println();
+        Console.printDashes();
     }
 
     /*
@@ -125,7 +126,7 @@ public class PokerGame extends CardGame {
      */
     private void resolveWinner(ArrayList<PokerPlayer> remainingPlayers) {
         PokerPlayer winner = compareHands(remainingPlayers);
-        System.out.println("The winner is " + getPokerPlayerName(winner) + "!\n");
+        Console.println("The winner is " + getPokerPlayerName(winner) + "!\n");
         payToWinnersAccount(winner);
     }
 
@@ -190,7 +191,7 @@ public class PokerGame extends CardGame {
             round.playersMakeBets();
 
             ArrayList<PokerPlayer> remainingPlayers = resolveRound(round);
-            System.out.println("There's currently $" + pot + " in the pot.\n");
+            Console.println("There's currently $" + pot + " in the pot.\n");
 
             setPlayerHandTypes(remainingPlayers);
             resolveWinner(remainingPlayers);

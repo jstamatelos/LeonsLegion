@@ -1,5 +1,6 @@
 package com.leonslegion.casino.CardGamePackage;
 
+import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ class PokerBettingRound {
     Offers each player their options and routs their choice appropriately.
      */
     private double playerChoice(PokerPlayerBettingRound player) {
-        System.out.println(player.showHand());
+        Console.println(player.showHand());
         String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.\n").toUpperCase();
         try {
             switch(choice) {
@@ -49,7 +50,7 @@ class PokerBettingRound {
                     throw new Exception("Not a valid choice. Read the instructions again.");
                 }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Console.println(e.getMessage());
             return playerChoice(player);
         }
     }

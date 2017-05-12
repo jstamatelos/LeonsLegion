@@ -44,7 +44,7 @@ public class RouletteGameTest {
         //When:
         player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForInsideBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
-        System.out.println(actualOutput);
+        Console.printDouble(actualOutput);
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
@@ -65,7 +65,7 @@ public class RouletteGameTest {
         //When:
         player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
-        System.out.println(actualOutput);
+        Console.printDouble(actualOutput);
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
@@ -86,7 +86,7 @@ public class RouletteGameTest {
         //When:
         player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
-        System.out.println(actualOutput);
+        Console.printDouble(actualOutput);
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
@@ -107,7 +107,7 @@ public class RouletteGameTest {
         //When:
         player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
-        System.out.println(actualOutput);
+        Console.printDouble(actualOutput);
 
 
         //Then:
@@ -129,7 +129,7 @@ public class RouletteGameTest {
         //When:
         player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
-        System.out.println(actualOutput);
+        Console.printDouble(actualOutput);
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
@@ -150,7 +150,7 @@ public class RouletteGameTest {
         //When:
         player.setBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
-        System.out.println(actualOutput);
+        Console.printDouble(actualOutput);
 
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
