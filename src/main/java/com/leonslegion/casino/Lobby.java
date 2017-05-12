@@ -32,25 +32,37 @@ public class Lobby {
         System.out.println("\nThanks for playing!  Have a nice day! \n");
     }
 
-    public void actionSelection(){
-        String question = "\nWould you like to play a game? 'y' or 'n' ";
+    public void actionSelection() {
+        System.out.println("\nWhat would you like to do?");
+        System.out.println("*'play' a game \n*'create' an account \n*'check' balance \n*'buy' more chips \n*'exit' casino");
+        String question = "Please enter a keyword to select";
         String selection = InputHandler.getStringInput(question).toLowerCase();
-        switch(selection){
+        switch (selection) {
             case "q":
                 exit();
                 break;
 
-            case "y":
+            case "exit":
+                exit();
+                break;
+
+            case "play":
                 selectGame();
                 break;
 
-            case "n":
-                askToBuyMoreChips();
+            case "buy":
+                buyMoreChips();
+                actionSelection();
                 break;
 
-            case "a":
-                System.out.println(getNumAccounts() + " accounts on record.");
+            case "check":
+                Account account = AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
+                System.out.format("This account has a balance of: $%.2f \n", account.getAccountBalance());
                 actionSelection();
+                break;
+
+            case "create":
+                createAccount();
                 break;
 
             default:

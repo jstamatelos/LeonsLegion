@@ -8,15 +8,14 @@ import java.util.ArrayList;
 class PokerBettingRound {
 
     private double highBet;
-    ArrayList<PokerPlayerBettingRound> playersStillInGame;
-    ArrayList<PokerPlayerBettingRound> playersOutOfGame;
+    ArrayList<PokerPlayerBettingRound> playersInRound;
 
     PokerBettingRound(ArrayList<PokerPlayer> players) {
-        playersStillInGame = new ArrayList<PokerPlayerBettingRound>();
-        playersOutOfGame = new ArrayList<PokerPlayerBettingRound>();
+        playersInRound = new ArrayList<PokerPlayerBettingRound>();
         for (PokerPlayer p : players) {
-            playersStillInGame.add(new PokerPlayerBettingRound(p));
+            playersInRound.add(new PokerPlayerBettingRound(p));
         }
+        highBet = 0;
     }
 
     /*
@@ -24,36 +23,35 @@ class PokerBettingRound {
      */
     private double playerChoice(PokerPlayerBettingRound player) {
         System.out.println(player.showHand());
-        while(true) {
-            String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if not bets have been made, CHECK.");
-            try {
-                switch(choice) {
-                    case "FOLD": // fold
-                        playersStillInGame.remove(player);
-                        playersOutOfGame.add(player);
-                        return 0;
-                    case "CALL":
-                        player.player.placeBet(highBet - player.amountIn);
-                        player.amountIn = highBet;
-                        return 0;
-                    case "RAISE":
-                        double raise = InputHandler.getDoubleInput("How much would you like to raise?");
-                        highBet = player.player.placeBet(highBet + raise);
-                        player.amountIn = highBet;
-                        return highBet;
-                    case "CHECK":
-                        if(highBet == 0) {
-                            throw new Exception("You cannot check.");
-                        }
-                        break;
-                    default:
-                        System.out.println("Not a valid choice. Read the instructions again.");
-                        break;
+        String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.");
+        try {
+            switch(choice) {
+                case "FOLD": // fold
+                    player.folds();
+                    return -1;
+                case "CALL":
+                    player.player.placeBet(highBet - player.amountIn);
+                    player.amountIn = highBet;
+                    return 0;
+                case "RAISE":
+                    double raise = InputHandler.getDoubleInput("How much would you like to raise?");
+                    highBet = player.player.placeBet(highBet + raise);
+                    player.amountIn = highBet;
+                    return highBet;
+                case "CHECK":
+                    if(highBet > 0) {
+                        throw new Exception("You cannot check.");
+                    }
+                    return 0;
+                default:
+                    System.out.println("Not a valid choice. Read the instructions again.");
+                    break;
                 }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return playerChoice(player);
         }
+        return 0;
     }
 
     /*
@@ -62,29 +60,24 @@ class PokerBettingRound {
     player who raised.
      */
     void playersMakeBets() {
-        PokerPlayerBettingRound player = playersStillInGame.get(0);
+        PokerPlayerBettingRound player = playersInRound.get(0);
         int turnIndex = 0;
-        int lastRaiseIndex = 0;
-        int currentSize = playersStillInGame.size();
-        highBet = 0;
+        PokerPlayerBettingRound lastToRaise = player;
 
         do { // an iteration represents a single move for
              // a player
+            if(player.folded) {
+                continue;
+            }
             double amount = playerChoice(player);
-            if(amount > highBet) {
+            if(amount > highBet) {                  //this is a raise
                 highBet = amount;
-                lastRaiseIndex = turnIndex;
+                lastToRaise = player;
             }
 
-            //this condition refers to a fold
-            if(currentSize > playersStillInGame.size()) {
-                turnIndex--;
-                currentSize--;
-            }
-
-            turnIndex = (turnIndex + 1) % currentSize;
-            player = playersStillInGame.get(turnIndex);
-        } while(turnIndex != lastRaiseIndex);
+            turnIndex = (turnIndex + 1) % playersInRound.size();
+            player = playersInRound.get(turnIndex);
+        } while(player != lastToRaise);
         // end of round
     }
 
