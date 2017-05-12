@@ -125,7 +125,10 @@ public class WarGame extends CardGame implements Comparator {
             }
             return "Dealer wins! Oh well.";
         } else {
-            return "Tie! WAR!!!!!!";
+            System.out.println("Tie! WAR!!!!!!");
+            System.out.println(setDealerCard());
+            System.out.println(setplayerCard());
+            return determineWinner(warPlayer, bet * 2);
         }
     }
 
