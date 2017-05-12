@@ -19,6 +19,7 @@ public class WarGame extends CardGame implements Comparator {
 
     // Game starter
     public static void startWarGame(){
+
         System.out.println("WAR! WHAT IS IT GOOD FOR!");
         System.out.println("Welcome to the game of War");
         WarPlayer newWarPlayer = createWarPlayer();
@@ -50,6 +51,7 @@ public class WarGame extends CardGame implements Comparator {
             WarPlayer newWarPlayer = new WarPlayer(warPlayerAccount.getAccountBalance(), warPlayerAccount.getId());
             return newWarPlayer;
         }
+
     }
 
     // Initial Bet
@@ -88,6 +90,8 @@ public class WarGame extends CardGame implements Comparator {
         playerCard = playerDeck.dealCard();
         return "Player draws a : " + playerCard.toString();
     }
+
+
     // Dealer card is compared to player card by point value
     public static String determineWinner(WarPlayer warPlayer, double bet){
         if (playerCard.getPointValue() > dealerCard.getPointValue()){
@@ -130,6 +134,18 @@ public class WarGame extends CardGame implements Comparator {
         } else {return exit();}
     }
 
+
+    public static void adjustBalance(WarPlayer newPlayer) {
+        double remainingBalance = newPlayer.getBalance();
+        long accountID = newPlayer.getAccountId();
+        for (int account = 0; account < AccountManager.getAccounts().size(); account++) {
+            if (AccountManager.getAccounts().get(account).getId() == accountID) {
+                double originalBalance = AccountManager.getAccounts().get(account).getAccountBalance();
+                double balanceDifference = remainingBalance - originalBalance;
+                AccountManager.getAccounts().get(account).setAccountBalance(balanceDifference);
+            }
+        }
+    }
 
 
     // Needed for implementation of interface
