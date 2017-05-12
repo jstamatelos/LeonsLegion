@@ -7,11 +7,21 @@ import java.util.ArrayList;
  */
 public class PokerGame extends CardGame {
 
-    double pot;
+    private double pot;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
         return (ArrayList<PokerPlayer>)super.getPlayers();
+    }
+
+
+    private void printRules() {
+        System.out.println( "Unfortunately for you, this is a degenerate form\n" +
+                            "of poker, wherein tiebreakers are determined by\n" +
+                            "who I like the best. So your pair of aces might\n" +
+                            "lose to a pair of twos. Sucks, but if you wanted\n" +
+                            "to win money, you should've gone on Price Is Right\n" +
+                            "or become an Instagram model.\n\n");
     }
 
     /*
@@ -19,6 +29,9 @@ public class PokerGame extends CardGame {
      */
     private void promptGame() {
         int numPlayers = InputHandler.getIntInput("How many players?");
+        while(numPlayers > 9) {
+            numPlayers = InputHandler.getIntInput("That's too many players. Try again.");
+        }
         loadPlayers(numPlayers);
     }
 
@@ -38,6 +51,7 @@ public class PokerGame extends CardGame {
     Called at the beginning of each round to repopulate PokerPlayers' Hands.
      */
     public void initialDeal() {
+        deck.shuffleDeck(); //I want to put this in the Deck constructor.
         for (PokerPlayer p : getPlayers()) {
             for (int i = 0; i < 5; i++) {
                 p.getHand().addCard(deck.dealCard());
@@ -48,7 +62,7 @@ public class PokerGame extends CardGame {
     /*
     Calls compareTo method from PokerHand to find a winner.
      */
-    public PokerPlayer compareHands(ArrayList<PokerPlayer> players) {
+    private PokerPlayer compareHands(ArrayList<PokerPlayer> players) {
         PokerPlayer winner = players.get(0);
         for (int i = 1; i < players.size(); i++) {
             if(winner.getHand().compareTo(players.get(i).getHand()) < 0) {
@@ -64,17 +78,26 @@ public class PokerGame extends CardGame {
     object and deducts the amount they committed to the
     last pot from their account.
      */
-    public void debitFromAccount(PokerPlayerBettingRound p) {
+    private void debitFromPokerPlayerBettingRoundPlayerAccount(PokerPlayerBettingRound p) {
         Account account = AccountManager.findAccount(p.player.getAccountId());
         account.setAccountBalance(-1 * p.amountIn);
+        System.out.println("After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
     Pays the pot to the Account of the winner.
      */
-    public void payToWinnersAccount(PokerPlayer p) {
+    private void payToWinnersAccount(PokerPlayer p) {
         Account account = AccountManager.findAccount(p.getAccountId());
         account.setAccountBalance(pot);
+        System.out.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+    }
+
+    /*
+    For getting a PokerPlayer's name.
+     */
+    private String getPokerPlayerName(PokerPlayer player) {
+        return AccountManager.findAccount(player.getAccountId()).getAccountHolderName();
     }
 
     /*
@@ -93,30 +116,52 @@ public class PokerGame extends CardGame {
      */
     public void run() {
         promptGame();
+        printRules();
+
+        //The boolean ends is used here to make the game terminate after
+        //one hand. The condition that might be best to use long term
+        //is the one commented out below.
         boolean ends = true;
+
         while (ends) { //players.size() > 1
             pot = 0;
             initialDeal();
             PokerBettingRound round = new PokerBettingRound(getPlayers());
             round.playersMakeBets();
 
-            for (PokerPlayerBettingRound p : round.playersOutOfGame) {
+            ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
+
+            for (PokerPlayerBettingRound p : round.playersInRound) {
                 pot += p.amountIn;
-                players.remove(p);
-                debitFromAccount(p);
+                debitFromPokerPlayerBettingRoundPlayerAccount(p);
+                if(!p.folded) {
+                    remainingPlayers.add(p.player);
+                }
             }
 
-            for (PokerPlayerBettingRound p : round.playersStillInGame) {
-                pot += p.amountIn;
-                debitFromAccount(p);
+            System.out.println("There's currently $" + pot + " in the pot.");
+
+            for(PokerPlayer p : remainingPlayers) {
+                p.getHand().determineHandType();
+                System.out.println(p.getHand().handType);
             }
 
-            PokerPlayer winner = compareHands(getPlayers());
+            PokerPlayer winner = compareHands(remainingPlayers);
+            System.out.println("The winner is " + getPokerPlayerName(winner));
             payToWinnersAccount(winner);
             ends = false;
         }
     }
 
+    /*
+    For now, the end condition of a poker game is any player deciding to leave.
+     */
+
+
+    /*
+    Needed to create this main for testing. There are so
+    many dependencies that it's hard to test a method.
+     */
     public static void main(String[] args) {
         for(int i = 1; i <= 10; i++){
             AccountManager.addAccount(AccountFactory.createAccountWithName("Guest" + i));

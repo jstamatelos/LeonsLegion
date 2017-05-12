@@ -22,6 +22,10 @@ public class CardComparatorTest {
         Deck deck = new Deck();
     }
 
+    /*
+    This is a deliberately failing test so that it's easy to verify
+    that a sorted deck will print 2s, then 3s, and so on.
+     */
     @Test
     public void sortDeckTest() {
         Deck deck = new Deck();
