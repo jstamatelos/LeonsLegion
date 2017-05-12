@@ -6,6 +6,8 @@ import com.leonslegion.casino.CardGamePackage.PokerGame;
 import com.leonslegion.casino.CardGamePackage.WarGame;
 import com.leonslegion.casino.RoulettePackage.RouletteGameManager;
 import com.leonslegion.casino.SlotPackage.SlotGame;
+import org.apache.commons.lang3.*;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Created by danielprahl on 5/9/17.
@@ -115,6 +117,10 @@ public class Lobby {
         String stringID = InputHandler.getStringInput("Please enter your account ID.");
         if(stringID.equalsIgnoreCase("q")){
             exit();
+            return;
+        }
+        if (!NumberUtils.isParsable(stringID)) {
+            System.out.println("I don't recognize that as an account number.");
             return;
         }
         long id = Long.parseLong(stringID);

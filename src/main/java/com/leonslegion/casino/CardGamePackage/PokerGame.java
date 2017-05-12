@@ -3,6 +3,7 @@ package com.leonslegion.casino.CardGamePackage;
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.InputHandler;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -84,7 +85,7 @@ public class PokerGame extends CardGame {
     private void debitFromPokerPlayerBettingRoundPlayerAccount(PokerPlayerBettingRound p) {
         Account account = Account.AccountManager.findAccount(p.player.getAccountId());
         account.setAccountBalance(-1 * p.amountIn);
-        System.out.println("After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        System.out.println(getPokerPlayerName(p.player) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
 
     /*
@@ -101,6 +102,25 @@ public class PokerGame extends CardGame {
      */
     private String getPokerPlayerName(PokerPlayer player) {
         return Account.AccountManager.findAccount(player.getAccountId()).getAccountHolderName();
+    }
+
+    /*
+    For setting all the remaining players' HandTypes.
+     */
+    private void setPlayerHandTypes(ArrayList<PokerPlayer> remainingPlayers) {
+        for(PokerPlayer p : remainingPlayers) {
+            p.getHand().determineHandType();
+            System.out.println(p.getHand().handType);
+        }
+    }
+
+    /*
+    Takes care of finding, announcing, paying winner.
+     */
+    private void resolveWinner(ArrayList<PokerPlayer> remainingPlayers) {
+        PokerPlayer winner = compareHands(remainingPlayers);
+        System.out.println("The winner is " + getPokerPlayerName(winner));
+        payToWinnersAccount(winner);
     }
 
     /*
@@ -142,23 +162,14 @@ public class PokerGame extends CardGame {
                 }
             }
 
-            System.out.println("There's currently $" + pot + " in the pot.");
+            System.out.println("There's currently $" + pot + " in the pot.\n");
 
-            for(PokerPlayer p : remainingPlayers) {
-                p.getHand().determineHandType();
-                System.out.println(p.getHand().handType);
-            }
+            setPlayerHandTypes(remainingPlayers);
+            resolveWinner(remainingPlayers);
 
-            PokerPlayer winner = compareHands(remainingPlayers);
-            System.out.println("The winner is " + getPokerPlayerName(winner));
-            payToWinnersAccount(winner);
             ends = false;
         }
     }
-
-    /*
-    For now, the end condition of a poker game is any player deciding to leave.
-     */
 
 
     /*

@@ -23,8 +23,11 @@ public class WarGame extends CardGame implements Comparator {
     public static void startWarGame(){
 
         System.out.println("WAR! WHAT IS IT GOOD FOR!");
-        System.out.println("Welcome to the game of War");
+        System.out.println("=========================");
+        System.out.println("Welcome to the game of War \n May the odds never be in your favor");
+        System.out.println("=========================");
         WarPlayer newWarPlayer = createWarPlayer();
+
         boolean playRound = true;
         while (playRound) {
             double bet = WarGame.placeBet(newWarPlayer);
