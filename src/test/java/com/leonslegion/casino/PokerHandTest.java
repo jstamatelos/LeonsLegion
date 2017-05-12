@@ -1,5 +1,7 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.CardGamePackage.Card;
+import com.leonslegion.casino.CardGamePackage.PokerHand;
 import org.junit.*;
 
 

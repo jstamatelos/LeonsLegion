@@ -1,5 +1,8 @@
 package com.leonslegion.casino;
 
+import com.leonslegion.casino.AccountPackage.Account;
+import com.leonslegion.casino.SlotPackage.SlotMachine;
+import com.leonslegion.casino.SlotPackage.SlotPlayer;
 import org.junit.Assert;
 import org.junit.Test;
 
