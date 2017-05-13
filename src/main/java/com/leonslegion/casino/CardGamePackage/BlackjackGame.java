@@ -192,7 +192,7 @@ public class BlackjackGame extends CardGame {
         StringBuilder sb = new StringBuilder();
         sb.append(playerIdentifier);
         sb.append(" hand: ");
-        for (Card card : hand.getHand()) {
+        for (Card card : hand.getCards()) {
             sb.append(card.getRank());
             sb.append(" of ");
             sb.append(card.getSuit());
