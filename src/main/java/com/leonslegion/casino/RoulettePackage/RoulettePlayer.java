@@ -30,7 +30,7 @@ public class RoulettePlayer extends Player {
 
     public ArrayList<RouletteBet> getBetList() {return betList;}
     public void resetBetList() {
-        betList = RouletteCoreGameplayEngine.returnEmptyRouletteBetList();
+        betList = new ArrayList<RouletteBet>();
     }
 
 
@@ -62,8 +62,7 @@ public class RoulettePlayer extends Player {
             return placeBet(newBet);
         }
         else {
-            double newBalance = getBalance() - Double.parseDouble(bet);
-            getAccount().setAccountBalance(newBalance);
+            getAccount().setAccountBalance(Double.parseDouble(bet) * -1);
         }
         return bet;
     }

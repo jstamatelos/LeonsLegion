@@ -4,8 +4,6 @@ import com.leonslegion.casino.Abstracts.Spin;
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
-import org.apache.commons.lang3.math.NumberUtils;
-
 import java.util.ArrayList;
 
 /**
@@ -15,57 +13,80 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
 
+    public static RoulettePlayer addRoulettePlayer(ArrayList<RoulettePlayer> roulettePlayers) {
+        long numberOfAttempts = 2;
+        while (numberOfAttempts > 0) {
+            Console.printNumberOfAttemptsRemaining(numberOfAttempts);
+            long ID = RouletteInputOutputAndPrint.getPlayerID(numberOfAttempts);
+            if (ID == -1 && numberOfAttempts == 2) {
+                numberOfAttempts--;
+                Console.printNumberOfAttemptsRemaining(numberOfAttempts);
+                ID = RouletteInputOutputAndPrint.getPlayerID(numberOfAttempts);
+                continue;
+            }
+            if (ID == -1 && numberOfAttempts == 1) {
+                Console.printAttemptsExceeded();
+                numberOfAttempts = 2;
+                continue;
+            }
+            Account roulettePlayerAccount = Account.AccountManager.findAccount(ID);
+            if (roulettePlayerAccount == null && numberOfAttempts == 2) {
+                numberOfAttempts--;
+                Console.printAccountNotFoundMessage();
+                continue;
+            }
+            if (roulettePlayerAccount == null && numberOfAttempts == 1) {
+                Console.printAttemptsExceeded();
+                numberOfAttempts = 2;
+                continue;
 
-    public static String rouletteGameEngineSetup() {
-        Console.println("Welcome to Roulette!");
-        String numberOfPlayers = InputHandler.getStringInput("How many players? Max is 2.");
-        switch (numberOfPlayers) {
-            case "1":
-                return "1";
-            case "2":
-                return "2";
-            default:
-                Console.println("Not a valid selection");
-                Console.printDashes();
-                return rouletteGameEngineSetup();
+            }
+            if (roulettePlayers.size() == 1 && roulettePlayerAccount.getId() == roulettePlayers.get(0).getAccount().getId()) {
+                if (numberOfAttempts == 2) {
+                    Console.printAccountAlreadyLoaded();
+                    numberOfAttempts--;
+                }
+                else {
+                    Console.printAccountAlreadyLoaded();
+                    Console.printAttemptsExceeded();
+                    numberOfAttempts = 2;
+                }
+            }
+            else {
+                Console.printAccountAccepted();
+                return new RoulettePlayer(roulettePlayerAccount, new ArrayList<RouletteBet>());}
         }
+        return null;
+    }
+
+
+
+    public static ArrayList<RoulettePlayer> createRoulettePlayerList(long numberOfPlayers) {
+        ArrayList<RoulettePlayer> players = new ArrayList<>();
+        for (int playerIndex = 0; playerIndex < numberOfPlayers; playerIndex++) {
+            RoulettePlayer newPlayer = addRoulettePlayer(players);
+            players.add(newPlayer);
+        }
+        return players;
     }
 
 
 
 
-    public static ArrayList<RoulettePlayer> createRoulettePlayerList(int numberOfPlayers) {
-        ArrayList<RoulettePlayer> roulettePlayers = new ArrayList<RoulettePlayer>();
-        int count = 0;
-        while (count < numberOfPlayers) {
-            String roulettePlayerID = InputHandler.getStringInput("Please enter your ID.");
-            if (!NumberUtils.isParsable(roulettePlayerID)) {
-                Console.println("Not a valid ID");
-                continue;
-            }
-            Account roulettePlayerAccount = Account.AccountManager.findAccount(Long.parseLong(roulettePlayerID));
-            if (roulettePlayerAccount == null) {
-                Console.println("ID not found!");
-                continue;
-            }
-            if ((roulettePlayers.size() == 1) && roulettePlayerID.equalsIgnoreCase(Long.toString(roulettePlayers.get(0).getAccount().getId()))) {
-                Console.println("ID already in list");
-                continue;
-            }
-
-            Console.printDashes();
-            Console.println("ID accepted!");
-            Console.printDashes();
-            roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount, returnEmptyRouletteBetList()));
-            count++;
-        }
-        return roulettePlayers;
-    }
 
 
 
 
-    public static ArrayList<RouletteBet> returnEmptyRouletteBetList() {return new ArrayList<RouletteBet>();}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -134,9 +155,6 @@ public class RouletteCoreGameplayEngine implements Spin {
             Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }
-
-
-
 
 
     public static String keepBettingLoop() {

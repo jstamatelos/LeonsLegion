@@ -8,7 +8,7 @@ import org.junit.Test;
  * Created by sarahweisser on 5/9/17.
  */
 public class TestAccountManager {
-
+/*
     @Test
     public void testAccountManagerShowBalance() {
 
@@ -189,5 +189,5 @@ public class TestAccountManager {
         //then
         Assert.assertEquals(expectedResult, actualResult);
 
-    }
+    } */
 }
