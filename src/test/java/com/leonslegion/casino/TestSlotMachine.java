@@ -35,7 +35,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
+        SlotPlayer sp = new SlotPlayer(account);
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 500;
 
@@ -52,7 +52,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
+        SlotPlayer sp = new SlotPlayer(account);
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 1000;
 
@@ -69,7 +69,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
+        SlotPlayer sp = new SlotPlayer(account);
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 2000;
 
@@ -86,7 +86,7 @@ public class TestSlotMachine {
 
         //given
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
+        SlotPlayer sp = new SlotPlayer(account);
         SlotMachine machine = new SlotMachine(sp);
         double expectedResult = 5000;
 
@@ -104,7 +104,7 @@ public class TestSlotMachine {
         //given
 
         Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
+        SlotPlayer sp = new SlotPlayer(account);
         SlotMachine machine = new SlotMachine(sp);
 
         do {

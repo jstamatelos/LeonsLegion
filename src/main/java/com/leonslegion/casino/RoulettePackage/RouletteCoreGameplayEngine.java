@@ -48,7 +48,7 @@ public class RouletteCoreGameplayEngine implements Spin {
                 Console.println("ID not found!");
                 continue;
             }
-            if ((roulettePlayers.size() == 1) && roulettePlayerID.equalsIgnoreCase(Long.toString(roulettePlayers.get(0).getAccountId()))) {
+            if ((roulettePlayers.size() == 1) && roulettePlayerID.equalsIgnoreCase(Long.toString(roulettePlayers.get(0).getAccount().getId()))) {
                 Console.println("ID already in list");
                 continue;
             }
@@ -56,7 +56,7 @@ public class RouletteCoreGameplayEngine implements Spin {
             Console.printDashes();
             Console.println("ID accepted!");
             Console.printDashes();
-            roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount.getAccountBalance(), roulettePlayerAccount.getId(), returnEmptyRouletteBetList()));
+            roulettePlayers.add(new RoulettePlayer(roulettePlayerAccount, returnEmptyRouletteBetList()));
             count++;
         }
         return roulettePlayers;
@@ -90,7 +90,7 @@ public class RouletteCoreGameplayEngine implements Spin {
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
             printTableInformation();
-            Console.println("Now Betting For Player #" + roulettePlayers.get(i).getAccountId());
+            Console.println("Now Betting For Player #" + roulettePlayers.get(i).getAccount().getId());
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
     }

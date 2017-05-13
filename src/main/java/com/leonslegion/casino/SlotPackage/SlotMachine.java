@@ -65,7 +65,7 @@ public class SlotMachine {
         displayImages();
         if(matchImages()) {
             System.out.printf("You won: $%.2f\n", determineWinnings(image1));
-            sp.setBalance(sp.getBalance() + determineWinnings(image1));
+            sp.getAccount().setAccountBalance(sp.getBalance() + determineWinnings(image1));
             return determineWinnings(image1);
         }
         else {

@@ -39,8 +39,8 @@ public class PokerGame extends CardGame {
      */
     private void promptGame() {
         int numPlayers = InputHandler.getIntInput("How many players?");
-        while(numPlayers > 9) {
-            numPlayers = InputHandler.getIntInput("That's too many players. Try again.");
+        while(numPlayers > 9 || numPlayers < 1) {
+            numPlayers = InputHandler.getIntInput("Invalid number of players. Try in the 1 - 9 range.");
         }
         loadPlayers(numPlayers);
     }
@@ -89,7 +89,7 @@ public class PokerGame extends CardGame {
     last pot from their account.
      */
     private void debitFromPokerPlayerAccount(PokerPlayer p, double amount) {
-        Account account = Account.AccountManager.findAccount(p.getAccountId());
+        Account account = Account.AccountManager.findAccount(p.getAccount().getAccountHolderName());
         account.setAccountBalance(-1 * amount);
         Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
@@ -98,7 +98,7 @@ public class PokerGame extends CardGame {
     Pays the pot to the Account of the winner.
      */
     private void payToWinnersAccount(PokerPlayer p) {
-        Account account = Account.AccountManager.findAccount(p.getAccountId());
+        Account account = Account.AccountManager.findAccount(p.getAccount().getId());
         account.setAccountBalance(pot);
         Console.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
     }
@@ -107,7 +107,7 @@ public class PokerGame extends CardGame {
     For getting a PokerPlayer's name.
      */
     private String getPokerPlayerName(PokerPlayer player) {
-        return Account.AccountManager.findAccount(player.getAccountId()).getAccountHolderName();
+        return Account.AccountManager.findAccount(player.getAccount().getId()).getAccountHolderName();
     }
 
     /*

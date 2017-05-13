@@ -1,12 +1,13 @@
 package com.leonslegion.casino.CardGamePackage;
 
+import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.InputHandler;
 import org.apache.commons.lang3.math.NumberUtils;
 
 public class BlackjackPlayer extends CardPlayer {
 
-    public BlackjackPlayer(double balance, long accountId) {
-        super(balance, accountId);
+    public BlackjackPlayer(Account account) {
+        super(account);
     }
 
     void hit(Card card) {

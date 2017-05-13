@@ -27,7 +27,7 @@ public class BlackjackGame extends CardGame {
         Account.AccountManager.addAccount(newDealerAccount);
         newDealerAccount.setAccountBalance(1000000);
 
-        return new BlackjackPlayer(newDealerAccount.getAccountBalance(), newDealerAccount.getId()) {
+        return new BlackjackPlayer(newDealerAccount) {
             @Override
             public double placeBet(double d) {
                 // do nothing
@@ -72,7 +72,7 @@ public class BlackjackGame extends CardGame {
         switch (action) {
             case "hit":
                 dealCard(player.getHand());
-                if (Account.AccountManager.findAccount(player.getAccountId()).getAccountHolderName().equalsIgnoreCase("dealer")) {
+                if (Account.AccountManager.findAccount(player.getAccount().getId()).getAccountHolderName().equalsIgnoreCase("dealer")) {
                     Console.println("Dealer's hand: ");
                 } else {
                     Console.println("Your hand: ");
@@ -115,7 +115,7 @@ public class BlackjackGame extends CardGame {
     }
 
     private Account getPlayerAccount() {
-        return Account.AccountManager.findAccount(player.getAccountId());
+        return Account.AccountManager.findAccount(player.getAccount().getId());
     }
 
 
@@ -234,7 +234,7 @@ public class BlackjackGame extends CardGame {
         long accountId = Long.parseLong(InputHandler.getStringInput("Enter ID number: "));
         Account acct = Account.AccountManager.findAccount(accountId);
         double balance = Account.AccountManager.getBalance(acct);
-        player = new BlackjackPlayer(balance, accountId);
+        player = new BlackjackPlayer(acct);
     }
 
     private void placeBet() {
