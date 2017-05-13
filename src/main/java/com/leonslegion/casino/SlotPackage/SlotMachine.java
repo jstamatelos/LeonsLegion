@@ -37,24 +37,24 @@ public class SlotMachine {
         }
     }
 
-    public double determineWinnings(String image1) {
+    public long determineWinnings(String image1) {
         switch (image1) {
             case "Cherry":
-                return 500;
+                return 50000;
             case "Orange":
-                return 500;
+                return 50000;
             case "Watermelon":
-                return 500;
+                return 50000;
             case "Lemon":
-                return 500;
+                return 50000;
             case "Bar":
-                return 500;
+                return 50000;
             case "Double Bar":
-                return 1000;
+                return 100000;
             case "Triple Bar":
-                return 2000;
+                return 200000;
             case "Lucky Seven":
-                return 5000;
+                return 500000;
             default:
                 return 0;
             }
@@ -64,7 +64,7 @@ public class SlotMachine {
 
         displayImages();
         if(matchImages()) {
-            System.out.printf("You won: $%.2f\n", determineWinnings(image1));
+            Console.println("You won: "+ Console.moneyToString(determineWinnings(image1)));
             sp.getAccount().setAccountBalance(sp.getBalance() + determineWinnings(image1));
             return determineWinnings(image1);
         }

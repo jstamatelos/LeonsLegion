@@ -60,7 +60,7 @@ public class BlackjackPlayer extends CardPlayer {
         hand = blackjackHand;
     }
 
-
+    //TODO - dzf - probably good idea to use getMoneyInput here.
     public String placeBet (String bet) {
         if (!NumberUtils.isParsable(bet)) {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");
