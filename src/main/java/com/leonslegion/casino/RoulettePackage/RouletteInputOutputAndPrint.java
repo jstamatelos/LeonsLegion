@@ -6,7 +6,7 @@ import com.leonslegion.casino.Console;
 /**
  * Created by markbrown on 5/13/17.
  */
-public class RouletteInputOutput {
+public class RouletteInputOutputAndPrint {
 
 
     public static void printWelcomeMessage() {

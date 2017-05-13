@@ -4,7 +4,6 @@ import com.leonslegion.casino.Abstracts.Spin;
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.ArrayList;
 
 /**
@@ -18,11 +17,11 @@ public class RouletteCoreGameplayEngine implements Spin {
         long numberOfAttempts = 2;
         while (numberOfAttempts > 0) {
             Console.printNumberOfAttemptsRemaining(numberOfAttempts);
-            long ID = RouletteInputOutput.getPlayerID(numberOfAttempts);
+            long ID = RouletteInputOutputAndPrint.getPlayerID(numberOfAttempts);
             if (ID == -1 && numberOfAttempts == 2) {
                 numberOfAttempts--;
                 Console.printNumberOfAttemptsRemaining(numberOfAttempts);
-                ID = RouletteInputOutput.getPlayerID(numberOfAttempts);
+                ID = RouletteInputOutputAndPrint.getPlayerID(numberOfAttempts);
                 continue;
             }
             if (ID == -1 && numberOfAttempts == 1) {
@@ -70,6 +69,26 @@ public class RouletteCoreGameplayEngine implements Spin {
         }
         return players;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -136,9 +155,6 @@ public class RouletteCoreGameplayEngine implements Spin {
             Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }
-
-
-
 
 
     public static String keepBettingLoop() {
