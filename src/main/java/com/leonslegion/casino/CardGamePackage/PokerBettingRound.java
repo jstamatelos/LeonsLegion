@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 class PokerBettingRound {
 
-    private double highBet;
+    private long highBet;
     ArrayList<PokerPlayerBettingRound> playersInRound;
     PokerPlayerBettingRound roundTerminator;
 
@@ -35,7 +35,7 @@ class PokerBettingRound {
                     playerBetting.folds();
                     break;
                 case "RAISE":
-                    double raise = InputHandler.getDoubleInput("\nThe high bet is currently " + highBet + ". How much would you like to raise above that?");
+                    long raise = Console.getMoneyInput("\nThe high bet is currently " + Console.moneyToString(highBet) + ". How much would you like to raise above that?");
                     highBet = playerBetting.player.placeBet(highBet + raise);
                     playerBetting.amountIn = highBet;
                     roundTerminator = playerBetting;
@@ -96,7 +96,6 @@ class PokerBettingRound {
      */
     void playersMakeBets() {
         PokerPlayerBettingRound player = playersInRound.get(0);
-        int turnIndex = 0;
         roundTerminator = playersInRound.get(playersInRound.size() - 1);
 
         //each iteration of the loop is a turn by a player

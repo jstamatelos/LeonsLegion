@@ -5,7 +5,7 @@ package com.leonslegion.casino.CardGamePackage;
  */
 public class PokerPlayerBettingRound {
     PokerPlayer player;
-    double amountIn;
+    long amountIn;
     boolean folded;
 
     PokerPlayerBettingRound(PokerPlayer player) {

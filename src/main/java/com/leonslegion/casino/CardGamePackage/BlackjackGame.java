@@ -20,16 +20,16 @@ public class BlackjackGame extends CardGame {
     private BlackjackPlayer player;
     private BlackjackPlayer dealer;
     private boolean playing;
-    private double bet;
+    private long bet;
 
     public BlackjackPlayer createDealer() {
         Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
         Account.AccountManager.addAccount(newDealerAccount);
-        newDealerAccount.setAccountBalance(1000000);
+        newDealerAccount.setAccountBalance(100000000);
 
         return new BlackjackPlayer(newDealerAccount) {
             @Override
-            public double placeBet(double d) {
+            public long placeBet(long d) {
                 // do nothing
                 return -1;
             }
@@ -110,7 +110,7 @@ public class BlackjackGame extends CardGame {
         getPlayerAccount().setAccountBalance(bet *= 1.5);
     }
 
-    private double returnBalance() {
+    private long returnBalance() {
         return getPlayerAccount().getAccountBalance();
     }
 
@@ -235,15 +235,12 @@ public class BlackjackGame extends CardGame {
     private void loadPlayer() {
         long accountId = Long.parseLong(InputHandler.getStringInput("Enter ID number: "));
         Account acct = Account.AccountManager.findAccount(accountId);
-        double balance = Account.AccountManager.getBalance(acct);
+        long balance = Account.AccountManager.getBalance(acct);
         player = new BlackjackPlayer(acct);
     }
 
     private void placeBet() {
-
-        String b = InputHandler.getStringInput("How much would you like to bet?");
-       // player.placeBet(b);
-        bet = Double.parseDouble(b);
+        bet = Console.getMoneyInput("How much would you like to bet?");
     }
 
     public void play() {

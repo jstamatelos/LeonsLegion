@@ -140,16 +140,15 @@ public class RouletteCoreGameplayEngine implements Spin {
         String newBetType = RouletteBetHandler.handleAnyBet();
         String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
         String newBetValue = roulettePlayer.placeBet(betValue);
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
         Console.printDashes();
-        Console.print("Your balance is now: $");
-        Console.print("%,.2f", roulettePlayer.getBalance());
+        Console.print("Your balance is now: ");
+        Console.printMoney(roulettePlayer.getBalance());
         Console.printDashes();
         Console.println("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
-            Console.print("$");
-            Console.print("%,.2f", roulettePlayer.getBetList().get(i).getBetValue());
+            Console.printMoney(roulettePlayer.getBetList().get(i).getBetValue());
             Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }
