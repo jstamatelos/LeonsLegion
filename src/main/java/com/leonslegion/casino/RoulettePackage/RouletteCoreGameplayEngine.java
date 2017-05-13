@@ -17,11 +17,11 @@ public class RouletteCoreGameplayEngine implements Spin {
         long numberOfAttempts = 2;
         while (numberOfAttempts > 0) {
             Console.printNumberOfAttemptsRemaining(numberOfAttempts);
-            long ID = RouletteInputOutputAndPrint.getPlayerID(numberOfAttempts);
+            long ID = RouletteInputOutputAndPrint.getPlayerID();
             if (ID == -1 && numberOfAttempts == 2) {
                 numberOfAttempts--;
                 Console.printNumberOfAttemptsRemaining(numberOfAttempts);
-                ID = RouletteInputOutputAndPrint.getPlayerID(numberOfAttempts);
+                ID = RouletteInputOutputAndPrint.getPlayerID();
                 continue;
             }
             if (ID == -1 && numberOfAttempts == 1) {
