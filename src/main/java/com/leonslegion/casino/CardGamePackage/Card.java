@@ -51,7 +51,74 @@ public class Card {
             }
         }
     }
-    public enum Rank {TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE}
+    //TODO implement the toStrings to make these nicer
+    public enum Rank {
+        TWO {
+        public String toString(){
+            return "2";
+            }
+        },
+        THREE {
+            public String toString(){
+                return "3";
+            }
+        }
+        , FOUR{
+            public String toString(){
+                return "4";
+            }
+        }
+        , FIVE{
+            public String toString(){
+                return "5";
+            }
+        }
+        , SIX{
+            public String toString(){
+                return "6";
+            }
+        }
+        , SEVEN{
+            public String toString(){
+                return "7";
+            }
+        }
+        , EIGHT{
+            public String toString(){
+                return "8";
+            }
+        }
+        , NINE{
+            public String toString(){
+                return "9";
+            }
+        }
+        , TEN{
+            public String toString(){
+                return "10";
+            }
+        }
+        , JACK {
+            public String toString(){
+                return "J";
+            }
+        }
+        , QUEEN{
+            public String toString(){
+                return "Q";
+            }
+        }
+        , KING{
+            public String toString(){
+                return "K";
+            }
+        }
+        , ACE{
+            public String toString(){
+                return "A";
+            }
+        }
+    }
 
     public int getPointValue() {
         if(rank.ordinal() < 8) {
@@ -64,7 +131,9 @@ public class Card {
     }
 
     public String toString() {
-        return String.format("|%s| of |%s|", rank.name(), suit.toString());
+        return String.format("|%s " +
+                "" +
+                "%s|", rank.toString(), suit.toString());
     }
 
 }
