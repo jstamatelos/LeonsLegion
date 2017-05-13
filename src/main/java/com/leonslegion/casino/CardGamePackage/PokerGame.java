@@ -14,6 +14,7 @@ public class PokerGame extends CardGame {
 
     private double pot;
     private double ante = 10;  //For the time being, ante is set to 10 automatically.
+    private boolean[] hasFolded;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
@@ -47,7 +48,7 @@ public class PokerGame extends CardGame {
 
     private void loadPlayers(int numPlayers) {
         for (int i = 0; i < numPlayers; i++) {
-            long accountid = InputHandler.getLongInput("Please enter Player " + (i + 1) + "'s ID.");
+            long accountid = InputHandler.getLongInput("Please enter Player " + (i + 1) + "'s ID.\n");
             Account account = Account.AccountManager.findAccount(accountid);
             if (account != null) {
                 players.add(new PokerPlayer(account));
@@ -89,25 +90,23 @@ public class PokerGame extends CardGame {
     last pot from their account.
      */
     private void debitFromPokerPlayerAccount(PokerPlayer p, double amount) {
-        Account account = Account.AccountManager.findAccount(p.getAccount().getAccountHolderName());
-        account.setAccountBalance(-1 * amount);
-        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        p.getAccount().setAccountBalance(-1 * amount);
+        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + p.getBalance() + " remaining in your account.\n");
     }
 
     /*
     Pays the pot to the Account of the winner.
      */
     private void payToWinnersAccount(PokerPlayer p) {
-        Account account = Account.AccountManager.findAccount(p.getAccount().getId());
-        account.setAccountBalance(pot);
-        Console.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        p.getAccount().setAccountBalance(pot);
+        Console.println("Congratulations! After your win, you have $" + p.getBalance() + " remaining in your account.\n");
     }
 
     /*
     For getting a PokerPlayer's name.
      */
     private String getPokerPlayerName(PokerPlayer player) {
-        return Account.AccountManager.findAccount(player.getAccount().getId()).getAccountHolderName();
+        return player.getAccount().getAccountHolderName();
     }
 
     /*
@@ -135,8 +134,14 @@ public class PokerGame extends CardGame {
      */
     private void anteUp() {
         for(PokerPlayer p : getPlayers()) {
-            pot += ante;
-            debitFromPokerPlayerAccount(p, ante);
+            String name = p.getAccount().getAccountHolderName();
+            try {
+                pot += placeBet(ante);
+                Console.print(name + " antes $" + ante + ".\n");
+            } catch (Exception e){
+                Console.print(name + ": You don't have to go home, but you can't stay here.\n");
+                players.remove(p);
+            }
         }
     }
 
@@ -149,7 +154,7 @@ public class PokerGame extends CardGame {
         ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
         for (PokerPlayerBettingRound p : round.playersInRound) {
             pot += p.amountIn;
-            debitFromPokerPlayerAccount(p.player, p.amountIn);
+            //debitFromPokerPlayerAccount(p.player, p.amountIn);
             if(!p.folded) {
                 remainingPlayers.add(p.player);
             }
@@ -159,18 +164,17 @@ public class PokerGame extends CardGame {
 
     /*
     Sets into motion the logic behind a game of poker.
-    The while loop will terminate when all players but
-    one leave.
 
     This is set up for a deal, one round of betting, and
     then determining a winner.
 
     Currently, the order of play is going to be the same
-    for each of these loops.
+    for each iteration of the loop.
 
     This loop as constituted will run a five card game
     with no exchanges and one round of betting.
      */
+    //TODO - add a stage wherein we check that the player has enough balance to play
     public void run() {
         promptGame();
         printRules();
@@ -184,6 +188,7 @@ public class PokerGame extends CardGame {
         boolean ends = true;
 
         while (ends) { //players.size() > 1
+            hasFolded = new boolean[players.size()];
             pot = 0;
             initialDeal();
             PokerBettingRound round = new PokerBettingRound(getPlayers());

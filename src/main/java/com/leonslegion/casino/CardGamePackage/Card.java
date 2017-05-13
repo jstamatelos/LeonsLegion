@@ -136,4 +136,10 @@ public class Card {
                 "%s|", rank.toString(), suit.toString());
     }
 
+    public String toStringReverse() {
+        return String.format("|%s " +
+                "" +
+                "%s|", suit.toString(), rank.toString());
+    }
+
 }
