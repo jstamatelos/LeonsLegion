@@ -35,7 +35,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinInsideBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "00";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -57,7 +57,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideDozenBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "1st D";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -79,7 +79,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideColumnBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "2nd C";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -101,7 +101,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideEvenOrOddBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Even";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -124,7 +124,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideFrontOrBackBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Front";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -146,7 +146,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideColorBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Red";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);

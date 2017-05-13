@@ -27,6 +27,7 @@ public class RouletteInputOutput {
 
     public static long getPlayerID(long numberOfAttempts) {
         do {
+            Console.println("");
             return Console.getLongInput("Please enter your ID.", numberOfAttempts);
         } while (numberOfAttempts > 0);
     }

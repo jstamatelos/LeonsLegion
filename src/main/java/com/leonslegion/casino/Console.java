@@ -39,23 +39,19 @@ public class Console {
     }
 
     public static Long getLongInput(String prompt, long numberOfAttempts, Object... args) {
-        if (numberOfAttempts == 0) {
-            return (long) 0;
-        }
-        println("Number of Input Attempts Remaining: " + numberOfAttempts);
         String stringInput = getStringInput(prompt, args);
         try {
             long longInput = Long.parseLong(stringInput);
             if (longInput < 0) {
                 println("Invalid negative input");
-                return getLongInput(prompt, numberOfAttempts - 1, args);
+                return (long) -1;
             }
             return longInput;
         } catch (NumberFormatException nfe) {
             println("");
             println("[ %s ] is an invalid user input!", stringInput);
             println("Try inputting an integer value!");
-            return getLongInput(prompt, numberOfAttempts - 1, args);
+            return (long) -1;
         }
     }
 
@@ -76,6 +72,11 @@ public class Console {
         print(sb.toString());
     }
 
+    public static void printNumberOfAttemptsRemaining(long numberOfAttempts) {
+        println("");
+        println("Number of Attempts Remaining: " + numberOfAttempts);
+    }
+
     public static void printAccountNotFoundMessage() {
         println("");
         println("Account Not Found!");
@@ -86,6 +87,12 @@ public class Console {
         println("Account Already Loaded!");
     }
 
+    public static void printAttemptsExceeded() {
+        println("");
+        println("You've surpassed the two attempts limit.");
+        println("We'll give you two more, but your activity has been flagged.");
+    }
+
     public static void printAccountAccepted() {
         println("");
         println("ID Accepted! Loading Account Info...");
@@ -93,7 +100,6 @@ public class Console {
 
     public static void printAccountInformation(Account account) {
         println("");
-
     }
 
 }
