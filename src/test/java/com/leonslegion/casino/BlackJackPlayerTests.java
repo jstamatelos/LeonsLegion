@@ -4,6 +4,7 @@ import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.CardGamePackage.BlackjackHand;
 import com.leonslegion.casino.CardGamePackage.BlackjackPlayer;
 import com.leonslegion.casino.CardGamePackage.Card;
+import com.leonslegion.casino.CardGamePackage.Deck;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,8 +30,8 @@ public class BlackJackPlayerTests {
         player.setHand(hand);
         player.split();
 
-        Card cardInHand1 = player.getSplitHands().get(0).getHand().get(0);
-        Card cardInHand2 = player.getSplitHands().get(1).getHand().get(0);
+        Card cardInHand1 = player.getSplitHands().get(0).getCards().get(0);
+        Card cardInHand2 = player.getSplitHands().get(1).getCards().get(0);
 
         Assert.assertTrue(player.hasSplitHands());
 
@@ -44,6 +45,17 @@ public class BlackJackPlayerTests {
 
         Assert.assertEquals(cardInHand1, card1);
         Assert.assertEquals(cardInHand2, card2);
+
+    }
+
+    @Test
+    public void hitTest() {
+        Deck deck = new Deck();
+        BlackjackHand hand = new BlackjackHand();
+        player.setHand(hand);
+        player.hit(deck);
+
+        Assert.assertEquals(1, player.getHand().getCards().size());
 
     }
 }

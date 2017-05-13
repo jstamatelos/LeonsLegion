@@ -20,10 +20,14 @@ public class BlackjackPlayer extends CardPlayer {
         hand = (BlackjackHand) super.getHand();
     }
 
-    public void hit(Card card) {
+    public void hit(Deck deck) {
+        Card card = deck.dealCard();
         hand.addCard(card);
     }
 
+    public BlackjackHand getHand() {
+        return hand;
+    }
     public void stay() {
         //nothing happens. not sure if this needs a method.
     }
@@ -38,8 +42,8 @@ public class BlackjackPlayer extends CardPlayer {
         if (hand.splitPossible()) {
             BlackjackHand hand1 = new BlackjackHand();
             BlackjackHand hand2 = new BlackjackHand();
-            hand1.addCard(hand.getHand().get(0));
-            hand2.addCard(hand.getHand().get(1));
+            hand1.addCard(hand.getCards().get(0));
+            hand2.addCard(hand.getCards().get(1));
             splitHands.add(hand1);
             splitHands.add(hand2);
         }
