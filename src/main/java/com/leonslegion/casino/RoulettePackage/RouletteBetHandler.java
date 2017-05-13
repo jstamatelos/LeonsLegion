@@ -131,8 +131,8 @@ public class RouletteBetHandler {
     public static double checkPlayerBetsForInsideBetWins(ArrayList<RouletteBet> betList, String spinResult) {
         for (int count = 0; count < betList.size(); count++) {
             if (spinResult.equals(betList.get(count).getBetType())) {
-                System.out.print("You won a 35:1 Payout! You won: $");
-                System.out.printf("%,.2f", betList.get(count).getBetValue() * 34);
+                Console.print("You won a 35:1 Payout! You won: $");
+                Console.print("%,.2f", betList.get(count).getBetValue() * 34);
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 35;
             }
@@ -145,20 +145,20 @@ public class RouletteBetHandler {
     public static double checkPlayerBetsForOutsideDozenBetWins(ArrayList<RouletteBet> betList, String spinResult) {
         for (int count = 0; count < betList.size(); count++) {
             if (Integer.parseInt(spinResult) > 0 && Integer.parseInt(spinResult) < 13 && betList.get(count).getBetType().equalsIgnoreCase("1st D")) {
-                System.out.print("You won a 2:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue()*2);
+                Console.print("You won a 2:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue()*2);
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 3;
             }
             if (Integer.parseInt(spinResult) > 12 && Integer.parseInt(spinResult) < 25 && betList.get(count).getBetType().equalsIgnoreCase("2nd D")) {
-                System.out.print("You won a 2:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue()*2);
+                Console.print("You won a 2:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue()*2);
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 3;
             }
             if (Integer.parseInt(spinResult) > 24 && Integer.parseInt(spinResult) < 37 && betList.get(count).getBetType().equalsIgnoreCase("3rd D")) {
-                System.out.print("You won a 2:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue()*2);
+                Console.print("You won a 2:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue()*2);
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 3;
             }
@@ -172,24 +172,24 @@ public class RouletteBetHandler {
         for (int count = 0; count < betList.size(); count++) {
             for (int columnStart = 1; columnStart < 35; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && betList.get(count).getBetType().equalsIgnoreCase("1st C")) {
-                    System.out.print("You won a 2:1 Payout! You won: ");
-                    System.out.printf("%,.2f", betList.get(count).getBetValue()*2);
+                    Console.print("You won a 2:1 Payout! You won: ");
+                    Console.print("%,.2f", betList.get(count).getBetValue()*2);
                     Console.printDashes();
                     return betList.get(count).getBetValue() * 3;
                 }
             }
             for (int columnStart = 2; columnStart < 36; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && betList.get(count).getBetType().equalsIgnoreCase("2nd C")) {
-                    System.out.print("You won a 2:1 Payout! You won: ");
-                    System.out.printf("%,.2f", betList.get(count).getBetValue()*2);
+                    Console.print("You won a 2:1 Payout! You won: ");
+                    Console.print("%,.2f", betList.get(count).getBetValue()*2);
                     Console.printDashes();
                     return betList.get(count).getBetValue() * 3;
                 }
             }
             for (int columnStart = 3; columnStart < 37; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && betList.get(count).getBetType().equalsIgnoreCase("3rd C")) {
-                    System.out.print("You won a 2:1 Payout! You won: ");
-                    System.out.printf("%,.2f", betList.get(count).getBetValue()*2);
+                    Console.print("You won a 2:1 Payout! You won: ");
+                    Console.print("%,.2f", betList.get(count).getBetValue()*2);
                     Console.printDashes();
                     return betList.get(count).getBetValue() * 3;
                 }
@@ -203,14 +203,14 @@ public class RouletteBetHandler {
     public static double checkPlayerBetsForEvenOrOddBetWins(ArrayList<RouletteBet> betList, String spinResult) {
         for (int count = 0; count < betList.size(); count++) {
             if (Integer.parseInt(spinResult) % 2 == 0 && Integer.parseInt(spinResult) != 0 && betList.get(count).getBetType().equalsIgnoreCase("Even")) {
-                System.out.print("You won a 1:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue());
+                Console.print("You won a 1:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue());
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 2;
             }
             if (Integer.parseInt(spinResult) % 2 == 1 && Integer.parseInt(spinResult) != 0 && betList.get(count).getBetType().equalsIgnoreCase("Odd")) {
-                System.out.print("You won a 1:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue());
+                Console.print("You won a 1:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue());
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 2;
             }
@@ -223,14 +223,14 @@ public class RouletteBetHandler {
     public static double checkPlayerBetsForFrontOrBackBetWins(ArrayList<RouletteBet> betList, String spinResult) {
         for (int count = 0; count < betList.size(); count++) {
             if (Integer.parseInt(spinResult) > 0 && Integer.parseInt(spinResult) < 19 && betList.get(count).getBetType().equalsIgnoreCase("Front")) {
-                System.out.print("You won a 1:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue());
+                Console.print("You won a 1:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue());
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 2;
             }
             if (Integer.parseInt(spinResult) > 18 && Integer.parseInt(spinResult) < 37 && betList.get(count).getBetType().equalsIgnoreCase("Back")) {
-                System.out.print("You won a 1:1 Payout! You won: ");
-                System.out.printf("%,.2f", betList.get(count).getBetValue());
+                Console.print("You won a 1:1 Payout! You won: ");
+                Console.print("%,.2f", betList.get(count).getBetValue());
                 Console.printDashes();
                 return betList.get(count).getBetValue() * 2;
             }
@@ -245,8 +245,8 @@ public class RouletteBetHandler {
             if (betList.get(count).getBetType().equalsIgnoreCase("Red")) {
                 for (int i = 0; i < redList.length; i++) {
                     if (Integer.parseInt(spinResult) == redList[i]) {
-                        System.out.print("You won a 1:1 Payout! You won: ");
-                        System.out.printf("%,.2f", betList.get(count).getBetValue());
+                        Console.print("You won a 1:1 Payout! You won: ");
+                        Console.print("%,.2f", betList.get(count).getBetValue());
                         Console.printDashes();
                         return betList.get(count).getBetValue() * 2;
                     }
@@ -255,8 +255,8 @@ public class RouletteBetHandler {
             if (betList.get(count).getBetType().equalsIgnoreCase("Black")) {
                 for (int i = 0; i < blackList.length; i++) {
                     if (Integer.parseInt(spinResult) == blackList[i]) {
-                        System.out.print("You won a 1:1 Payout! You won: ");
-                        System.out.printf("%,.2f", betList.get(count).getBetValue());
+                        Console.print("You won a 1:1 Payout! You won: ");
+                        Console.print("%,.2f", betList.get(count).getBetValue());
                         Console.printDashes();
                         return betList.get(count).getBetValue() * 2;
                     }

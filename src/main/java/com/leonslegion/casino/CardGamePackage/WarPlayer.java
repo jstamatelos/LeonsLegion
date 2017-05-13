@@ -7,7 +7,7 @@ import com.leonslegion.casino.AccountPackage.Account;
  */
 public class WarPlayer extends CardPlayer {
 
-    WarPlayer(Account account) {
+    public WarPlayer(Account account) {
         super(account);
     }
 

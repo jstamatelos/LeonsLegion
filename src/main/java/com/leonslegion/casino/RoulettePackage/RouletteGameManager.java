@@ -89,8 +89,8 @@ public class RouletteGameManager {
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(betList, spinResult));
-            System.out.print("Player #" + roulettePlayers.get(count).getAccount().getId() + " new balance: $");
-            System.out.printf("%,.2f", roulettePlayers.get(count).getBalance());
+            Console.print("Player #" + roulettePlayers.get(count).getAccount().getId() + " new balance: $");
+            Console.print("%,.2f", roulettePlayers.get(count).getBalance());
             Console.printDashes();
             player.resetBetList();
         }

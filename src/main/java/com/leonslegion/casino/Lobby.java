@@ -66,7 +66,7 @@ public class Lobby {
 
             case "check":
                 Account account = Account.AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
-                System.out.format("This account has a balance of: $%.2f \n", account.getAccountBalance());
+                Console.println("This account has a balance of: $%.2f \n", account.getAccountBalance());
                 actionSelection();
                 break;
 
