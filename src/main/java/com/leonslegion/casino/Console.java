@@ -1,6 +1,8 @@
 package com.leonslegion.casino;
 
 
+import com.leonslegion.casino.AccountPackage.Account;
+
 import java.util.Scanner;
 
 /**
@@ -39,12 +41,17 @@ public class Console {
     public static Long getLongInput(String prompt, Object... args) {
         String stringInput = getStringInput(prompt, args);
         try {
-            Long longInput = Long.parseLong(stringInput);
+            long longInput = Long.parseLong(stringInput);
+            if (longInput < 0) {
+                println("Invalid negative input");
+                return (long) -1;
+            }
             return longInput;
         } catch (NumberFormatException nfe) {
+            println("");
             println("[ %s ] is an invalid user input!", stringInput);
             println("Try inputting an integer value!");
-            return getLongInput(prompt, args);
+            return (long) -1;
         }
     }
 
@@ -65,5 +72,34 @@ public class Console {
         print(sb.toString());
     }
 
+    public static void printNumberOfAttemptsRemaining(long numberOfAttempts) {
+        println("");
+        println("Number of Attempts Remaining: " + numberOfAttempts);
+    }
+
+    public static void printAccountNotFoundMessage() {
+        println("");
+        println("Account Not Found!");
+    }
+
+    public static void printAccountAlreadyLoaded() {
+        println("");
+        println("Account Already Loaded!");
+    }
+
+    public static void printAttemptsExceeded() {
+        println("");
+        println("You've surpassed the two attempts limit.");
+        println("We'll give you two more, but your activity has been flagged.");
+    }
+
+    public static void printAccountAccepted() {
+        println("");
+        println("ID Accepted! Loading Account Info...");
+    }
+
+    public static void printAccountInformation(Account account) {
+        println("");
+    }
 
 }

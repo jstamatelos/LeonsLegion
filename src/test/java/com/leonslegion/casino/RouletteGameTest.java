@@ -35,7 +35,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinInsideBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "00";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -45,7 +45,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (35*100);
 
         //When:
-        player.getAccount().setAccountBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForInsideBetWins(player.getBetList(), spin));
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForInsideBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
         Console.printDouble(actualOutput);
 
@@ -57,7 +57,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideDozenBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "1st D";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -67,7 +67,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (3*100);
 
         //When:
-        player.getAccount().setAccountBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
         Console.printDouble(actualOutput);
 
@@ -79,7 +79,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideColumnBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "2nd C";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -89,7 +89,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (3*100);
 
         //When:
-        player.getAccount().setAccountBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
         Console.printDouble(actualOutput);
 
@@ -101,7 +101,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideEvenOrOddBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Even";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -111,7 +111,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (2*100);
 
         //When:
-        player.getAccount().setAccountBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
         Console.printDouble(actualOutput);
 
@@ -124,7 +124,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideFrontOrBackBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Front";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -134,7 +134,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (2*100);
 
         //When:
-        player.getAccount().setAccountBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
         Console.printDouble(actualOutput);
 
@@ -146,7 +146,7 @@ public class RouletteGameTest {
     public void testThatPlayerCanWinOutsideColorBet() {
         //Given:
         Account account = new Account();
-        RoulettePlayer player = new RoulettePlayer(account, RouletteCoreGameplayEngine.returnEmptyRouletteBetList());
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Red";
         String newBetValue = player.placeBet("100");
         double newBetValueAsDouble = Double.parseDouble(newBetValue);
@@ -156,7 +156,7 @@ public class RouletteGameTest {
         double expectedOutput = 900 + (2*100);
 
         //When:
-        player.getAccount().setAccountBalance(player.getBalance() + RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
         double actualOutput = player.getBalance();
         Console.printDouble(actualOutput);
 
