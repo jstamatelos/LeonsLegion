@@ -24,27 +24,32 @@ class PokerBettingRound {
 
     /*
     Offers each player their options and routs their choice appropriately.
+    It's also controlling the skipping of folded players, so it's clearly
+    doing too much. There's also a tail recursion that needs to be removed.
      */
-    private void playerChoice(PokerPlayerBettingRound player) {
-        if(player.folded) {
+    private void playerChoice(PokerPlayerBettingRound playerBetting) {
+        if(playerBetting.folded) {
             return;
         }
-        Console.println(player.player.getAccount().getAccountHolderName() + "\n" + player.showHand());
-        String choice = InputHandler.getStringInput("You can FOLD, CALL, RAISE, or if no bets have been made, CHECK.\n").toUpperCase();
+        Console.println(playerBetting.player.getAccount().getAccountHolderName() + "\n" + playerBetting.showHand());
+        String choice = InputHandler.getStringInput("You can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
         try {
-            switch(choice) {
+            switch(choice.toUpperCase()) {
                 case "FOLD": // fold
-                    player.folds();
-                    break;
-                case "CALL":
-                    player.player.placeBet(highBet - player.amountIn);
-                    player.amountIn = highBet;
+                    playerBetting.folds();
                     break;
                 case "RAISE":
                     double raise = InputHandler.getDoubleInput("How much would you like to raise?");
-                    highBet = player.player.placeBet(highBet + raise);
-                    player.amountIn = highBet;
-                    lastToRaise = player;
+                    highBet = playerBetting.player.placeBet(highBet + raise);
+                    playerBetting.amountIn = highBet;
+                    lastToRaise = playerBetting;
+                    break;
+                case "CALL":
+                    if(highBet == 0) {
+                        throw new Exception("There was no raise to call.");
+                    }
+                    playerBetting.player.placeBet(highBet - playerBetting.amountIn);
+                    playerBetting.amountIn = highBet;
                     break;
                 case "CHECK":
                     if(highBet > 0) {
@@ -56,7 +61,7 @@ class PokerBettingRound {
                 }
         } catch (Exception e) {
             Console.println(e.getMessage());
-            playerChoice(player);
+            playerChoice(playerBetting);
         }
     }
 

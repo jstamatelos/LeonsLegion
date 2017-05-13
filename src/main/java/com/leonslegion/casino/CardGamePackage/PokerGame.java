@@ -89,25 +89,23 @@ public class PokerGame extends CardGame {
     last pot from their account.
      */
     private void debitFromPokerPlayerAccount(PokerPlayer p, double amount) {
-        Account account = Account.AccountManager.findAccount(p.getAccount().getAccountHolderName());
-        account.setAccountBalance(-1 * amount);
-        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        p.getAccount().setAccountBalance(-1 * amount);
+        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + p.getBalance() + " remaining in your account.\n");
     }
 
     /*
     Pays the pot to the Account of the winner.
      */
     private void payToWinnersAccount(PokerPlayer p) {
-        Account account = Account.AccountManager.findAccount(p.getAccount().getId());
-        account.setAccountBalance(pot);
-        Console.println("Congratulations! After your win, you have $" + account.getAccountBalance() + " remaining in your account.\n");
+        p.getAccount().setAccountBalance(pot);
+        Console.println("Congratulations! After your win, you have $" + p.getBalance() + " remaining in your account.\n");
     }
 
     /*
     For getting a PokerPlayer's name.
      */
     private String getPokerPlayerName(PokerPlayer player) {
-        return Account.AccountManager.findAccount(player.getAccount().getId()).getAccountHolderName();
+        return player.getAccount().getAccountHolderName();
     }
 
     /*
