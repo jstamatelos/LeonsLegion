@@ -148,7 +148,7 @@ public class PokerGame extends CardGame {
         ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
         for (PokerPlayerBettingRound p : round.playersInRound) {
             pot += p.amountIn;
-            debitFromPokerPlayerAccount(p.player, p.amountIn);
+            //debitFromPokerPlayerAccount(p.player, p.amountIn);
             if(!p.folded) {
                 remainingPlayers.add(p.player);
             }
@@ -158,18 +158,17 @@ public class PokerGame extends CardGame {
 
     /*
     Sets into motion the logic behind a game of poker.
-    The while loop will terminate when all players but
-    one leave.
 
     This is set up for a deal, one round of betting, and
     then determining a winner.
 
     Currently, the order of play is going to be the same
-    for each of these loops.
+    for each iteration of the loop.
 
     This loop as constituted will run a five card game
     with no exchanges and one round of betting.
      */
+    //TODO - add a stage wherein we check that the player has enough balance to play
     public void run() {
         promptGame();
         printRules();

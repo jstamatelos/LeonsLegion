@@ -12,7 +12,7 @@ class PokerBettingRound {
 
     private double highBet;
     ArrayList<PokerPlayerBettingRound> playersInRound;
-    PokerPlayerBettingRound lastToRaise;
+    PokerPlayerBettingRound roundTerminator;
 
     PokerBettingRound(ArrayList<PokerPlayer> players) {
         playersInRound = new ArrayList<PokerPlayerBettingRound>();
@@ -24,40 +24,36 @@ class PokerBettingRound {
 
     /*
     Offers each player their options and routs their choice appropriately.
-    It's also controlling the skipping of folded players, so it's clearly
-    doing too much. There's also a tail recursion that needs to be removed.
+    TODO - There's also a tail recursion that needs to be removed.
      */
     private void playerChoice(PokerPlayerBettingRound playerBetting) {
-        if(playerBetting.folded) {
-            return;
-        }
         Console.println(playerBetting.player.getAccount().getAccountHolderName() + "\n" + playerBetting.showHand());
-        String choice = InputHandler.getStringInput("You can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
+        String choice = InputHandler.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
         try {
             switch(choice.toUpperCase()) {
                 case "FOLD": // fold
                     playerBetting.folds();
                     break;
                 case "RAISE":
-                    double raise = InputHandler.getDoubleInput("The high bet is currently " + highBet + ". How much would you like to raise above that?");
+                    double raise = InputHandler.getDoubleInput("\nThe high bet is currently " + highBet + ". How much would you like to raise above that?");
                     highBet = playerBetting.player.placeBet(highBet + raise);
                     playerBetting.amountIn = highBet;
-                    lastToRaise = playerBetting;
+                    roundTerminator = playerBetting;
                     break;
                 case "CALL":
                     if(highBet == 0) {
-                        throw new Exception("There was no raise to call.");
+                        throw new Exception("\nThere was no raise to call.");
                     }
                     playerBetting.player.placeBet(highBet - playerBetting.amountIn);
                     playerBetting.amountIn = highBet;
                     break;
                 case "CHECK":
                     if(highBet > 0) {
-                        throw new Exception("You cannot check.");
+                        throw new Exception("\nYou cannot check.");
                     }
                     break;
                 default:
-                    throw new Exception("Not a valid choice. Read the instructions again.");
+                    throw new Exception("\nNot a valid choice. Read the instructions again.");
                 }
         } catch (Exception e) {
             Console.println(e.getMessage());
@@ -81,6 +77,19 @@ class PokerBettingRound {
     }
 
     /*
+    getNextPlayer iterates around the table and skips folded players.
+     */
+    private PokerPlayerBettingRound getNextPlayer(PokerPlayerBettingRound player) {
+        int turnIndex;
+
+        do { //skips folded players
+            turnIndex = (playersInRound.indexOf(player) + 1) % playersInRound.size();
+        } while(playersInRound.get(turnIndex).folded);
+
+        return playersInRound.get(turnIndex);
+    }
+
+    /*
     This method holds the logic that ends a round
     of betting when it becomes the turn of the last
     player who raised.
@@ -88,15 +97,13 @@ class PokerBettingRound {
     void playersMakeBets() {
         PokerPlayerBettingRound player = playersInRound.get(0);
         int turnIndex = 0;
-        PokerPlayerBettingRound lastToRaise = player;
+        roundTerminator = playersInRound.get(playersInRound.size() - 1);
 
         //each iteration of the loop is a turn by a player
         do {
             playerChoice(player);
-
-            turnIndex = (turnIndex + 1) % playersInRound.size();
-            player = playersInRound.get(turnIndex);
-        } while(countFolds() < playersInRound.size() - 1 && player != lastToRaise);
+            player = getNextPlayer(player);
+        } while(countFolds() < playersInRound.size() - 1 && player != roundTerminator);
         // end of round
     }
 
