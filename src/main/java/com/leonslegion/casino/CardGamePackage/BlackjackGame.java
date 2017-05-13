@@ -43,12 +43,12 @@ public class BlackjackGame extends CardGame {
 
     private String dealerAction() {
         BlackjackHand dealerHand = (BlackjackHand) dealer.getHand();
-        if (dealerHand.evaluateHand() <= 17) {
+        if (dealerHand.sumHand() <= 17) {
             Console.println("Dealer Hits...");
             return "hit";
         }
         else {
-            Console.println("Dealer stays with " + dealerHand.evaluateHand());
+            Console.println("Dealer stays with " + dealerHand.sumHand());
             return "stay";
         }
     }
@@ -78,7 +78,7 @@ public class BlackjackGame extends CardGame {
                     Console.println("Your hand: ");
                 }
                 BlackjackHand playerHand = (BlackjackHand)player.getHand();
-                Console.println(playerHand + " total = " + playerHand.evaluateHand());
+                Console.println(playerHand + " total = " + playerHand.sumHand());
                 break;
             case "stay":
                 handleStayAction(player);
@@ -156,8 +156,8 @@ public class BlackjackGame extends CardGame {
     }
 
     public String check21(BlackjackHand playerHand, BlackjackHand dealerHand) {
-        int dealerHandValue = dealerHand.evaluateHand();
-        int playerHandValue = playerHand.evaluateHand();
+        int dealerHandValue = dealerHand.sumHand();
+        int playerHandValue = playerHand.sumHand();
         if (dealerHandValue == 21 || playerHandValue > 21) {
             deductBetFromAccount();
             return "loser";
@@ -175,7 +175,7 @@ public class BlackjackGame extends CardGame {
         String result = check21(playerHand, dealerHand);
 
         if (result.equals("") || result.equals("winner")) {
-            if (playerHand.evaluateHand() > dealerHand.evaluateHand()) {
+            if (playerHand.sumHand() > dealerHand.sumHand()) {
                 addBetToAccount();
                 Console.println("You Win!");
             } else {
@@ -188,7 +188,7 @@ public class BlackjackGame extends CardGame {
 
     private StringBuilder buildHandString(BlackjackHand hand, String playerIdentifier) {
 
-        int points = hand.evaluateHand();
+        int points = hand.sumHand();
         StringBuilder sb = new StringBuilder();
         sb.append(playerIdentifier);
         sb.append(" hand: ");
@@ -208,12 +208,14 @@ public class BlackjackGame extends CardGame {
     public void initialDeal() {
 
         deck.shuffleDeck();
-        BlackjackHand playerHand = new BlackjackHand();
-        BlackjackHand dealerHand = new BlackjackHand();
-        buildInitialHand(player, playerHand);
-        buildInitialHand(dealer, dealerHand);
-        player.setHand(playerHand);
-        dealer.setHand(dealerHand);
+
+        BlackjackPlayer[] bjplayers = {dealer, player};
+
+        for (BlackjackPlayer bjplayer : bjplayers) {
+            BlackjackHand hand = new BlackjackHand();
+            buildInitialHand(bjplayer, hand);
+            bjplayer.setHand(hand);
+        }
     }
 
     private void buildInitialHand(BlackjackPlayer player, Hand hand) {
