@@ -140,7 +140,7 @@ public class PokerGame extends CardGame {
                 pot += p.placeBet(ante);
                 Console.print(name + " antes " + Console.moneyToString(ante) + ".\n");
             } catch (Exception e){
-                Console.print(name + ": You don't have to go home, but you can't stay here.\n");
+                Console.println(name + ": You don't have to go home, but you can't stay here.\n");
                 players.remove(p);
             }
         }

@@ -27,7 +27,9 @@ class PokerBettingRound {
     TODO - There's also a tail recursion that needs to be removed.
      */
     private void playerChoice(PokerPlayerBettingRound playerBetting) {
+        Console.printDashes();
         Console.println(playerBetting.player.getAccount().getAccountHolderName() + "\n" + playerBetting.showHand());
+        Console.printDashes();
         String choice = InputHandler.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
         try {
             switch(choice.toUpperCase()) {
