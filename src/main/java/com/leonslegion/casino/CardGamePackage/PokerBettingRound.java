@@ -24,42 +24,45 @@ class PokerBettingRound {
 
     /*
     Offers each player their options and routs their choice appropriately.
-    TODO - There's also a tail recursion that needs to be removed.
      */
     private void playerChoice(PokerPlayerBettingRound playerBetting) {
         Console.printDashes();
         Console.println(playerBetting.player.getAccount().getAccountHolderName() + "\n" + playerBetting.showHand());
         Console.printDashes();
         String choice = InputHandler.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
-        try {
-            switch(choice.toUpperCase()) {
-                case "FOLD": // fold
-                    playerBetting.folds();
-                    break;
-                case "RAISE":
-                    long raise = Console.getMoneyInput("\nThe high bet is currently " + Console.moneyToString(highBet) + ". How much would you like to raise above that?");
-                    highBet = playerBetting.player.placeBet(highBet + raise);
-                    playerBetting.amountIn = highBet;
-                    roundTerminator = playerBetting;
-                    break;
-                case "CALL":
-                    if(highBet == 0) {
-                        throw new Exception("\nThere was no raise to call.");
-                    }
-                    playerBetting.player.placeBet(highBet - playerBetting.amountIn);
-                    playerBetting.amountIn = highBet;
-                    break;
-                case "CHECK":
-                    if(highBet > 0) {
-                        throw new Exception("\nYou cannot check.");
-                    }
-                    break;
-                default:
-                    throw new Exception("\nNot a valid choice. Read the instructions again.");
+        boolean loopCondition = true;
+        while(loopCondition) {
+            loopCondition = false;
+            try {
+                switch (choice.toUpperCase()) {
+                    case "FOLD": // fold
+                        playerBetting.folds();
+                        break;
+                    case "RAISE":
+                        long raise = Console.getMoneyInput("\nThe high bet is currently " + Console.moneyToString(highBet) + ". How much would you like to raise above that?");
+                        highBet = playerBetting.player.placeBet(highBet + raise);
+                        playerBetting.amountIn = highBet;
+                        roundTerminator = playerBetting;
+                        break;
+                    case "CALL":
+                        if (highBet == 0) {
+                            throw new Exception("\nThere was no raise to call.");
+                        }
+                        playerBetting.player.placeBet(highBet - playerBetting.amountIn);
+                        playerBetting.amountIn = highBet;
+                        break;
+                    case "CHECK":
+                        if (highBet > 0) {
+                            throw new Exception("\nYou cannot check.");
+                        }
+                        break;
+                    default:
+                        throw new Exception("\nNot a valid choice. Read the instructions again.");
                 }
-        } catch (Exception e) {
-            Console.println(e.getMessage());
-            playerChoice(playerBetting);
+            } catch (Exception e) {
+                Console.println(e.getMessage());
+                loopCondition = true;
+            }
         }
     }
 

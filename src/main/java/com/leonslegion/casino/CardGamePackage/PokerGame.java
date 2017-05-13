@@ -15,6 +15,7 @@ public class PokerGame extends CardGame {
     private long pot;
     private long ante = 1000;  //For the time being, ante is set to $10 automatically.
     private boolean[] hasFolded;
+    private long[] amountInThePot;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
@@ -164,11 +165,23 @@ public class PokerGame extends CardGame {
     }
 
     private void promptPlayerExits() {
-        for(PokerPlayer p : getPlayers()) {
-            //
-            players.remove(p);
+        ArrayList<PokerPlayer> players = getPlayers();
+        for(PokerPlayer p : players) {
+            if(p.leaveGame()) {
+                players.remove(p);
+            }
         }
-        return;
+    }
+
+    private void resetHand() {
+        hasFolded = new boolean[players.size()];
+        amountInThePot = new long[players.size()];
+        pot = 0;
+        for(PokerPlayer p : getPlayers()) {
+            p.hand = null;
+        }
+        deck = new Deck();
+        initialDeal();
     }
 
     /*
@@ -188,9 +201,9 @@ public class PokerGame extends CardGame {
         printRules();
 
         while (players.size() > 1) { //
-            hasFolded = new boolean[players.size()];
-            pot = 0;
-            initialDeal();
+
+            resetHand();
+
             PokerBettingRound round = new PokerBettingRound(getPlayers());
             anteUp();
             round.playersMakeBets();
