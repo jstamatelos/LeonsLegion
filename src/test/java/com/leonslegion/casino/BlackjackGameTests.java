@@ -20,21 +20,19 @@ public class BlackjackGameTests {
 
     @Before
     public void setUp() {
-        Account account1 = new Account();
-        Account account2 = new Account();
-        account1.setAccountBalance(-900);
-        account2.setAccountBalance(99999000);
-        sam = new BlackjackPlayer(account1);
-        bob = new BlackjackPlayer(account2);
+        Account acct = Account.AccountFactory.createAccountWithName("Cameron");
+        BlackjackPlayer player = new BlackjackPlayer(acct);
 
-        newGame = new BlackjackGame(sam, bob);
+        newGame = new BlackjackGame(player);
 
     }
 
     @Test
     public void testNewGame() {
 
-        Assert.assertTrue(newGame instanceof BlackjackGame);
+        Assert.assertTrue(newGame.getHasDealer());
+
+        System.out.println(newGame);
     }
 
     @Test

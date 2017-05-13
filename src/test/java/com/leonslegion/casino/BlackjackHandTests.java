@@ -111,6 +111,27 @@ public class BlackjackHandTests {
 
     }
 
+    @Test
+    public void compareHandsTest() {
+        Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS);
+
+        BlackjackHand hand1 = new BlackjackHand();
+
+        hand1.addCard(card1);
+        hand1.addCard(card2);
+
+        Card card3 = new Card(Card.Rank.KING, Card.Suit.SPADES);
+        Card card4 = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS);
+
+        BlackjackHand hand2 = new BlackjackHand();
+
+        hand2.addCard(card3);
+        hand2.addCard(card4);
+
+        Assert.assertEquals(-1, hand1.compareTo(hand2));
+    }
+
 
 
 }

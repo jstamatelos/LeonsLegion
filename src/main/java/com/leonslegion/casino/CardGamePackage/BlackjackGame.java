@@ -22,7 +22,7 @@ public class BlackjackGame extends CardGame {
     private boolean playing;
     private double bet;
 
-    public BlackjackPlayer createDealer() {
+    private BlackjackPlayer createDealer() {
         Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
         Account.AccountManager.addAccount(newDealerAccount);
         newDealerAccount.setAccountBalance(1000000);
@@ -33,12 +33,19 @@ public class BlackjackGame extends CardGame {
                 // do nothing
                 return -1;
             }
+
+            public void takeTurn() {
+                if (getHand().getPoints() > 17) {
+                    hit(deck);
+                }
+            }
         };
     }
 
-    public BlackjackGame(BlackjackPlayer player, BlackjackPlayer dealer) {
+    public BlackjackGame(BlackjackPlayer player) {
         this.player = player;
-        this.dealer = dealer;
+        this.dealer = createDealer();
+        setHasDealer(true);
     }
 
     private String dealerAction() {

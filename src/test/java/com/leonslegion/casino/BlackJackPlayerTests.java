@@ -57,5 +57,15 @@ public class BlackJackPlayerTests {
 
         Assert.assertEquals(1, player.getHand().getCards().size());
 
+        player.hit(deck);
+
+        Assert.assertEquals(2, player.getHand().getCards().size());
+
     }
+
+    @Test
+    public void playerBalanceTest() {
+        Assert.assertEquals(1000.0, player.getBalance(), 0.001);
+    }
+
 }
