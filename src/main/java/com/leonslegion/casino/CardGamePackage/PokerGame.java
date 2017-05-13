@@ -14,6 +14,7 @@ public class PokerGame extends CardGame {
 
     private double pot;
     private double ante = 10;  //For the time being, ante is set to 10 automatically.
+    private boolean[] hasFolded;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
@@ -182,6 +183,7 @@ public class PokerGame extends CardGame {
         boolean ends = true;
 
         while (ends) { //players.size() > 1
+            hasFolded = new boolean[players.size()];
             pot = 0;
             initialDeal();
             PokerBettingRound round = new PokerBettingRound(getPlayers());

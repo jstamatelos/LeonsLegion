@@ -39,7 +39,7 @@ class PokerBettingRound {
                     playerBetting.folds();
                     break;
                 case "RAISE":
-                    double raise = InputHandler.getDoubleInput("How much would you like to raise?");
+                    double raise = InputHandler.getDoubleInput("The high bet is currently " + highBet + ". How much would you like to raise above that?");
                     highBet = playerBetting.player.placeBet(highBet + raise);
                     playerBetting.amountIn = highBet;
                     lastToRaise = playerBetting;
