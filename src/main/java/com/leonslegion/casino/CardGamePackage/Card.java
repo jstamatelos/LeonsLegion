@@ -131,7 +131,9 @@ public class Card {
     }
 
     public String toString() {
-        return String.format("|%s %s|", rank.toString(), suit.toString());
+        return String.format("|%s " +
+                "" +
+                "%s|", rank.toString(), suit.toString());
     }
 
 }
