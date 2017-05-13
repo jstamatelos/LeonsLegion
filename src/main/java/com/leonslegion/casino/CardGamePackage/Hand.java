@@ -32,6 +32,10 @@ public abstract class Hand {
         for(Card c : hand) {
             sb.append(c.toString() + " ");
         }
+        sb.append("\n");
+        for(Card c : hand) {
+            sb.append(c.toStringReverse() + " ");
+        }
         return sb.toString();
     }
 

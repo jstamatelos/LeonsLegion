@@ -24,7 +24,7 @@ public abstract class CardPlayer extends Player {
         if(getBalance() - bet < 0) {
             throw new Exception("Bet is too large.");
         }
-        getAccount().setAccountBalance(getBalance() - bet);
+        getAccount().setAccountBalance(-bet);
         return bet;
     }
 
