@@ -12,7 +12,7 @@ public class RouletteGameManager {
     public static void playRoulette() {
         RouletteInputOutputAndPrint.printWelcomeMessage();
         RouletteCoreGameplayEngine coreEngine = new RouletteCoreGameplayEngine();
-        long numberOfPlayers = RouletteInputOutputAndPrint.getNumberOfPlayers(2);
+        long numberOfPlayers = RouletteInputOutputAndPrint.getNumberOfPlayers();
         ArrayList<RoulettePlayer> players = coreEngine.createRoulettePlayerList(numberOfPlayers);
         boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {

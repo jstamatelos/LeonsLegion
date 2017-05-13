@@ -17,19 +17,19 @@ public class RouletteInputOutputAndPrint {
     }
 
 
-    public static long getNumberOfPlayers(long numberOfAttempts) {
+    public static long getNumberOfPlayers() {
         Console.println("Type '0' to return to lobby.");
+        long numberOfPlayers = -1;
         do {
-            return Console.getLongInput("How many players would like to play?", numberOfAttempts);
-        } while (numberOfAttempts > 0);
+            numberOfPlayers = Console.getLongInput("How many players would like to play?");
+        } while (numberOfPlayers == -1);
+        return numberOfPlayers;
     }
 
 
-    public static long getPlayerID(long numberOfAttempts) {
-        do {
-            Console.println("");
-            return Console.getLongInput("Please enter your ID.", numberOfAttempts);
-        } while (numberOfAttempts > 0);
+    public static long getPlayerID() {
+        Console.println("");
+        return Console.getLongInput("Please enter your ID.");
     }
 
 

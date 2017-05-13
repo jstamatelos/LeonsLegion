@@ -38,7 +38,7 @@ public class Console {
         }
     }
 
-    public static Long getLongInput(String prompt, long numberOfAttempts, Object... args) {
+    public static Long getLongInput(String prompt, Object... args) {
         String stringInput = getStringInput(prompt, args);
         try {
             long longInput = Long.parseLong(stringInput);
@@ -55,8 +55,8 @@ public class Console {
         }
     }
 
-    public static Integer getIntegerInput(String prompt, long numberOfAttempts, Object... args) {
-        return getLongInput(prompt, numberOfAttempts, args).intValue();
+    public static Integer getIntegerInput(String prompt, Object... args) {
+        return getLongInput(prompt, args).intValue();
     }
 
     public static void printDashes() {
