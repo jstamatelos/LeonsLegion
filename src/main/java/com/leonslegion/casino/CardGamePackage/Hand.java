@@ -15,7 +15,7 @@ public abstract class Hand {
         hand = cards;
     }
 
-    public ArrayList<Card> getHand() {
+    public ArrayList<Card> getCards() {
         return hand;
     }
 

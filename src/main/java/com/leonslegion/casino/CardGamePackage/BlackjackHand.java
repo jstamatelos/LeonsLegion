@@ -16,7 +16,7 @@ public class BlackjackHand extends Hand implements Comparable {
     }
 
     public boolean hasAce() {
-        for (Card card : getHand()) {
+        for (Card card : getCards()) {
             if (card.getRank() == Card.Rank.ACE) {
                 return true;
             }
@@ -30,7 +30,7 @@ public class BlackjackHand extends Hand implements Comparable {
 
     public int numAces() {
         int aces = 0;
-        for (Card card : getHand()) {
+        for (Card card : getCards()) {
             if (card.getRank() == Card.Rank.ACE) {
                 aces += 1;
             }
@@ -40,7 +40,7 @@ public class BlackjackHand extends Hand implements Comparable {
 
     public int sumHand() {
         int sum = 0;
-        for (Card card: getHand()) {
+        for (Card card: getCards()) {
             sum += card.getPointValue();
         }
         return sum;
@@ -48,18 +48,18 @@ public class BlackjackHand extends Hand implements Comparable {
 
     private int sumHand(Hand hand) {
         int sum = 0;
-        for (Card card : hand.getHand()) {
+        for (Card card : hand.getCards()) {
             sum += card.getPointValue();
         }
         return sum;
     }
 
     public boolean splitPossible() {
-        if (getHand().size() > 2) {
+        if (getCards().size() > 2) {
             return false;
         }
         Set<String> seen = new HashSet<>();
-        for (Card card : getHand()) {
+        for (Card card : getCards()) {
             if (seen.contains(card.getRank().toString())) {
                 return true;
             } else {
