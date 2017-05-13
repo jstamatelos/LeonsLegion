@@ -1,12 +1,52 @@
 package com.leonslegion.casino.CardGamePackage;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by cameronsima on 5/9/17.
  */
 public class BlackjackHand extends Hand implements Comparable {
 
-    private int evaluateHand(Hand hand) {
+    public int getPoints() {
+        if (isOver21() && hasAce()) {
+            return sumHand() - (numAces() * 10);
+        }
+        return sumHand();
+    }
 
+    public boolean hasAce() {
+        for (Card card : getHand()) {
+            if (card.getRank() == Card.Rank.ACE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isOver21() {
+        return sumHand() > 21;
+    }
+
+    public int numAces() {
+        int aces = 0;
+        for (Card card : getHand()) {
+            if (card.getRank() == Card.Rank.ACE) {
+                aces += 1;
+            }
+        }
+        return aces;
+    }
+
+    public int sumHand() {
+        int sum = 0;
+        for (Card card: getHand()) {
+            sum += card.getPointValue();
+        }
+        return sum;
+    }
+
+    private int sumHand(Hand hand) {
         int sum = 0;
         for (Card card : hand.getHand()) {
             sum += card.getPointValue();
@@ -14,31 +54,31 @@ public class BlackjackHand extends Hand implements Comparable {
         return sum;
     }
 
-    public int evaluateHand() {
-        int sum = 0;
-        for (Card card: this.getHand()) {
-            sum += card.getPointValue();
+    public boolean splitPossible() {
+        if (getHand().size() > 2) {
+            return false;
         }
-        return sum;
+        Set<String> seen = new HashSet<>();
+        for (Card card : getHand()) {
+            if (seen.contains(card.getRank().toString())) {
+                return true;
+            } else {
+                seen.add(card.getRank().toString());
+            }
+        }
+        return false;
     }
+
 
     @Override
     public int compareTo(Object otherHand) {
 
-        int thisTally = evaluateHand(this);
-        int otherTally = evaluateHand((Hand) otherHand);
-
-        if (thisTally > 21 && otherTally > 21) {
+        if (getPoints() == ((BlackjackHand) otherHand).getPoints()) {
             return 0;
-        }else if (thisTally > 21) {
-            return 1;
-        } else if (otherTally > 21) {
+        } else if (getPoints() > ((BlackjackHand) otherHand).getPoints()) {
             return -1;
-        } else if (thisTally > otherTally) {
-            return -1;
-        } else if (thisTally < otherTally) {
+        } else {
             return 1;
         }
-        return 0;
     }
 }
