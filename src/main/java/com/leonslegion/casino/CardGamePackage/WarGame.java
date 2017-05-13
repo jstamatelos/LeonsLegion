@@ -53,7 +53,7 @@ public class WarGame extends CardGame implements Comparator {
                 continue;
             }
             Console.println("ID accepted!");
-            WarPlayer newWarPlayer = new WarPlayer(warPlayerAccount.getAccountBalance(), warPlayerAccount.getId());
+            WarPlayer newWarPlayer = new WarPlayer(warPlayerAccount);
             return newWarPlayer;
         }
 
@@ -62,7 +62,7 @@ public class WarGame extends CardGame implements Comparator {
     // Initial Bet
     public static double placeBet(WarPlayer warPlayer) {
         double bet = InputHandler.getDoubleInput("Please place a bet: ");
-        long accountID = warPlayer.getAccountId();
+        long accountID = warPlayer.getAccount().getId();
         for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
             if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
                 double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
@@ -100,7 +100,7 @@ public class WarGame extends CardGame implements Comparator {
     // Dealer card is compared to player card by point value
     public static String determineWinner(WarPlayer warPlayer, double bet){
         if (playerCard.getPointValue() > dealerCard.getPointValue()){
-            long accountID = warPlayer.getAccountId();
+            long accountID = warPlayer.getAccount().getId();
             for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
                 if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
                     double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
@@ -113,7 +113,7 @@ public class WarGame extends CardGame implements Comparator {
             }
             return "You win! Nice!";
         } else if (playerCard.getPointValue() < dealerCard.getPointValue()){
-            long accountID = warPlayer.getAccountId();
+            long accountID = warPlayer.getAccount().getId();
             for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
                 if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
                     double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();

@@ -15,7 +15,7 @@ public class TestSlotPlayer {
 
         //given
         Account acct = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(acct.getAccountBalance(), acct.getId());
+        SlotPlayer sp = new SlotPlayer(acct);
         boolean expectedResult = true;
 
         //when

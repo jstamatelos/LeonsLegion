@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.leonslegion.casino.Abstracts.Player;
 import com.leonslegion.casino.Console;
+import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.InputHandler;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -20,8 +21,8 @@ public class RoulettePlayer extends Player {
 
 
 
-    public RoulettePlayer (double balance, long accountId, ArrayList<RouletteBet> betList) {
-        super(balance, accountId);
+    public RoulettePlayer (Account account, ArrayList<RouletteBet> betList) {
+        super(account);
         this.betList = betList;
     }
 
@@ -37,7 +38,7 @@ public class RoulettePlayer extends Player {
         if (super.getBalance() - bet < 0) {
             Console.println("Bet greater than current Balance!");
         }
-        setBalance(getBalance() - bet);
+        getAccount().setAccountBalance(getBalance() - bet);
         return bet;
     }
 
@@ -62,7 +63,7 @@ public class RoulettePlayer extends Player {
         }
         else {
             double newBalance = getBalance() - Double.parseDouble(bet);
-            super.setBalance(newBalance);
+            getAccount().setAccountBalance(newBalance);
         }
         return bet;
     }

@@ -1,13 +1,14 @@
 package com.leonslegion.casino.CardGamePackage;
 
 import com.leonslegion.casino.Abstracts.Player;
+import com.leonslegion.casino.AccountPackage.Account;
 
 public abstract class CardPlayer extends Player {
 
     protected Hand hand;
 
-    CardPlayer(double balance, long accountId) {
-        super(balance, accountId);
+    CardPlayer(Account account) {
+        super(account);
     }
 
     public Hand getHand() {
@@ -23,7 +24,7 @@ public abstract class CardPlayer extends Player {
         if(getBalance() - bet < 0) {
             throw new Exception("Bet is too large.");
         }
-        setBalance(getBalance() - bet);
+        getAccount().setAccountBalance(getBalance() - bet);
         return bet;
     }
 

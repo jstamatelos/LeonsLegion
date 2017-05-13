@@ -32,7 +32,7 @@ public class CardComparatorTest {
     public void sortDeckTest() {
         Deck deck = new Deck();
         Collections.sort(deck.deck, new CardComparator());
-        String expected = "";
+        String expected = "TWO of ♠, TWO of ♥, TWO of ♦, TWO of ♣, THREE of ♠, THREE of ♥, THREE of ♦, THREE of ♣, FOUR of ♠, FOUR of ♥, FOUR of ♦, FOUR of ♣, FIVE of ♠, FIVE of ♥, FIVE of ♦, FIVE of ♣, SIX of ♠, SIX of ♥, SIX of ♦, SIX of ♣, SEVEN of ♠, SEVEN of ♥, SEVEN of ♦, SEVEN of ♣, EIGHT of ♠, EIGHT of ♥, EIGHT of ♦, EIGHT of ♣, NINE of ♠, NINE of ♥, NINE of ♦, NINE of ♣, TEN of ♠, TEN of ♥, TEN of ♦, TEN of ♣, JACK of ♠, JACK of ♥, JACK of ♦, JACK of ♣, QUEEN of ♠, QUEEN of ♥, QUEEN of ♦, QUEEN of ♣, KING of ♠, KING of ♥, KING of ♦, KING of ♣, ACE of ♠, ACE of ♥, ACE of ♦, ACE of ♣";
 
         String actual = deck.toString();
 

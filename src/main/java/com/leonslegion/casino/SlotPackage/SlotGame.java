@@ -52,7 +52,7 @@ public class SlotGame {
             Console.printDashes();
             Console.println("ID accepted!");
             Console.printDashes();
-            SlotPlayer newSlotPlayer = new SlotPlayer(slotPlayerAccount.getAccountBalance(), slotPlayerAccount.getId());
+            SlotPlayer newSlotPlayer = new SlotPlayer(slotPlayerAccount);
             return newSlotPlayer;
         }
     }
@@ -61,7 +61,7 @@ public class SlotGame {
     public static void adjustBalance(SlotPlayer newPlayer) {
         Console.println("Player has exited.");
         double remainingBalance = newPlayer.getBalance();
-        long accountID = newPlayer.getAccountId();
+        long accountID = newPlayer.getAccount().getId();
         for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
             if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
                 double originalBalance = Account.AccountManager.getAccounts().get(account).getAccountBalance();

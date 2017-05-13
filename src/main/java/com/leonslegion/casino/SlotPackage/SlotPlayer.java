@@ -2,6 +2,7 @@ package com.leonslegion.casino.SlotPackage;
 
 import com.leonslegion.casino.Abstracts.Player;
 import com.leonslegion.casino.Console;
+import com.leonslegion.casino.AccountPackage.Account;
 
 /**
  * Created by sarahweisser on 5/11/17.
@@ -10,8 +11,8 @@ public class SlotPlayer extends Player {
 
     private double bet = 5;
 
-    public SlotPlayer (double balance, long accountId) {
-        super(balance, accountId);
+    public SlotPlayer (Account account) {
+        super(account);
     }
 
     public double getBet() {
@@ -25,7 +26,7 @@ public class SlotPlayer extends Player {
             return false;
         }
         else {
-            this.setBalance(this.getBalance() - 5);
+            this.getAccount().setAccountBalance(getBalance() - 5);
             return true;
         }
     }
