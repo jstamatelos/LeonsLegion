@@ -12,31 +12,27 @@ import org.junit.Test;
 
 public class WarGameTest {
     @Test
-    public void startWarGame() throws Exception {
+    public void startWarGame()  {
     }
 
     @Test
-    public void createWarPlayer() throws Exception {
+    public void createWarPlayer()  {
     }
 
     @Test
-    public void placeBet() throws Exception {
+    public void placeBet() {
     }
 
     @Test
-    public void setDealerCard() throws Exception {
+    public void setDealerCard() {
     }
 
     @Test
-    public void setplayerCard() throws Exception {
+    public void setplayerCard() {
     }
 
     @Test
-    public void determineWinner() throws Exception {
-    }
-
-    @Test
-    public void setHasDealer() throws Exception {
+    public void determineWinner() {
     }
 
     @Test

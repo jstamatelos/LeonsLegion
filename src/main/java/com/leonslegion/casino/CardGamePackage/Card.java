@@ -51,7 +51,7 @@ public class Card {
             }
         }
     }
-    //TODO implement the toStrings to make these nicer
+
     public enum Rank {
         TWO {
         public String toString(){
