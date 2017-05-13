@@ -134,8 +134,14 @@ public class PokerGame extends CardGame {
      */
     private void anteUp() {
         for(PokerPlayer p : getPlayers()) {
-            pot += ante;
-            debitFromPokerPlayerAccount(p, ante);
+            String name = p.getAccount().getAccountHolderName();
+            try {
+                pot += placeBet(ante);
+                Console.print(name + " antes $" + ante + ".\n");
+            } catch (Exception e){
+                Console.print(name + ": You don't have to go home, but you can't stay here.\n");
+                players.remove(p);
+            }
         }
     }
 
