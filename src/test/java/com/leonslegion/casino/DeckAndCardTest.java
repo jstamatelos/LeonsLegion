@@ -20,7 +20,7 @@ public class DeckAndCardTest {
         Assert.assertTrue(expectedOutput == actualOutput);
 
     }
-
+/*
     @Test
     public void testAllCardsInDeck() {
         //Given:
@@ -33,7 +33,7 @@ public class DeckAndCardTest {
         //Then:
         Assert.assertTrue(expectedOutput.equals(actualOutput));
     }
-
+*/
     @Test
     public void testShuffleDeck() {
         //Given:

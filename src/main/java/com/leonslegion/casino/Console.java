@@ -1,6 +1,8 @@
 package com.leonslegion.casino;
 
 
+import com.leonslegion.casino.AccountPackage.Account;
+
 import java.util.Scanner;
 
 /**
@@ -36,20 +38,29 @@ public class Console {
         }
     }
 
-    public static Long getLongInput(String prompt, Object... args) {
+    public static Long getLongInput(String prompt, long numberOfAttempts, Object... args) {
+        if (numberOfAttempts == 0) {
+            return (long) 0;
+        }
+        println("Number of Input Attempts Remaining: " + numberOfAttempts);
         String stringInput = getStringInput(prompt, args);
         try {
-            Long longInput = Long.parseLong(stringInput);
+            long longInput = Long.parseLong(stringInput);
+            if (longInput < 0) {
+                println("Invalid negative input");
+                return getLongInput(prompt, numberOfAttempts - 1, args);
+            }
             return longInput;
         } catch (NumberFormatException nfe) {
+            println("");
             println("[ %s ] is an invalid user input!", stringInput);
             println("Try inputting an integer value!");
-            return getLongInput(prompt, args);
+            return getLongInput(prompt, numberOfAttempts - 1, args);
         }
     }
 
-    public static Integer getIntegerInput(String prompt, Object... args) {
-        return getLongInput(prompt, args).intValue();
+    public static Integer getIntegerInput(String prompt, long numberOfAttempts, Object... args) {
+        return getLongInput(prompt, numberOfAttempts, args).intValue();
     }
 
     public static void printDashes() {
@@ -65,5 +76,24 @@ public class Console {
         print(sb.toString());
     }
 
+    public static void printAccountNotFoundMessage() {
+        println("");
+        println("Account Not Found!");
+    }
+
+    public static void printAccountAlreadyLoaded() {
+        println("");
+        println("Account Already Loaded!");
+    }
+
+    public static void printAccountAccepted() {
+        println("");
+        println("ID Accepted! Loading Account Info...");
+    }
+
+    public static void printAccountInformation(Account account) {
+        println("");
+
+    }
 
 }
