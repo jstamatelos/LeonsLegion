@@ -38,7 +38,7 @@ public class RouletteGameTest {
         RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "00";
         String newBetValue = player.placeBet("100");
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
         String spin = "00";
@@ -60,7 +60,7 @@ public class RouletteGameTest {
         RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "1st D";
         String newBetValue = player.placeBet("100");
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
         String spin = "1";
@@ -82,7 +82,7 @@ public class RouletteGameTest {
         RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "2nd C";
         String newBetValue = player.placeBet("100");
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
         String spin = "20";
@@ -104,7 +104,7 @@ public class RouletteGameTest {
         RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Even";
         String newBetValue = player.placeBet("100");
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
         String spin = "2";
@@ -127,7 +127,7 @@ public class RouletteGameTest {
         RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Front";
         String newBetValue = player.placeBet("100");
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
         String spin = "1";
@@ -149,7 +149,7 @@ public class RouletteGameTest {
         RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
         String newBetType = "Red";
         String newBetValue = player.placeBet("100");
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         player.makeRouletteBet(newBetType, newBetValueAsDouble);
 
         String spin = "1";

@@ -9,18 +9,18 @@ import com.leonslegion.casino.AccountPackage.Account;
  */
 public class SlotPlayer extends Player {
 
-    private double bet = 5;
+    private long bet = 500;
 
     public SlotPlayer (Account account) {
         super(account);
     }
 
-    public double getBet() {
+    public long getBet() {
         return bet;
     }
 
     public boolean placeBet() {
-        if (super.getBalance() < 5) {
+        if (super.getBalance() < 500) {
             Console.println("It is $5.00 to play this machine.");
             Console.println("You do not have enough in your account to play.");
             return false;
@@ -31,7 +31,7 @@ public class SlotPlayer extends Player {
         }
     }
 
-    public double placeBet(double bet) {return 0;}
+    public long placeBet(long bet) {return 0;}
 
 
 }

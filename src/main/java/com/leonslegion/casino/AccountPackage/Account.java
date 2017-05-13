@@ -1,5 +1,7 @@
 package com.leonslegion.casino.AccountPackage;
 
+import com.leonslegion.casino.Console;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ public class Account {
     private static long idCounter = 0;
     private long id;
     private String accountHolderName;
-    private double accountBalance = 1000;
+    private long accountBalance = 100000;
 
     public Account() {
         idCounter++;
@@ -34,17 +36,18 @@ public class Account {
         return accountHolderName;
     }
 
-    public double getAccountBalance() {
+    public long getAccountBalance() {
         return accountBalance;
     }
 
-    public void setAccountBalance(double netWinnings) {
+    public void setAccountBalance(long netWinnings) {
         accountBalance += netWinnings;
     }
 
     @Override
+    //TODO - due to long conversion, this won't be right
     public String toString() {
-        return String.format("Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: $%.2f", accountBalance);
+        return "Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: " + Console.moneyToString(accountBalance) + "\n";
     }
 
     /**
@@ -81,7 +84,7 @@ public class Account {
             accounts.remove(account);
         }
 
-        public static double getBalance(Account account) {
+        public static long getBalance(Account account) {
             return account.getAccountBalance();
         }
 
@@ -89,7 +92,7 @@ public class Account {
             return account.getAccountHolderName();
         }
 
-        public static void adjustAccountBalance(Account account, double netWinnings) {
+        public static void adjustAccountBalance(Account account, long netWinnings) {
             account.setAccountBalance(netWinnings);
         }
 
