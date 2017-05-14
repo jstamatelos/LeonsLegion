@@ -94,34 +94,4 @@ public class Console {
         print(sb.toString());
     }
 
-    public static void printNumberOfAttemptsRemaining(long numberOfAttempts) {
-        println("");
-        println("Number of Attempts Remaining: " + numberOfAttempts);
-    }
-
-    public static void printAccountNotFoundMessage() {
-        println("");
-        println("Account Not Found!");
-    }
-
-    public static void printAccountAlreadyLoaded() {
-        println("");
-        println("Account Already Loaded!");
-    }
-
-    public static void printAttemptsExceeded() {
-        println("");
-        println("You've surpassed the two attempts limit.");
-        println("We'll give you two more, but your activity has been flagged.");
-    }
-
-    public static void printAccountAccepted() {
-        println("");
-        println("ID Accepted! Loading Account Info...");
-    }
-
-    public static void printAccountInformation(Account account) {
-        println("");
-    }
-
 }
