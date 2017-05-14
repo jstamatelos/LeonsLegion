@@ -4,6 +4,8 @@ import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
@@ -47,11 +49,21 @@ public class BlackjackGame extends CardGame {
     }
 
     public void dealerTurn() {
-
+        wait(2);
         while (dealer.getHand().getPoints() < 17) {
-            Console.println("Dealer hits...");
+            Console.println(" \n Dealer hits...");
             dealer.hit(deck);
         }
+        wait(2);
+    }
+
+    private void wait(int seconds) {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            Console.println(e.toString());
+        }
+
     }
 
 
@@ -123,11 +135,6 @@ public class BlackjackGame extends CardGame {
                 promptPlayAgain();
                 break;
         }
-    }
-
-
-    private void selectHand() {
-        String h = Console.getStringInput("Which hand?");
     }
 
     private void getBet() {
@@ -207,27 +214,106 @@ public class BlackjackGame extends CardGame {
         handlePlayerAction(action);
     }
 
+
+
+    private void handleSplit() {
+        player.split();
+        player.hitSplitHand(1, deck);
+        player.hitSplitHand(2, deck);
+
+        player.showHand();
+        for (int i = 0; i < player.getSplitHands().size(); i++) {
+            stay = false;
+            while (stay == false) {
+                splitTurn(i+1);
+                if (player.getSplitHands().get(0).getPoints() > 21 || player.getSplitHands().get(1).getPoints() > 21) {
+                    Console.println("Hand " + (i+1) +  "busts");
+                    stay = true;
+                }
+            }
+        }
+
+        dealerTurn();
+
+        int handNum = 1;
+        for (BlackjackHand hand : player.getSplitHands()) {
+            evaluateSplits(hand, handNum);
+            handNum += 1;
+        }
+
+        stay = false;
+        dealer.showHand();
+        player.showHand();
+        promptPlayAgain();
+    }
+
+    private void evaluateSplits(BlackjackHand hand, int handNum) {
+        System.out.println(hand.toString());
+        if (hand.compareTo(dealer.getHand()) == -1) {
+            Console.printDashes();
+            Console.println("Hand " + handNum + " wins!");
+            Console.printDashes();
+            player.addBetToAccount((int) bet);
+        } else if (hand.compareTo(dealer.getHand()) == 1) {
+            Console.printDashes();
+            Console.println("Hand " + handNum + " loses!");
+            Console.printDashes();
+            player.deductBetFromAccount((int) bet);
+
+            } else {
+            Console.printDashes();
+            Console.println("Hand " + handNum + " is a tie.");
+            Console.printDashes();
+        }
+    }
+
+    private void splitTurn(int hand) {
+        String action = Console.getStringInput("Hit or stay on hand " + hand + "?");
+        handleSplitAction(action, hand);
+        player.showHand();
+
+    }
+
+    private void handleSplitAction(String action, int hand) {
+        switch (action) {
+            case "hit":
+                player.hitSplitHand(hand, deck);
+                break;
+            case "stay":
+                stay = true;
+                break;
+            default:
+                splitTurn(hand);
+                break;
+        }
+    }
+
     private void handlePlayerAction(String action) {
         switch (action) {
             case "hit":
-                if (player.hasSplitHands()) {
-
-                }
                 player.hit(deck);
                 break;
             case "stay":
                 stay = true;
                 break;
             case  "split":
-                player.split();
+                handleSplit();
                 break;
             default:
                 turn();
                 break;
-
         }
     }
 
+    public void initialDealSplit() {
+        Card card1 = new Card(Card.Rank.EIGHT, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS);
+        BlackjackHand hand = new BlackjackHand();
+        hand.addCard(card1);
+        hand.addCard(card2);
+        player.setHand(hand);
+        dealer.setHand(hand);
+    }
 
     public void startBlackJack() {
 
@@ -236,7 +322,9 @@ public class BlackjackGame extends CardGame {
             return;
         }
 
-        initialDeal();
+        //initialDeal();
+        initialDealSplit();
+
         getBet();
 
         while (playing) {
@@ -244,9 +332,12 @@ public class BlackjackGame extends CardGame {
                 bust();
                 break;
             }
-            player.showHand();
-            dealer.cardsShowing();
-            turn();
+
+            if (!player.hasSplitHands()) {
+                player.showHand();
+                dealer.cardsShowing();
+                turn();
+            }
 
             if (stay == true) {
                 stay = false;
@@ -269,6 +360,4 @@ public class BlackjackGame extends CardGame {
         BlackjackGame game = new BlackjackGame();
         game.startBlackJack();
     }
-
-
 }
