@@ -14,8 +14,8 @@ public class RouletteGameManager {
         RouletteCoreGameplayEngine coreEngine = new RouletteCoreGameplayEngine();
         RoulettePrint.printWelcomeMessage();
         long numberOfPlayers = RouletteInputOutput.getNumberOfPlayers(new InputAsker(System.in, System.out));
-      /*  ArrayList<RoulettePlayer> players = RouletteInputOutput.createRoulettePlayerList(numberOfPlayers);
-        boolean currentlyPlayingRound = true;
+        ArrayList<RoulettePlayer> players = RouletteInputOutput.createRoulettePlayerList(numberOfPlayers);
+       /* boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {
             doesPlayerHaveABalance(players);
             doesPlayerWantToExit(players);

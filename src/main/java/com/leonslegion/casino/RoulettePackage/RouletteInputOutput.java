@@ -34,10 +34,18 @@ public class RouletteInputOutput {
         ArrayList<RoulettePlayer> players = new ArrayList<>();
         for (int playerIndex = 0; playerIndex < numberOfPlayers; playerIndex++) {
             long playerID = getPlayerID(new InputAsker(System.in, System.out));
-            if (checkIfPlayerIDExists(playerID) && !checkIfPlayerAlreadyRegistered(players, playerID)) {
+            boolean doesIDExist = checkIfPlayerIDExists(playerID);
+            boolean isIDAlreadyRegistered = checkIfPlayerAlreadyRegistered(players, playerID);
+            if (doesIDExist && !isIDAlreadyRegistered) {
                 Account roulettePlayerAccount = Account.AccountManager.findAccount(playerID);
                 RoulettePlayer newPlayer = new RoulettePlayer(roulettePlayerAccount, new ArrayList<RouletteBet>());
                 players.add(newPlayer);
+            }
+            if (!checkIfPlayerIDExists(playerID)) {
+                playerIndex--;
+            }
+            if (checkIfPlayerAlreadyRegistered(players, playerID)) {
+                playerIndex--;
             }
         }
         return players;
@@ -49,14 +57,28 @@ public class RouletteInputOutput {
         long numberOfAttempts = 2;
         RoulettePrint.printNumberOfAttemptsRemaining(numberOfAttempts);
         String input = inputAsker.askForInput("Please enter your ID. Fractional components will be ignored.");
-        while (!NumberUtils.isParsable(input) && numberOfAttempts > 0) {
-            numberOfAttempts--;
-            RoulettePrint.printNumberOfAttemptsRemaining(numberOfAttempts);
-            input = inputAsker.askForInput("Not a valid input!");
+        while (numberOfAttempts > 0) {
             if (!NumberUtils.isParsable(input) && numberOfAttempts == 1) {
                 RoulettePrint.printAttemptsExceeded();
                 return (long) -1;
             }
+            if (!NumberUtils.isParsable(input)) {
+                numberOfAttempts--;
+                RoulettePrint.printNumberOfAttemptsRemaining(numberOfAttempts);
+                input = inputAsker.askForInput("Not a valid input!");
+                continue;
+            }
+            if (Double.parseDouble(input) < 0 && numberOfAttempts == 1) {
+                RoulettePrint.printAttemptsExceeded();
+                return (long) -1;
+            }
+            if (Double.parseDouble(input) < 0) {
+                numberOfAttempts--;
+                RoulettePrint.printNumberOfAttemptsRemaining(numberOfAttempts);
+                input = inputAsker.askForInput("Not a valid input!");
+                continue;
+            }
+            return Long.parseLong(input);
         }
         return Long.parseLong(input);
     }
@@ -65,7 +87,6 @@ public class RouletteInputOutput {
     public static boolean checkIfPlayerIDExists(long ID) {
         Account roulettePlayerAccount = Account.AccountManager.findAccount(ID);
         if (roulettePlayerAccount == null) {
-            RoulettePrint.printAccountNotFoundMessage();
             return false;
         } else {
             return true;
