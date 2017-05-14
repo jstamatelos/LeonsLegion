@@ -55,6 +55,10 @@ public class BlackjackPlayer extends CardPlayer {
         return hand;
     }
 
+    public void removeSplitHand() {
+        splitHands = new ArrayList<>();
+    }
+
     public void split() {
         if (hand.splitPossible()) {
             splitHand();

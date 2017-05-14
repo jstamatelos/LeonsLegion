@@ -48,13 +48,13 @@ public class BlackjackGame extends CardGame {
         return new BlackjackDealer(newDealerAccount);
     }
 
-    public void dealerTurn() {
-        wait(2);
+    private void dealerTurn() {
+        wait(1);
         while (dealer.getHand().getPoints() < 17) {
-            Console.println(" \n Dealer hits...");
+            Console.println(" \n Dealer hits...\n");
             dealer.hit(deck);
         }
-        wait(2);
+        wait(1);
     }
 
     private void wait(int seconds) {
@@ -234,6 +234,7 @@ public class BlackjackGame extends CardGame {
         }
 
         dealerTurn();
+        dealer.showHand();
 
         int handNum = 1;
         for (BlackjackHand hand : player.getSplitHands()) {
@@ -242,13 +243,13 @@ public class BlackjackGame extends CardGame {
         }
 
         stay = false;
-        dealer.showHand();
-        player.showHand();
+
+        //player.showHand();
+        player.removeSplitHand();
         promptPlayAgain();
     }
 
     private void evaluateSplits(BlackjackHand hand, int handNum) {
-        System.out.println(hand.toString());
         if (hand.compareTo(dealer.getHand()) == -1) {
             Console.printDashes();
             Console.println("Hand " + handNum + " wins!");
