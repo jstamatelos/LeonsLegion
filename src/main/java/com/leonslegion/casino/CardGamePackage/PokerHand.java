@@ -35,10 +35,19 @@ public class PokerHand extends Hand implements Comparable {
                     //TODO - needs a second level of comparison (get(1)) for perfect resolution
                     return comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3));
                 case FLUSH:
-                    //TODO - flush and highcard need all five levels for perfect resolution
-                    return comp.compare(getCards().get(4), ((PokerHand) other).getCards().get(4));
+                    for(int i = 4; i >= 0; i--) {
+                        if(comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i)) != 0){
+                            return comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i));
+                        }
+                    }
+                    return 0;
                 case HIGHCARD:
-                    return comp.compare(getCards().get(4), ((PokerHand) other).getCards().get(4));
+                    for(int i = 4; i >= 0; i--) {
+                        if(comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i)) != 0){
+                            return comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i));
+                        }
+                    }
+                    return 0;
                 case PAIR:
                     return 0; //TODO - trickier
                 default:

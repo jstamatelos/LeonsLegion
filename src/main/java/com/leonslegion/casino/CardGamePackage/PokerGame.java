@@ -64,7 +64,7 @@ public class PokerGame extends CardGame {
         amountInThePot = new long[players.size()];
         pot = 0;
         turnIndex = 0;
-        lastToRaiseIndex = -1;
+        lastToRaiseIndex = 0;
         for(PokerPlayer p : getPlayers()) {
             p.hand = null;
         }
