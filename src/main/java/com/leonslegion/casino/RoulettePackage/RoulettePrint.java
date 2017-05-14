@@ -32,7 +32,6 @@ public class RoulettePrint {
     public static void printAttemptsExceeded() {
         Console.println("");
         Console.println("You've surpassed the two attempts limit.");
-        Console.println("We'll give you two more, but your activity has been flagged.");
     }
 
     public static void printAccountAccepted() {
