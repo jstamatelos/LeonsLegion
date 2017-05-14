@@ -18,16 +18,21 @@ public class BlackjackDealer extends BlackjackPlayer {
         return -1;
     }
 
+    @Override
+    public void showHand() {
+        Console.println("Dealer has: ");
+        Console.println(getHand().toString());
+    }
+
     public void cardsShowing() {
         int len = getHand().getCards().size();
         System.out.println(getHand().getCards().size());
         Console.println("Dealer is showing: ");
 
         for (int i=1; i<len; i++) {
-            Console.println(getHand().getCards().get(i).toString());
-            Console.println(getHand().getCards().get(i).toStringReverse());
+            Console.print(getHand().getCards().get(i).toString() + "\n" + getHand().getCards().get(i).toStringReverse());
         }
-        Console.println("\n");
+        Console.print("\n");
     }
 }
 

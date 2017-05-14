@@ -46,14 +46,6 @@ public class BlackjackHand extends Hand implements Comparable {
         return sum;
     }
 
-    private int sumHand(Hand hand) {
-        int sum = 0;
-        for (Card card : hand.getCards()) {
-            sum += card.getPointValue();
-        }
-        return sum;
-    }
-
     public boolean splitPossible() {
         if (getCards().size() > 2) {
             return false;

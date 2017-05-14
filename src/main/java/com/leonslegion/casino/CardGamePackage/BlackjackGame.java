@@ -56,8 +56,11 @@ public class BlackjackGame extends CardGame {
     }
 
     public void dealerTurn() {
-        if (dealer.getHand().getPoints() > 17) {
+        System.out.println(dealer.getHand().getPoints());
+        if (dealer.getHand().getPoints() < 17) {
+            Console.println("Dealer hits...");
             dealer.hit(deck);
+            System.out.println(dealer.getHand().getPoints());
         }
     }
 
@@ -248,20 +251,24 @@ public class BlackjackGame extends CardGame {
                 accountId = -1;
             } else {
                 player = new BlackjackPlayer(acct);
-                System.out.println("Player");
-                System.out.println(player);
             }
 
         }
-        
+
     }
 
-    private void placeBet() {
+  /*  private void placeBet() {
 
-        String b = InputHandler.getStringInput("How much would you like to bet?");
+        long b = -1;
+
+        while (b == -1) {
+            b = InputHandler.getLongInput("How much would you like to bet?");
+        }
+
+        long b =
        // player.placeBet(b);
-        bet = Integer.parseInt(b);
-    }
+        bet = b;
+    }*/
 
  /*   public void play() {
 
@@ -326,7 +333,19 @@ public class BlackjackGame extends CardGame {
     }
 
     private void getBet() {
-        bet = Console.getLongInput("How much would you like to bet?");
+        long b = -1;
+
+        while (b == -1) {
+            b = Console.getLongInput("How much would you like to bet?");
+
+            System.out.println(b);
+            System.out.println(player.getBalance());
+            if (bet > (long)player.getBalance()) {
+                Console.println("Bet exceeds you balance!");
+                b = -1;
+            }
+        }
+        bet = b;
     }
 
 
@@ -347,7 +366,7 @@ public class BlackjackGame extends CardGame {
     }
 
     private void bust() {
-        Console.println("Bust!");
+        Console.println("\u2620  \u2620 \u2620 Bust! \u2620 \u2620 \u2620");
         endRound();
         System.out.println(bet);
         player.deductBetFromAccount((int)bet);
@@ -361,7 +380,7 @@ public class BlackjackGame extends CardGame {
         getBet();
 
         while (playing) {
-            if (player.getHand().isOver21()) {
+            if (player.getHand().getPoints() > 21) {
                 bust();
                 break;
             }
@@ -375,10 +394,6 @@ public class BlackjackGame extends CardGame {
 
     public static void main(String[] args) {
         Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Cameron"));
-        /*Account acct = Account.AccountFactory.createAccountWithName("Cameron");
-        System.out.println(acct);
-        BlackjackPlayer plr = new BlackjackPlayer(acct);
-        System.out.println(plr);*/
         BlackjackGame game = new BlackjackGame();
         game.startBlackJack();
     }
