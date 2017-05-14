@@ -5,7 +5,7 @@ import com.leonslegion.casino.AccountPackage.Account;
 public class PokerPlayer extends CardPlayer {
 
     PokerPlayer(Account account) {
-        super(account.getAccountBalance(), account.getId());
+        super(account);
         hand = new PokerHand();
     }
 

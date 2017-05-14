@@ -15,7 +15,7 @@ public abstract class Hand {
         hand = cards;
     }
 
-    public ArrayList<Card> getHand() {
+    public ArrayList<Card> getCards() {
         return hand;
     }
 
@@ -31,6 +31,10 @@ public abstract class Hand {
         StringBuilder sb = new StringBuilder();
         for(Card c : hand) {
             sb.append(c.toString() + " ");
+        }
+        sb.append("\n");
+        for(Card c : hand) {
+            sb.append(c.toStringReverse() + " ");
         }
         return sb.toString();
     }

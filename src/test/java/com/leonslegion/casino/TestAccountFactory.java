@@ -8,10 +8,10 @@ import org.junit.Test;
  * Created by sarahweisser on 5/10/17.
  */
 public class TestAccountFactory {
-
+/*
     @Test
     public void testAccountFactory() {
-
+/*
         //given
 
         Account.AccountFactory factory = new Account.AccountFactory();
@@ -27,5 +27,11 @@ public class TestAccountFactory {
         Assert.assertEquals(expectedResult, actualResult);
 
 
+<<<<<<< HEAD
+    }*/
     }
 }
+=======
+    } */
+}
+>>>>>>> bbcf45a4f5724fe44b903a286aa246d4a34c9371

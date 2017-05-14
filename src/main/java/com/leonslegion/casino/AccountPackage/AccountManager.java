@@ -1,75 +1,18 @@
 package com.leonslegion.casino.AccountPackage;
 
-import com.leonslegion.casino.Console;
-
 import java.util.ArrayList;
 
 /**
- * Created by sarahweisser on 5/9/17.
+ * Created by sarahweisser on 5/14/17.
  */
-public class Account {
+public final class AccountManager {
 
-    private static long idCounter = 0;
-    private long id;
-    private String accountHolderName;
-    private long accountBalance = 100000;
+    private static ArrayList<Account> accounts;
 
-    public Account() {
-        idCounter++;
-        this.id = idCounter;
+    public AccountManager() {
+        this.accounts = new ArrayList<Account>();
     }
 
-    public Account(String accountHolderName) {
-        this();
-        this.accountHolderName = accountHolderName;
-    }
-
-    public long getIdCounter() {
-        return idCounter;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getAccountHolderName() {
-        return accountHolderName;
-    }
-
-    public long getAccountBalance() {
-        return accountBalance;
-    }
-
-    public void setAccountBalance(long netWinnings) {
-        accountBalance += netWinnings;
-    }
-
-    @Override
-    //TODO - due to long conversion, this won't be right
-    public String toString() {
-        return "Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: " + Console.moneyToString(accountBalance) + "\n";
-    }
-
-<<<<<<< HEAD
-}
-=======
-    /**
-     * Created by sarahweisser on 5/10/17.
-     */
-    public static class AccountFactory {
-
-        public static Account createAccountWithName(String accountHolderName) {
-            return new Account(accountHolderName);
-        }
-
-    }
-
-    /**
-     * Created by sarahweisser on 5/9/17.
-     */
-    public static class AccountManager {
-
-        private static ArrayList<Account> accounts = new ArrayList<Account>();
 
         public static String showBalance(Account account) {
             return account.toString();
@@ -87,7 +30,7 @@ public class Account {
             accounts.remove(account);
         }
 
-        public static long getBalance(Account account) {
+        public static double getBalance(Account account) {
             return account.getAccountBalance();
         }
 
@@ -95,7 +38,7 @@ public class Account {
             return account.getAccountHolderName();
         }
 
-        public static void adjustAccountBalance(Account account, long netWinnings) {
+        public static void adjustAccountBalance(Account account, double netWinnings) {
             account.setAccountBalance(netWinnings);
         }
 
@@ -135,5 +78,4 @@ public class Account {
             return -1;
         }
     }
-}
->>>>>>> bbcf45a4f5724fe44b903a286aa246d4a34c9371
+

@@ -3,6 +3,8 @@ package com.leonslegion.casino.RoulettePackage;
 import java.util.ArrayList;
 
 import com.leonslegion.casino.Abstracts.Player;
+import com.leonslegion.casino.Console;
+import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.InputHandler;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -19,8 +21,8 @@ public class RoulettePlayer extends Player {
 
 
 
-    public RoulettePlayer (double balance, long accountId, ArrayList<RouletteBet> betList) {
-        super(balance, accountId);
+    public RoulettePlayer (Account account, ArrayList<RouletteBet> betList) {
+        super(account);
         this.betList = betList;
     }
 
@@ -28,20 +30,20 @@ public class RoulettePlayer extends Player {
 
     public ArrayList<RouletteBet> getBetList() {return betList;}
     public void resetBetList() {
-        betList = RouletteCoreGameplayEngine.returnEmptyRouletteBetList();
+        betList = new ArrayList<RouletteBet>();
     }
 
 
-    public double placeBet (double bet) {
+    public long placeBet (long bet) {
         if (super.getBalance() - bet < 0) {
-            System.out.println("Bet greater than current Balance!");
+            Console.println("Bet greater than current Balance!");
         }
-        setBalance(getBalance() - bet);
+        getAccount().setAccountBalance(getBalance() - bet);
         return bet;
     }
 
 
-
+    //TODO - this logic should probably be left to the Console class.
     public String placeBet (String bet) {
         if (!NumberUtils.isParsable(bet)) {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");
@@ -60,8 +62,7 @@ public class RoulettePlayer extends Player {
             return placeBet(newBet);
         }
         else {
-            double newBalance = getBalance() - Double.parseDouble(bet);
-            super.setBalance(newBalance);
+            getAccount().setAccountBalance(Long.parseLong(bet) * -1);
         }
         return bet;
     }
@@ -69,7 +70,7 @@ public class RoulettePlayer extends Player {
 
 
 
-    public void makeRouletteBet (String betType, double betValue) {
+    public void makeRouletteBet (String betType, long betValue) {
         betList.add(new RouletteBet(betType, betValue));
     }
 

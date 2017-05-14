@@ -26,7 +26,7 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     void determineHandType() {
-        Collections.sort(getHand(), new CardComparator());
+        Collections.sort(getCards(), new CardComparator());
         int switchNum = numberOfRanksPresent();
         switch(switchNum) {
             case 2:
@@ -51,8 +51,8 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     public boolean hasFlush() {
-        Card.Suit suit = getHand().get(0).getSuit();
-        for(Card c : getHand()) {
+        Card.Suit suit = getCards().get(0).getSuit();
+        for(Card c : getCards()) {
             if(c.getSuit() != suit) {
                 return false;
             }
@@ -61,10 +61,10 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     public boolean hasStraight() {
-        int ordinal = getHand().get(0).getRank().ordinal();
+        int ordinal = getCards().get(0).getRank().ordinal();
         for(int i = 1; i < 5; i++) {
             ordinal++;
-            if(getHand().get(i).getRank().ordinal() != ordinal) {
+            if(getCards().get(i).getRank().ordinal() != ordinal) {
                 return false;
             }
         }
@@ -73,7 +73,7 @@ public class PokerHand extends Hand implements Comparable {
 
     public int countRank(Card.Rank rank) {
         int count = 0;
-        for(Card c : getHand()) {
+        for(Card c : getCards()) {
             if(c.getRank() == rank) {
                 count++;
             }
@@ -83,7 +83,7 @@ public class PokerHand extends Hand implements Comparable {
 
     public int numberOfRanksPresent() {
         ArrayList<Card.Rank> ranks = new ArrayList<Card.Rank>();
-        for(Card c : getHand()) {
+        for(Card c : getCards()) {
             if(!ranks.contains(c.getRank())) {
                 ranks.add(c.getRank());
             }
@@ -118,15 +118,15 @@ public class PokerHand extends Hand implements Comparable {
     }
 
     public HandType twoRankHandChooser() {
-        Card.Rank rank = getHand().get(0).getRank();
-        if(getHand().get(1).getRank() == rank) {
+        Card.Rank rank = getCards().get(0).getRank();
+        if(getCards().get(1).getRank() == rank) {
             return HandType.FULLHOUSE;
         }
         return HandType.FOUROFAKIND;
     }
 
     public boolean hasTriple() {
-        Card.Rank rank = getHand().get(2).getRank();
+        Card.Rank rank = getCards().get(2).getRank();
         if(countRank(rank) == 3) {
             return true;
         }

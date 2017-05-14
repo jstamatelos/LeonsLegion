@@ -1,27 +1,23 @@
 package com.leonslegion.casino.Abstracts;
 
+import com.leonslegion.casino.AccountPackage.Account;
+
 public abstract class Player {
 
-    private double balance;
-    private long accountId;
+    Account account;
 
-    public Player(double balance, long accountId) {
-        this.balance = balance;
-        this.accountId = accountId;
+    public Player(Account account) {
+        this.account = account;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public double getBalance() {
-        return balance;
+    public long getBalance() {
+        return account.getAccountBalance();
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public abstract double placeBet(double bet) throws Exception;
+    public abstract long placeBet(long bet) throws Exception;
 
 }

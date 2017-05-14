@@ -1,35 +1,37 @@
 package com.leonslegion.casino.SlotPackage;
 
 import com.leonslegion.casino.Abstracts.Player;
+import com.leonslegion.casino.Console;
+import com.leonslegion.casino.AccountPackage.Account;
 
 /**
  * Created by sarahweisser on 5/11/17.
  */
 public class SlotPlayer extends Player {
 
-    private double bet = 5;
+    private long bet = 500;
 
-    public SlotPlayer (double balance, long accountId) {
-        super(balance, accountId);
+    public SlotPlayer (Account account) {
+        super(account);
     }
 
-    public double getBet() {
+    public long getBet() {
         return bet;
     }
 
     public boolean placeBet() {
-        if (super.getBalance() < 5) {
-            System.out.println("It is $5.00 to play this machine.");
-            System.out.println("You do not have enough in your account to play.");
+        if (super.getBalance() < 500) {
+            Console.println("It is $5.00 to play this machine.");
+            Console.println("You do not have enough in your account to play.");
             return false;
         }
         else {
-            this.setBalance(this.getBalance() - 5);
+            this.getAccount().setAccountBalance(getBalance() - 5);
             return true;
         }
     }
 
-    public double placeBet(double bet) {return 0;}
+    public long placeBet(long bet) {return 0;}
 
 
 }

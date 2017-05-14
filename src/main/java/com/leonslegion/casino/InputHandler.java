@@ -14,7 +14,7 @@ public final class InputHandler {
 
     // return String from input string
     public static String getStringInput(String promptUserForInput) {
-        System.out.println(promptUserForInput);
+        Console.println(promptUserForInput);
         String userInput = scanner.nextLine();
         return userInput;
     }
