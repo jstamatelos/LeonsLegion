@@ -29,10 +29,15 @@ public class BlackjackDealer extends BlackjackPlayer {
         System.out.println(getHand().getCards().size());
         Console.println("Dealer is showing: ");
 
+
         for (int i=1; i<len; i++) {
-            Console.print(getHand().getCards().get(i).toString() + "\n" + getHand().getCards().get(i).toStringReverse());
+            Console.print(getHand().getCards().get(i).toString());
         }
         Console.print("\n");
+        for (int i=1; i<len; i++) {
+            Console.print(getHand().getCards().get(i).toStringReverse());
+        }
+        Console.println("\n");
     }
 }
 

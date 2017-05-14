@@ -88,7 +88,7 @@ public class BlackjackPlayer extends CardPlayer {
     }
 
     public void addBetToAccount(int bet) {
-        getAccount().setAccountBalance(bet * 1.5);
+        getAccount().setAccountBalance(bet);
     }
 
 
