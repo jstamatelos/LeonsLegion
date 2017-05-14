@@ -32,8 +32,14 @@ public class PokerHand extends Hand implements Comparable {
                 case THREEOFAKIND:
                     return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
                 case TWOPAIR:
-                    //TODO - needs a second level of comparison (get(1)) for perfect resolution
-                    return comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3));
+                    if(comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3)) != 0) {
+                        return comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3));
+                    } else if(comp.compare(getCards().get(1), ((PokerHand) other).getCards().get(1)) != 0) {
+                        return comp.compare(getCards().get(1), ((PokerHand) other).getCards().get(1));
+                    } else { //TODO - add condition for final kicker, wherein the ordinal values of the
+                             //cards in each hand are added and it returns the difference between the two
+                        return 0;
+                    }
                 case FLUSH:
                     for(int i = 4; i >= 0; i--) {
                         if(comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i)) != 0){

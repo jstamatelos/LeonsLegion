@@ -107,7 +107,7 @@ public class PokerGame extends CardGame {
     of betting when it becomes the turn of the last
     player who raised.
     */
-    void playersMakeBets() {
+    private void playersMakeBets() {
         //each iteration of the loop is a turn by a player
         do {
             playerChoice(turnIndex);
@@ -193,9 +193,9 @@ public class PokerGame extends CardGame {
 
     private long getHighBet() {
         long highBet = 0;
-        for(int i = 0; i < amountInThePot.length; i++) {
-            if(amountInThePot[i] > highBet) {
-                highBet = amountInThePot[i];
+        for(long amount : amountInThePot) {
+            if(amount > highBet) {
+                highBet = amount;
             }
         }
         return highBet;
@@ -311,6 +311,7 @@ public class PokerGame extends CardGame {
      */
     public static void main(String[] args) {
         for(int i = 1; i <= 10; i++){
+            Account account = new Account("Guest" + i);
             Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Guest" + i));
         }
 
