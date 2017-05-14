@@ -99,28 +99,30 @@ public class WarGame extends CardGame implements Comparator {
 
 
     private static long placeBet(WarPlayer warPlayer) {
-        long bet = Console.getMoneyInput("Please place a bet: ");
-        long accountID = warPlayer.getAccount().getId();
-        for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
-            if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
-                double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
-                if (balance == 0) {
-                    Console.println("You have a balance of 0!");
-                    Console.println("Sorry! You are out of money.");
-                    WarGame.exit();
-                    return 0;
-                }
-                if (bet > balance) {
-                    Console.println("Your bet is greater than your balance!");
-                    return placeBet(warPlayer);
-                }
-                if (bet < 0) {
-                    Console.println("You can bet a negative value.");
-                    return placeBet(warPlayer);
+        while(true) {
+            long bet = Console.getMoneyInput("Please place a bet: ");
+            long accountID = warPlayer.getAccount().getId();
+            for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
+                if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
+                    long balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
+                    if (balance == 0) {
+                        Console.println("You have a balance of 0!");
+                        Console.println("Sorry! You are out of money.");
+                        continue;
+                    }
+                    if (bet > balance) {
+                        Console.println("Your bet is greater than your balance!");
+                        continue;
+                    }
+                    if (bet < 0) {
+                        Console.println("You can bet a negative value.");
+                        continue;
+                    }
                 }
             }
-        }
+
         return bet;
+        }
     }
 
     /**
@@ -133,7 +135,6 @@ public class WarGame extends CardGame implements Comparator {
         dealerDeck.shuffleDeck();
         dealerCard = dealerDeck.dealCard();
         Console.println("Dealer draws a : " + dealerCard.toString());
-        //return "Dealer draws a : " + dealerCard.toString();
     }
 
     /**
@@ -145,7 +146,6 @@ public class WarGame extends CardGame implements Comparator {
         playerDeck.shuffleDeck();
         playerCard = playerDeck.dealCard();
         Console.println("Player draws a : " + playerCard.toString());
-       // return "Player draws a : " + playerCard.toString();
     }
 
 
@@ -157,40 +157,44 @@ public class WarGame extends CardGame implements Comparator {
      * @return win / loss / draw message
      */
 
-    public static String determineWinner(WarPlayer warPlayer, long bet){
-        if (playerCard.getPointValue() > dealerCard.getPointValue()){
+    public static void determineWinner(WarPlayer warPlayer, long bet){
+        while (true) {
+            if (playerCard.getPointValue() > dealerCard.getPointValue()) {
 
-            long accountID = warPlayer.getAccount().getId();
-            for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
-                if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
-                    long balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
-                    Account.AccountManager.getAccounts().get(account).setAccountBalance(bet);
-                    Console.println("Your balance is now: ");
-                    Console.println("$ %,.2f", Account.AccountManager.getAccounts().get(account).getAccountBalance());
-
-                    Console.printDashes();
+                long accountID = warPlayer.getAccount().getId();
+                for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
+                    if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
+                        Account.AccountManager.getAccounts().get(account).setAccountBalance(bet);
+                        Console.println("Your balance is now: ");
+                        Console.printMoney(warPlayer.getBalance());
+                        Console.printDashes();
+                    }
                 }
-            }
-            Console.println("You win! Nice!");
+                Console.println("You win! Nice!");
+                break;
 
-        } else if (playerCard.getPointValue() < dealerCard.getPointValue()) {
-            long accountID = warPlayer.getAccount().getId();
-            for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
-                if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
-                    long balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
-                    Account.AccountManager.getAccounts().get(account).setAccountBalance(-bet);
-                    Console.print("Your balance is now: " + Console.moneyToString(warPlayer.getAccount().getAccountBalance()));
-                    Console.printDashes();
+            } else if (playerCard.getPointValue() < dealerCard.getPointValue()) {
+                long accountID = warPlayer.getAccount().getId();
+                for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
+                    if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
+                        Account.AccountManager.getAccounts().get(account).setAccountBalance(-bet);
+                        Console.print("Your balance is now: ");
+                        Console.printMoney(warPlayer.getBalance());
+                        Console.printDashes();
+                    }
                 }
+                Console.println("Dealer wins! Oh well.");
+                break;
+
+            } else {
+                Console.println("Tie! WAR!!!!!! Your bet is doubled!!!!\n Another Card is pulled for each player!");
+                setDealerCard();
+                setplayerCard();
+                determineWinner(warPlayer, bet * 2);
+                continue;
             }
-            Console.println( "Dealer wins! Oh well.");
-        } else {
-            Console.println("Tie! WAR!!!!!! Your bet is doubled!!!!\n Another Card is pulled for each player!");
-            setDealerCard();
-            setplayerCard();
-            determineWinner(warPlayer, bet * 2);
         }
-        return "";
+
     }
 
     /**
@@ -199,13 +203,15 @@ public class WarGame extends CardGame implements Comparator {
      * @return
      */
     private static boolean exit() {
-        String exitOpportunity = InputHandler.getStringInput("Type 'exit' to return to lobby or 'stay' to play again");
-        if (exitOpportunity.equalsIgnoreCase("exit")) {
-            return false;
-        } else if (exitOpportunity.equalsIgnoreCase("stay")) {
-            return true;
-        } else {
-            return exit();
+        while(true) {
+            String exitOpportunity = InputHandler.getStringInput("Type 'exit' to return to lobby or 'stay' to play again");
+            if (exitOpportunity.equalsIgnoreCase("exit")) {
+                return false;
+            } else if (exitOpportunity.equalsIgnoreCase("stay")) {
+                return true;
+            } else {
+                continue;
+            }
         }
     }
 

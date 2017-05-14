@@ -61,17 +61,17 @@ public class WarGameTest {
         WarPlayer player = new WarPlayer(account);
 
         try {
-            player.placeBet(100);
+            player.placeBet(10000);
         } catch (Exception e){
             Console.print("This should never get hit.");
         }
 
 
-        double actual = player.getBalance();
-        double expected = 900;
+        long actual = player.getBalance();
+        long expected = 90000;
 
 
-        Assert.assertEquals(actual,expected,0.00001);
+        Assert.assertEquals(actual, expected,.00001);
 
     }
 
