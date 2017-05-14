@@ -11,93 +11,6 @@ import java.util.ArrayList;
  */
 public class RouletteCoreGameplayEngine implements Spin {
 
-
-
-    public static RoulettePlayer addRoulettePlayer(ArrayList<RoulettePlayer> roulettePlayers) {
-        long numberOfAttempts = 2;
-        while (numberOfAttempts > 0) {
-            Console.printNumberOfAttemptsRemaining(numberOfAttempts);
-            long ID = RouletteInputOutputAndPrint.getPlayerID();
-            if (ID == -1 && numberOfAttempts == 2) {
-                numberOfAttempts--;
-                continue;
-            }
-            if (ID == -1 && numberOfAttempts == 1) {
-                Console.printAttemptsExceeded();
-                numberOfAttempts = 2;
-                continue;
-            }
-            Account roulettePlayerAccount = Account.AccountManager.findAccount(ID);
-            if (roulettePlayerAccount == null && numberOfAttempts == 2) {
-                numberOfAttempts--;
-                Console.printAccountNotFoundMessage();
-                continue;
-            }
-            if (roulettePlayerAccount == null && numberOfAttempts == 1) {
-                Console.printAttemptsExceeded();
-                numberOfAttempts = 2;
-                continue;
-
-            }
-            if (roulettePlayers.size() == 1 && roulettePlayerAccount.getId() == roulettePlayers.get(0).getAccount().getId()) {
-                if (numberOfAttempts == 2) {
-                    Console.printAccountAlreadyLoaded();
-                    numberOfAttempts--;
-                }
-                else {
-                    Console.printAccountAlreadyLoaded();
-                    Console.printAttemptsExceeded();
-                    numberOfAttempts = 2;
-                }
-            }
-            else {
-                Console.printAccountAccepted();
-                return new RoulettePlayer(roulettePlayerAccount, new ArrayList<RouletteBet>());}
-        }
-        return null;
-    }
-
-
-
-    public static ArrayList<RoulettePlayer> createRoulettePlayerList(long numberOfPlayers) {
-        ArrayList<RoulettePlayer> players = new ArrayList<>();
-        for (int playerIndex = 0; playerIndex < numberOfPlayers; playerIndex++) {
-            RoulettePlayer newPlayer = addRoulettePlayer(players);
-            players.add(newPlayer);
-        }
-        return players;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private static void printTableInformation() {
-        RouletteTable.printRouletteTable();
-        RouletteTable.printInsideBets();
-        RouletteTable.printOutsideBets();
-    }
-
-
-
     public static boolean exitInput() {
         String exitOpportunity = InputHandler.getStringInput("Type 'exit' before the round starts to leave game. Or type any other letter to stay.");
         if (exitOpportunity.equalsIgnoreCase("exit")) {return true;}
@@ -108,7 +21,7 @@ public class RouletteCoreGameplayEngine implements Spin {
 
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
-            printTableInformation();
+            RoulettePrint.printTableInformation();
             Console.println("Now Betting For Player #" + roulettePlayers.get(i).getAccount().getId());
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
