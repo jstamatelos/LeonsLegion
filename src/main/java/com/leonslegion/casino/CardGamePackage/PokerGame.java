@@ -18,6 +18,7 @@ public class PokerGame extends CardGame {
     private boolean[] hasFolded;
     private long[] amountInThePot;
     private int turnIndex = 0;
+    private int lastToRaiseIndex = -1;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
@@ -63,6 +64,7 @@ public class PokerGame extends CardGame {
         amountInThePot = new long[players.size()];
         pot = 0;
         turnIndex = 0;
+        lastToRaiseIndex = -1;
         for(PokerPlayer p : getPlayers()) {
             p.hand = null;
         }
@@ -110,7 +112,7 @@ public class PokerGame extends CardGame {
         do {
             playerChoice(turnIndex);
             turnIndex = getNextPlayer(turnIndex);
-        } while(countFolds() < hasFolded.length - 1 && amountInThePot[turnIndex] != getHighBet() && getHighBet() > 0);
+        } while(countFolds() < hasFolded.length - 1 && turnIndex != lastToRaiseIndex);
         // end of round
     }
 
@@ -139,6 +141,7 @@ public class PokerGame extends CardGame {
                         long raise = Console.getMoneyInput("\nThe high bet is currently " + Console.moneyToString(highBet) + ". How much would you like to raise above that?");
                         player.placeBet(highBet + raise);
                         amountInThePot[playerIndex] = highBet + raise;
+                        lastToRaiseIndex = playerIndex;
                         break;
                     case "CALL":
                         if (highBet == 0) {
@@ -180,7 +183,7 @@ public class PokerGame extends CardGame {
     /*
     getNextPlayer iterates around the table and skips folded players.
      */
-    private int getNextPlayer(int playerIndex) {
+    private int getNextPlayer(int turnIndex) {
         do {
             turnIndex = (turnIndex + 1) % hasFolded.length;
         } while(hasFolded[turnIndex]);

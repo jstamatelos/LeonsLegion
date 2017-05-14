@@ -16,7 +16,35 @@ public class PokerHand extends Hand implements Comparable {
 
     public int compareTo(Object other) {
         PokerHand otherHand = (PokerHand) other;
-        return handType.ordinal() - otherHand.getHandType().ordinal();
+        if(handType.ordinal() - otherHand.getHandType().ordinal() != 0) {
+            return handType.ordinal() - otherHand.getHandType().ordinal();
+        } else {
+            CardComparator comp = new CardComparator();
+            switch(handType) {
+                case STRAIGHTFLUSH:
+                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                case FOUROFAKIND:
+                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                case FULLHOUSE:
+                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                case STRAIGHT:
+                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                case THREEOFAKIND:
+                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                case TWOPAIR:
+                    //TODO - needs a second level of comparison (get(1)) for perfect resolution
+                    return comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3));
+                case FLUSH:
+                    //TODO - flush and highcard need all five levels for perfect resolution
+                    return comp.compare(getCards().get(4), ((PokerHand) other).getCards().get(4));
+                case HIGHCARD:
+                    return comp.compare(getCards().get(4), ((PokerHand) other).getCards().get(4));
+                case PAIR:
+                    return 0; //TODO - trickier
+                default:
+                    return 0;
+            }
+        }
     }
 
     public enum HandType {HIGHCARD, PAIR, TWOPAIR, THREEOFAKIND, STRAIGHT, FLUSH, FULLHOUSE, FOUROFAKIND, STRAIGHTFLUSH}
