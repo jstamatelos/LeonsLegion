@@ -2,22 +2,11 @@ package com.leonslegion.casino.CardGamePackage;
 
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
-import com.leonslegion.casino.InputHandler;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by jarrydstamatelos on 5/9/17.
  */
 public class BlackjackGame extends CardGame {
-    // Take cards from deck
-    // Deal cards
-    // Show player initial total and Dealer  initial total
-    // If player total = 21 player win , add bet to player to player total
-    // If Dealer total = 21 dealer win, remove bet from player
-    // Ask player if they want to hit / stay, if player total over 21, remove bet
-    // Dealer hit - if 17 or over dealer stay, if dealer over 21, player win - add bet to player total
-    // Restart game
 
     private BlackjackPlayer player;
     private BlackjackDealer dealer;
@@ -49,7 +38,6 @@ public class BlackjackGame extends CardGame {
     }
 
     public void initialDeal() {
-
         deck.shuffleDeck();
         BlackjackPlayer[] bjplayers = {dealer, player};
 
@@ -84,13 +72,11 @@ public class BlackjackGame extends CardGame {
                 Console.println("Not a valid account id.");
                 accountId = -1;
             } else {
+                printRules();
                 player = new BlackjackPlayer(acct);
             }
-
         }
-
     }
-
 
     public void promptPlayAgain() {
         Console.print(" Your new balance is ");
@@ -170,20 +156,35 @@ public class BlackjackGame extends CardGame {
 
     private void tie() {
         Console.printDashes();
-        Console.println("$ $ $ $ $ $ $ $ $ $ ");
-        Console.println("$ $ $ Tie. $ $ $");
-        Console.println("$ $ $ $ $ $ $ $ $ $ /n");
+        Console.println(" $ $ $ $ $ $ $ $ $  ");
+        Console.println("$ $ $ Push. $ $ $ $");
+        Console.println(" $ $ $ $ $ $ $ $ $  \n");
         Console.printDashes();
+        promptPlayAgain();
+    }
+
+    private void hitBlackjack() {
+        Console.printDashes();
+        Console.println("\n $ $ $ $ $ $ $ $ $ $ ");
+        Console.println("$ $ $ Blackjack! $ $ $");
+        Console.println("$ $ $ $ $ $ $ $ $ $ \n");
+        Console.printDashes();
+        player.showHand();
+        bet *= .75;
+        player.addBetToAccount((int) bet);
         promptPlayAgain();
     }
 
     private void turn() {
         String action;
+        Console.println("\n");
+        Console.printDashes();
         if (player.getHand().splitPossible()) {
-            action = Console.getStringInput("\n Hit, stay, or split?");
+            action = Console.getStringInput("\n\nHit, stay, or split?");
         } else {
-            action = Console.getStringInput("\n Hit or stay?");
+            action = Console.getStringInput("\n\nHit or stay?");
         }
+
         handlePlayerAction(action);
     }
 
@@ -277,14 +278,34 @@ public class BlackjackGame extends CardGame {
         }
     }
 
+    private void printRules() {
+        Console.printDashes();
+        Console.println("Rules: ");
+        Console.println("Dealer stays on soft 17.");
+        Console.println("Player may split once on initial pair only.");
+        Console.println("Player gets Blackjack on initial deal whether");
+        Console.println("the dealer shows an Ace or not.");
+        Console.println("Blackjack pays 1.5x, other wins pay 2x. \n");
+        Console.println("Good luck!");
+        Console.printDashes();
+
+
+    }
+
+
     public void startBlackJack() {
 
         if (player.getBalance() < 1) {
             Console.println("You're busted! Goodbye!");
             return;
         }
+
         initialDeal();
         getBet();
+
+        if (player.getHand().hasBlackjack()) {
+            hitBlackjack();
+        }
 
         while (playing) {
             if (player.getHand().getPoints() > 21) {
@@ -312,7 +333,6 @@ public class BlackjackGame extends CardGame {
                 }
             }
         }
-
     }
 
     public static void main(String[] args) {

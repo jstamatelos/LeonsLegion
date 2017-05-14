@@ -28,6 +28,13 @@ public class BlackjackHand extends Hand implements Comparable {
         return sumHand() > 21;
     }
 
+    public boolean hasBlackjack() {
+        if (getCards().size() == 2 && sumHand() == 21) {
+            return true;
+        }
+        return false;
+    }
+
     public int numAces() {
         int aces = 0;
         for (Card card : getCards()) {
