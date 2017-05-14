@@ -44,6 +44,9 @@ public class Account {
         return "Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: " + Console.moneyToString(accountBalance) + "\n";
     }
 
+<<<<<<< HEAD
+}
+=======
     /**
      * Created by sarahweisser on 5/10/17.
      */
@@ -124,3 +127,4 @@ public class Account {
         }
     }
 }
+>>>>>>> bbcf45a4f5724fe44b903a286aa246d4a34c9371
