@@ -1,6 +1,7 @@
 package com.leonslegion.casino.RoulettePackage;
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
+
 import java.util.*;
 
 
@@ -10,10 +11,10 @@ public class RouletteGameManager {
 
 
     public static void playRoulette() {
-        RouletteInputOutputAndPrint.printWelcomeMessage();
         RouletteCoreGameplayEngine coreEngine = new RouletteCoreGameplayEngine();
-        long numberOfPlayers = RouletteInputOutputAndPrint.getNumberOfPlayers();
-        ArrayList<RoulettePlayer> players = coreEngine.createRoulettePlayerList(numberOfPlayers);
+        RoulettePrint.printWelcomeMessage();
+        long numberOfPlayers = RouletteInputOutput.getNumberOfPlayers(new InputAsker(System.in, System.out));
+      /*  ArrayList<RoulettePlayer> players = RouletteInputOutput.createRoulettePlayerList(numberOfPlayers);
         boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {
             doesPlayerHaveABalance(players);
@@ -25,10 +26,10 @@ public class RouletteGameManager {
             RouletteCoreGameplayEngine.gatherPlayerBets(players);
             String spinResult = coreEngine.spin();
             checkPlayerBetsForResults(players, spinResult);
-        }
+        }*/
     }
 
-
+/*
 
     public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
@@ -94,5 +95,5 @@ public class RouletteGameManager {
             Console.printDashes();
             player.resetBetList();
         }
-    }
+    }*/
 }

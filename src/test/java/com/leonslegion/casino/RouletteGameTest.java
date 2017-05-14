@@ -1,15 +1,53 @@
 package com.leonslegion.casino;
 
 import com.leonslegion.casino.AccountPackage.Account;
-import com.leonslegion.casino.RoulettePackage.RouletteBet;
-import com.leonslegion.casino.RoulettePackage.RouletteBetHandler;
-import com.leonslegion.casino.RoulettePackage.RouletteCoreGameplayEngine;
-import com.leonslegion.casino.RoulettePackage.RoulettePlayer;
+import com.leonslegion.casino.RoulettePackage.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.*;
+
 import java.util.*;
 
 public class RouletteGameTest {
+
+    @Test
+    public void testGetNumberOfPlayersInputCanBe0() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+        //When
+        Mockito.when(asker.askForInput("Please enter integer number of players. 2 is max.")).thenReturn("0");
+        //Then
+        Assert.assertTrue(RouletteInputOutput.getNumberOfPlayers(asker) == 0);
+    }
+
+    @Test
+    public void testGetNumberOfPlayersInputCanBeInvalidOnce() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+        //When
+        Mockito.when(asker.askForInput("Please enter integer number of players. 2 is max.")).thenReturn("c");
+        Mockito.when(asker.askForInput("Not a valid input!")).thenReturn("1");
+        //Then
+        Assert.assertTrue(RouletteInputOutput.getNumberOfPlayers(asker) == 1);
+    }
+
+    @Test
+    public void testGetNumberOfPlayersInputCanBeInvalidTwice() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+        //When
+        Mockito.when(asker.askForInput("Please enter integer number of players. 2 is max.")).thenReturn("c");
+        Mockito.when(asker.askForInput("Not a valid input!")).thenReturn("c");
+        //Then
+        Assert.assertTrue(RouletteInputOutput.getNumberOfPlayers(asker) == 0);
+    }
+
+
+
+
+
+    /*
+
 
     @Test
     public void testThatPlayerCanMakeBet() {
@@ -163,5 +201,5 @@ public class RouletteGameTest {
         //Then:
         Assert.assertTrue(expectedOutput == actualOutput);
     }
-
+*/
 }
