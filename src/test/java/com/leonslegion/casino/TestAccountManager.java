@@ -9,10 +9,7 @@ import org.junit.Test;
  * Created by sarahweisser on 5/9/17.
  */
 public class TestAccountManager {
-<<<<<<< HEAD
 
-=======
->>>>>>> bbcf45a4f5724fe44b903a286aa246d4a34c9371
 /*
     @Test
     public void testAccountManagerShowBalance() {
@@ -194,10 +191,5 @@ public class TestAccountManager {
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
-
-<<<<<<< HEAD
-    }*/
-=======
-    } */
->>>>>>> bbcf45a4f5724fe44b903a286aa246d4a34c9371
+*/
 }

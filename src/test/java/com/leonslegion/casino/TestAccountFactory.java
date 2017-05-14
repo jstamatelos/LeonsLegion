@@ -28,8 +28,12 @@ public class TestAccountFactory {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     }*/
     }
+=======
+    } */
+>>>>>>> bbcf45a4f5724fe44b903a286aa246d4a34c9371
 }
 =======
     } */
