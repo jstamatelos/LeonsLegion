@@ -16,9 +16,10 @@ public class PokerPlayer extends CardPlayer {
     }
 
     boolean leaveGame() {
-        String string = Console.getStringInput("You gonna stick around? (Y/N)\n");
+        Console.printDashes();
+        String string = Console.getStringInput("You gonna stick around, " + getAccount().getAccountHolderName() +  "? (Y/N)\n");
         if(string.equalsIgnoreCase("y")) {
-            Console.println("OK, " + getAccount().getAccountHolderName() + ".\nYou can stay, but you should probably slow down on the jack and cokes.");
+            Console.println("OK, " + getAccount().getAccountHolderName() + ". You can stay, but you should probably slow down on the jack and cokes.\n");
             return false;
         } else if(string.equalsIgnoreCase("n")){
             Console.println("Good choice.\n");

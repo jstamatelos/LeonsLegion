@@ -31,27 +31,23 @@ public class PokerGame extends CardGame {
                             "whom I like the best. So your pair of aces might\n" +
                             "lose to a pair of twos. Sucks, but if you wanted\n" +
                             "to win money, you should've gone on Price Is Right\n" +
-                            "or become an Instagram model.\n\n" +
-                            "We will, however, let you play by yourself. You\n" +
-                            "won't win any money, but it'll feel kind of like\n" +
-                            "you're gambling.\n\n" +
-                            "...Kind of.\n\n");
+                            "or become an Instagram model.\n\n");
     }
 
     /*
     Asks for number of players and loads in players by ID by calling loadPlayers.
      */
     private void promptGame() {
-        int numPlayers = InputHandler.getIntInput("How many players?");
-        while(numPlayers > 9 || numPlayers < 1) {
-            numPlayers = InputHandler.getIntInput("Invalid number of players. Try in the 1 - 9 range.");
+        int numPlayers = Console.getIntegerInput("How many players?");
+        while(numPlayers > 9 || numPlayers < 2) {
+            numPlayers = Console.getIntegerInput("Invalid number of players. Try in the 1 - 9 range.");
         }
         loadPlayers(numPlayers);
     }
 
     private void loadPlayers(int numPlayers) {
         for (int i = 0; i < numPlayers; i++) {
-            long accountid = InputHandler.getLongInput("Please enter Player " + (i + 1) + "'s ID.\n");
+            long accountid = Console.getLongInput("Please enter Player " + (i + 1) + "'s ID.\n");
             Account account = Account.AccountManager.findAccount(accountid);
             if (account != null) {
                 players.add(new PokerPlayer(account));
@@ -60,6 +56,20 @@ public class PokerGame extends CardGame {
             }
         }
     }
+
+
+    private void resetHand() {
+        hasFolded = new boolean[players.size()];
+        amountInThePot = new long[players.size()];
+        pot = 0;
+        turnIndex = 0;
+        for(PokerPlayer p : getPlayers()) {
+            p.hand = null;
+        }
+        deck = new Deck();
+        initialDeal();
+    }
+
 
     /*
     Ante up!
@@ -173,16 +183,16 @@ public class PokerGame extends CardGame {
     private int getNextPlayer(int playerIndex) {
         do {
             turnIndex = (turnIndex + 1) % hasFolded.length;
-        } while(!hasFolded[turnIndex]);
+        } while(hasFolded[turnIndex]);
 
         return turnIndex;
     }
 
     private long getHighBet() {
         long highBet = 0;
-        for(long l : amountInThePot) {
-            if(l > highBet) {
-                highBet = l;
+        for(int i = 0; i < amountInThePot.length; i++) {
+            if(amountInThePot[i] > highBet) {
+                highBet = amountInThePot[i];
             }
         }
         return highBet;
@@ -196,6 +206,23 @@ public class PokerGame extends CardGame {
 
     private void printPot() {
         Console.println("There's currently " + Console.moneyToString(pot) + " in the pot.\n");
+    }
+
+    /*
+    Takes care of finding, announcing, paying winner.
+    */
+    private void resolveWinner() {
+        PokerPlayer winner = compareHands();
+        Console.println("The winner is " + getPokerPlayerName(winner) + "!\n");
+        payToWinnersAccount(winner);
+    }
+
+    /*
+    Pays the pot to the Account of the winner.
+    */
+    private void payToWinnersAccount(PokerPlayer p) {
+        p.getAccount().setAccountBalance(pot);
+        Console.println("Congratulations! After your win, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
     }
 
     /*
@@ -225,18 +252,8 @@ public class PokerGame extends CardGame {
     */
     private void setPlayerHandType(PokerPlayer player) {
         player.getHand().determineHandType();
-        Console.println(player.getHand().handType.toString());
+        Console.println(getPokerPlayerName(player) + ": " + player.getHand().handType.toString());
         Console.printDashes();
-    }
-
-    /*
-    This helper method takes the PokerPlayer
-    object and deducts the amount committed to
-    the last pot from their account.
-     */
-    private void debitFromPokerPlayerAccount(PokerPlayer p, long amount) {
-        p.getAccount().setAccountBalance(-1 * amount);
-        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
     }
 
 
@@ -247,43 +264,14 @@ public class PokerGame extends CardGame {
         return player.getAccount().getAccountHolderName();
     }
 
-    /*
-    Takes care of finding, announcing, paying winner.
-     */
-    private void resolveWinner() {
-        PokerPlayer winner = compareHands();
-        Console.println("The winner is " + getPokerPlayerName(winner) + "!\n");
-        payToWinnersAccount(winner);
-    }
-
-    /*
-    Pays the pot to the Account of the winner.
-    */
-    private void payToWinnersAccount(PokerPlayer p) {
-        p.getAccount().setAccountBalance(pot);
-        Console.println("Congratulations! After your win, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
-    }
-
 
     private void promptPlayerExits() {
-        ArrayList<PokerPlayer> players = getPlayers();
-        for(PokerPlayer p : players) {
-            if(p.leaveGame()) {
-                players.remove(p);
+        for(int i = 0; i < players.size(); i++) {
+            if(getPlayers().get(i).leaveGame()) {
+                players.remove(i);
+                i--;
             }
         }
-    }
-
-    private void resetHand() {
-        hasFolded = new boolean[players.size()];
-        amountInThePot = new long[players.size()];
-        pot = 0;
-        turnIndex = 0;
-        for(PokerPlayer p : getPlayers()) {
-            p.hand = null;
-        }
-        deck = new Deck();
-        initialDeal();
     }
 
 
@@ -303,14 +291,14 @@ public class PokerGame extends CardGame {
         promptGame();
         printRules();
 
-        while (players.size() > 1) { //
+        while (players.size() > 1) {
+            resetHand();
             anteUp();
             playersMakeBets();
             rakeBetsIn();
             printPot();
             resolveWinner();
             promptPlayerExits();
-            resetHand();
         }
     }
 
