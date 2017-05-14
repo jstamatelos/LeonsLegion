@@ -30,14 +30,17 @@ public class Lobby {
 
     // this is the main game loop
     public void startLobby(){
-        while(isRunning){
-            Console.println("\n------------------------------------------------");
-            Console.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
-            Console.println("------------------------------------------------");
-            Console.println("         (Enter 'Q' at any time to quit) \n");
-            actionSelection();
+        Console.println("\n------------------------------------------------");
+        Console.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
+        Console.println("------------------------------------------------");
+        Console.println("         (Enter 'Q' at any time to quit) \n");
 
+        while(isRunning){
+            actionSelection();
+            Console.println("\n------------------------------------------------");
+            Console.println("        you are back in the Lobby \n");
         }
+
         Console.println("\nThanks for playing!  Have a nice day! \n");
     }
 
@@ -61,13 +64,11 @@ public class Lobby {
 
             case "buy":
                 buyMoreChips();
-                actionSelection();
                 break;
 
             case "check":
                 Account account = Account.AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
                 Console.println("This account has a balance of: " + Console.moneyToString(account.getAccountBalance()) + "\n");
-                actionSelection();
                 break;
 
             case "create":
@@ -76,13 +77,12 @@ public class Lobby {
 
             default:
                 Console.println("That selection was unrecognized. Please enter a valid selection.");
-                actionSelection();
                 break;
         }
     }
 
     public void askToBuyMoreChips(){
-        String question = "\nWould you like to buy more chips? 'y' or 'n' ";
+        String question = "\nWould you like to add more funds to your account? 'y' or 'n' ";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch(selection){
             case "q":
@@ -91,16 +91,12 @@ public class Lobby {
 
             case "y":
                 buyMoreChips();
-                actionSelection();
                 break;
 
             case "n":
-                actionSelection();
                 break;
 
             default:
-                Console.println("That selection was unrecognized. Please enter a valid selection.");
-                askToBuyMoreChips();
                 break;
         }
     }
@@ -128,7 +124,6 @@ public class Lobby {
             buyMoreChips(id);
         }else{
             Console.println("Account not found.");
-            buyMoreChips();
         }
     }
 
@@ -178,11 +173,6 @@ public class Lobby {
 
     public void exit(){
         isRunning = false;
-    }
-
-    @Deprecated // backdoor method to check how many accounts have been created
-    private int getNumAccounts(){
-        return  Account.AccountManager.getAccounts().size();
     }
 
     @Deprecated // convenience method to generate generic accounts for testing
