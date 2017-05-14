@@ -26,7 +26,7 @@ public class TestAccountManager {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-
+*/
     @Test
     public void testAddAccountToManager() {
 
@@ -44,7 +44,7 @@ public class TestAccountManager {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-
+/*
     @Test
     public void testRemoveAccountFromManager() {
 
