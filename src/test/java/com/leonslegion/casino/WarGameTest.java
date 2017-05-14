@@ -1,8 +1,7 @@
 package com.leonslegion.casino;
-
-import com.leonslegion.casino.CardGamePackage.Card;
-import com.leonslegion.casino.CardGamePackage.CardComparator;
-import com.leonslegion.casino.CardGamePackage.Deck;
+import com.leonslegion.casino.CardGamePackage.*;
+import com.leonslegion.casino.AccountPackage.Account;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,29 +10,71 @@ import org.junit.Test;
  */
 
 public class WarGameTest {
+
     @Test
-    public void startWarGame()  {
+    public void playerDeckShuffleTest(){
+        Deck playerDeck = new Deck();
+        Deck unshuffledDeck= new Deck();
+
+        playerDeck.shuffleDeck();
+
+        Assert.assertNotEquals(playerDeck, unshuffledDeck);
+
+    }
+    @Test
+    public void dealerDeckShuffleTest(){
+        Deck dealerDeck = new Deck();
+        Deck unshuffledDeck= new Deck();
+
+        dealerDeck.shuffleDeck();
+
+        Assert.assertNotEquals(dealerDeck, unshuffledDeck);
+
     }
 
     @Test
-    public void createWarPlayer()  {
+    public  void setplayerCardTest(){
+
+        Deck playerDeck = new Deck();
+        Card actual= new Card(Card.Rank.ACE, Card.Suit.CLUBS);
+
+        String expected = playerDeck.dealCard().toString();
+
+        Assert.assertEquals(actual.toString(),expected );
+
+    }
+
+
+
+    @Test
+    public void createWarPlayer() {
+        Account account = new Account();
+        WarPlayer newWarPlayer = new WarPlayer(account);
+
+        Assert.assertNotNull(newWarPlayer);
     }
 
     @Test
-    public void placeBet() {
+    public void placeBet()  {
+
+        Account account = new Account();
+        WarPlayer player = new WarPlayer(account);
+
+        try {
+            player.placeBet(10000);
+        } catch (Exception e){
+            Console.print("This should never get hit.");
+        }
+
+
+        long actual = player.getBalance();
+        long expected = 90000;
+
+
+        Assert.assertEquals(actual, expected,.00001);
+
     }
 
-    @Test
-    public void setDealerCard() {
-    }
-
-    @Test
-    public void setplayerCard() {
-    }
-
-    @Test
-    public void determineWinner() {
-    }
 
     @Test
     public void testDealerShowCard() {
@@ -45,9 +86,7 @@ public class WarGameTest {
 
         Assert.assertEquals(actual.toString(),expected.toString() );
 
-
     }
-
 
     @Test
     public void testPickHigherValue()  {
@@ -64,6 +103,7 @@ public class WarGameTest {
 
 
     }
+
     @Test
     public void testDealerAndPlayerShowSameCard() {
 
@@ -74,7 +114,7 @@ public class WarGameTest {
         Card card1 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
 
         int actual = comp.compare(card0, card1);
-        Console.printDouble(actual);
+
         Assert.assertEquals(expected, actual);
     }
     @Test
@@ -90,6 +130,7 @@ public class WarGameTest {
 
         Assert.assertNotEquals("These cards should not be same",expected, actual);
     }
+
 
 }
 

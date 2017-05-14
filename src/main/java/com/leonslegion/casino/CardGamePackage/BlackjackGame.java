@@ -48,35 +48,9 @@ public class BlackjackGame extends CardGame {
         return new BlackjackDealer(newDealerAccount);
     }
 
-    private void dealerTurn() {
-        wait(1);
-        while (dealer.getHand().getPoints() < 17) {
-            Console.println(" \n Dealer hits...\n");
-            dealer.hit(deck);
-        }
-        wait(1);
-    }
-
-    private void wait(int seconds) {
-        try {
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException e) {
-            Console.println(e.toString());
-        }
-
-    }
-
-
-    private Account getPlayerAccount() {
-        return Account.AccountManager.findAccount(player.getAccount().getId());
-    }
-
-
-
     public void initialDeal() {
 
         deck.shuffleDeck();
-
         BlackjackPlayer[] bjplayers = {dealer, player};
 
         for (BlackjackPlayer bjplayer : bjplayers) {
@@ -99,7 +73,6 @@ public class BlackjackGame extends CardGame {
         hand.addCard(card);
     }
 
-
     private void loadPlayer() {
 
         long accountId = -1;
@@ -120,8 +93,10 @@ public class BlackjackGame extends CardGame {
 
 
     public void promptPlayAgain() {
-        Console.println(" Your new balance is " + player.getBalance());
-        String playAgain = InputHandler.getStringInput("Play again?").toLowerCase();
+        Console.print(" Your new balance is ");
+        Console.printMoney(player.getBalance());
+        Console.println("\n");
+        String playAgain = Console.getStringInput("Play again?").toLowerCase();
         switch (playAgain) {
             case "yes":
                 startBlackJack();
@@ -141,12 +116,9 @@ public class BlackjackGame extends CardGame {
         long b = -1;
 
         while (b == -1) {
-            b = Console.getLongInput("How much would you like to bet?");
-
-            System.out.println(b);
-            System.out.println(player.getBalance());
+            b = Console.getMoneyInput("How much would you like to bet?");
             if (b > player.getBalance()) {
-                Console.println("Bet exceeds you balance!");
+                Console.println("Bet exceeds your balance!");
                 b = -1;
             }
         }
@@ -155,7 +127,9 @@ public class BlackjackGame extends CardGame {
 
     private int endRound() {
         player.showHand();
+        Console.println("\n");
         dealer.showHand();
+        Console.println("\n");
         return player.getHand().compareTo(dealer.getHand());
 
     }
@@ -168,18 +142,17 @@ public class BlackjackGame extends CardGame {
         Console.printDashes();
         Console.println("\u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620");
         Console.println(" \u2620 \u2620 \u2620 Bust! \u2620 \u2620 \u2620");
-        Console.println("\u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620");
-        System.out.println(bet);
-        player.deductBetFromAccount((int)bet);
-        System.out.println(player.getBalance());
+        Console.println("\u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \n");
+
+        player.deductBetFromAccount((int) bet);
         promptPlayAgain();
     }
 
     private void youWin() {
         Console.printDashes();
-        Console.println("$ $ $ $ $ $ $ $ $ $ ");
+        Console.println("\n $ $ $ $ $ $ $ $ $ $ ");
         Console.println("$ $ $ You Win! $ $ $");
-        Console.println("$ $ $ $ $ $ $ $ $ $ ");
+        Console.println("$ $ $ $ $ $ $ $ $ $ \n");
         Console.printDashes();
         player.addBetToAccount((int) bet);
         promptPlayAgain();
@@ -187,9 +160,9 @@ public class BlackjackGame extends CardGame {
 
     private void youLose() {
         Console.printDashes();
-        Console.println("  \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620");
+        Console.println(" \n \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620");
         Console.println(" \u2620 \u2620 \u2620 You lose! \u2620 \u2620 \u2620");
-        Console.println("  \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620");
+        Console.println("  \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \u2620 \n");
         Console.printDashes();
         player.deductBetFromAccount((int) bet);
         promptPlayAgain();
@@ -199,7 +172,7 @@ public class BlackjackGame extends CardGame {
         Console.printDashes();
         Console.println("$ $ $ $ $ $ $ $ $ $ ");
         Console.println("$ $ $ Tie. $ $ $");
-        Console.println("$ $ $ $ $ $ $ $ $ $ ");
+        Console.println("$ $ $ $ $ $ $ $ $ $ /n");
         Console.printDashes();
         promptPlayAgain();
     }
@@ -207,14 +180,12 @@ public class BlackjackGame extends CardGame {
     private void turn() {
         String action;
         if (player.getHand().splitPossible()) {
-            action = Console.getStringInput("Hit, stay, or split?");
+            action = Console.getStringInput("\n Hit, stay, or split?");
         } else {
-            action = Console.getStringInput("Hit or stay?");
+            action = Console.getStringInput("\n Hit or stay?");
         }
         handlePlayerAction(action);
     }
-
-
 
     private void handleSplit() {
         player.split();
@@ -233,7 +204,7 @@ public class BlackjackGame extends CardGame {
             }
         }
 
-        dealerTurn();
+        dealer.takeTurn(deck);
         dealer.showHand();
 
         int handNum = 1;
@@ -306,26 +277,13 @@ public class BlackjackGame extends CardGame {
         }
     }
 
-    public void initialDealSplit() {
-        Card card1 = new Card(Card.Rank.EIGHT, Card.Suit.CLUBS);
-        Card card2 = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS);
-        BlackjackHand hand = new BlackjackHand();
-        hand.addCard(card1);
-        hand.addCard(card2);
-        player.setHand(hand);
-        dealer.setHand(hand);
-    }
-
     public void startBlackJack() {
 
         if (player.getBalance() < 1) {
             Console.println("You're busted! Goodbye!");
             return;
         }
-
-        //initialDeal();
-        initialDealSplit();
-
+        initialDeal();
         getBet();
 
         while (playing) {
@@ -336,13 +294,14 @@ public class BlackjackGame extends CardGame {
 
             if (!player.hasSplitHands()) {
                 player.showHand();
+                Console.println("\n");
                 dealer.cardsShowing();
                 turn();
             }
 
             if (stay == true) {
                 stay = false;
-                dealerTurn();
+                dealer.takeTurn(deck);
                 int result = endRound();
                 if (result == -1) {
                     youWin();

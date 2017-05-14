@@ -33,7 +33,7 @@ public class SlotGame {
             }
             SlotMachine machine = new SlotMachine(sp);
             machine.pullLever();
-            System.out.printf("Your balance is now: $%.2f\n", sp.getBalance());
+            Console.println("Your balance is now: " + Console.moneyToString(sp.getBalance()) + "\n");
         }
     }
 
@@ -60,12 +60,12 @@ public class SlotGame {
 
     public static void adjustBalance(SlotPlayer newPlayer) {
         Console.println("Player has exited.");
-        double remainingBalance = newPlayer.getBalance();
+        long remainingBalance = newPlayer.getBalance();
         long accountID = newPlayer.getAccount().getId();
         for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
             if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
-                double originalBalance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
-                double balanceDifference = remainingBalance - originalBalance;
+                long originalBalance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
+                long balanceDifference = remainingBalance - originalBalance;
                 Account.AccountManager.getAccounts().get(account).setAccountBalance(balanceDifference);
             }
         }

@@ -44,9 +44,11 @@ public class BlackjackPlayer extends CardPlayer {
                 Console.println(h.toString());
                 num +=1 ;
             }
+            Console.println("\n" + getHand().getPoints() + " points.");
         } else {
-            Console.println("Your hand: ");
+            Console.println("Your hand: \n");
             Console.println(getHand().toString());
+            Console.println("\n" + getHand().getPoints() + " points.");
         }
     }
 

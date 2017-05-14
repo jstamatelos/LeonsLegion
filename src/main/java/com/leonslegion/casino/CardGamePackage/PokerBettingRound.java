@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 class PokerBettingRound {
 
-    private double highBet;
+    private long highBet;
     ArrayList<PokerPlayerBettingRound> playersInRound;
     PokerPlayerBettingRound roundTerminator;
 
@@ -27,7 +27,9 @@ class PokerBettingRound {
     TODO - There's also a tail recursion that needs to be removed.
      */
     private void playerChoice(PokerPlayerBettingRound playerBetting) {
+        Console.printDashes();
         Console.println(playerBetting.player.getAccount().getAccountHolderName() + "\n" + playerBetting.showHand());
+        Console.printDashes();
         String choice = InputHandler.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
         try {
             switch(choice.toUpperCase()) {
@@ -35,7 +37,7 @@ class PokerBettingRound {
                     playerBetting.folds();
                     break;
                 case "RAISE":
-                    double raise = InputHandler.getDoubleInput("\nThe high bet is currently " + highBet + ". How much would you like to raise above that?");
+                    long raise = Console.getMoneyInput("\nThe high bet is currently " + Console.moneyToString(highBet) + ". How much would you like to raise above that?");
                     highBet = playerBetting.player.placeBet(highBet + raise);
                     playerBetting.amountIn = highBet;
                     roundTerminator = playerBetting;
@@ -96,7 +98,6 @@ class PokerBettingRound {
      */
     void playersMakeBets() {
         PokerPlayerBettingRound player = playersInRound.get(0);
-        int turnIndex = 0;
         roundTerminator = playersInRound.get(playersInRound.size() - 1);
 
         //each iteration of the loop is a turn by a player

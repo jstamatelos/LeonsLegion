@@ -13,10 +13,6 @@ public abstract class CardGame extends CasinoGame {
         return deck;
     }
 
-    public double placeBet(double bet){
-        return bet;
-    }
-
     public abstract void initialDeal();
 
 

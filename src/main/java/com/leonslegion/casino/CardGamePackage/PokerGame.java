@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class PokerGame extends CardGame {
 
-    private double pot;
-    private double ante = 10;  //For the time being, ante is set to 10 automatically.
+    private long pot;
+    private long ante = 1000;  //For the time being, ante is set to $10 automatically.
     private boolean[] hasFolded;
 
     @Override
@@ -64,6 +64,7 @@ public class PokerGame extends CardGame {
     public void initialDeal() {
         deck.shuffleDeck(); //I want to put this in the Deck constructor.
         for (PokerPlayer p : getPlayers()) {
+            p.hand = new PokerHand();
             for (int i = 0; i < 5; i++) {
                 p.getHand().addCard(deck.dealCard());
             }
@@ -89,9 +90,9 @@ public class PokerGame extends CardGame {
     object and deducts the amount they committed to the
     last pot from their account.
      */
-    private void debitFromPokerPlayerAccount(PokerPlayer p, double amount) {
+    private void debitFromPokerPlayerAccount(PokerPlayer p, long amount) {
         p.getAccount().setAccountBalance(-1 * amount);
-        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have $" + p.getBalance() + " remaining in your account.\n");
+        Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
     }
 
     /*
@@ -99,7 +100,7 @@ public class PokerGame extends CardGame {
      */
     private void payToWinnersAccount(PokerPlayer p) {
         p.getAccount().setAccountBalance(pot);
-        Console.println("Congratulations! After your win, you have $" + p.getBalance() + " remaining in your account.\n");
+        Console.println("Congratulations! After your win, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
     }
 
     /*
@@ -136,10 +137,10 @@ public class PokerGame extends CardGame {
         for(PokerPlayer p : getPlayers()) {
             String name = p.getAccount().getAccountHolderName();
             try {
-                pot += placeBet(ante);
-                Console.print(name + " antes $" + ante + ".\n");
+                pot += p.placeBet(ante);
+                Console.print(name + " antes " + Console.moneyToString(ante) + ".\n");
             } catch (Exception e){
-                Console.print(name + ": You don't have to go home, but you can't stay here.\n");
+                Console.println(name + ": You don't have to go home, but you can't stay here.\n");
                 players.remove(p);
             }
         }
@@ -162,6 +163,14 @@ public class PokerGame extends CardGame {
         return  remainingPlayers;
     }
 
+    private void promptPlayerExits() {
+        for(PokerPlayer p : getPlayers()) {
+            //
+            players.remove(p);
+        }
+        return;
+    }
+
     /*
     Sets into motion the logic behind a game of poker.
 
@@ -174,20 +183,11 @@ public class PokerGame extends CardGame {
     This loop as constituted will run a five card game
     with no exchanges and one round of betting.
      */
-    //TODO - add a stage wherein we check that the player has enough balance to play
     public void run() {
         promptGame();
         printRules();
 
-        /*The boolean ends is used here to make the game terminate after
-        one hand. The condition that might be best to use long term
-        is the one commented out below. Future versions of this class
-        will include giving players the option to leave a game, where
-        enough players leaving will terminate the PokerGame.
-        */
-        boolean ends = true;
-
-        while (ends) { //players.size() > 1
+        while (players.size() > 1) { //
             hasFolded = new boolean[players.size()];
             pot = 0;
             initialDeal();
@@ -196,12 +196,11 @@ public class PokerGame extends CardGame {
             round.playersMakeBets();
 
             ArrayList<PokerPlayer> remainingPlayers = resolveRound(round);
-            Console.println("There's currently $" + pot + " in the pot.\n");
+            Console.println("There's currently " + Console.moneyToString(pot) + " in the pot.\n");
 
             setPlayerHandTypes(remainingPlayers);
-            resolveWinner(remainingPlayers);
-
-            ends = false;
+            resolveWinner(remainingPlayers); //TODO - write this method
+            promptPlayerExits();
         }
     }
 

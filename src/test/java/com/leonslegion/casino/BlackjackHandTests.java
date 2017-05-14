@@ -108,7 +108,6 @@ public class BlackjackHandTests {
         hand.addCard(card2);
 
         Assert.assertFalse(hand.splitPossible());
-
     }
 
     @Test
@@ -152,8 +151,6 @@ public class BlackjackHandTests {
         hand2.addCard(card4);
         hand2.addCard(card5);
 
-        System.out.println(hand1.compareTo(hand2));
-
         Assert.assertEquals(1, hand1.compareTo(hand2));
     }
 
@@ -179,10 +176,5 @@ public class BlackjackHandTests {
         hand2.addCard(card5);
 
         Assert.assertEquals(-1, hand1.compareTo(hand2));
-
     }
-
-
-
-
 }
