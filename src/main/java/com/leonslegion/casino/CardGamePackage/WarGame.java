@@ -3,6 +3,7 @@ package com.leonslegion.casino.CardGamePackage;
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
+import com.leonslegion.casino.Lobby;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.Comparator;
@@ -98,6 +99,7 @@ public class WarGame extends CardGame implements Comparator {
      */
 
 
+
     private static long placeBet(WarPlayer warPlayer) {
         while(true) {
             long bet = Console.getMoneyInput("Please place a bet: ");
@@ -108,15 +110,15 @@ public class WarGame extends CardGame implements Comparator {
                     if (balance == 0) {
                         Console.println("You have a balance of 0!");
                         Console.println("Sorry! You are out of money.");
-                        continue;
+                        break;
                     }
                     if (bet > balance) {
                         Console.println("Your bet is greater than your balance!");
-                        continue;
+                        break;
                     }
                     if (bet < 0) {
                         Console.println("You can bet a negative value.");
-                        continue;
+                        break;
                     }
                 }
             }
