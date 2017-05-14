@@ -9,27 +9,21 @@ import java.util.ArrayList;
  */
 public class Account {
 
-    private static long idCounter = 0;
     private long id;
     private String accountHolderName;
     private long accountBalance = 100000;
 
-    public Account() {
-        idCounter++;
-        this.id = idCounter;
-    }
+    public Account() {}
 
     public Account(String accountHolderName) {
-        this();
         this.accountHolderName = accountHolderName;
-    }
-
-    public long getIdCounter() {
-        return idCounter;
     }
 
     public long getId() {
         return id;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getAccountHolderName() {
@@ -77,11 +71,8 @@ public class Account {
         }
 
         public static void addAccount(Account account) {
+            account.setId(accounts.size() + 1);
             accounts.add(account);
-        }
-
-        public static void removeAccount(Account account) {
-            accounts.remove(account);
         }
 
         public static long getBalance(Account account) {
