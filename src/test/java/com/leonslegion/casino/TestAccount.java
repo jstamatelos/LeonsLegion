@@ -8,35 +8,81 @@ import org.junit.Test;
  * Created by sarahweisser on 5/9/17.
  */
 public class TestAccount {
-/*
+
     @Test
-    public void testIdCounter() {
+    public void accountConstructorWithUserNameTest() {
 
         //given
-        Account acct = new Account();
-        Account acct2 = new Account();
-        long expectedResult = 2;
+        Account account1 = new Account("Leon");
+        String expected = "Leon";
 
         //when
-        long actualResult = acct2.getIdCounter();
+        String actual = account1.getAccountHolderName();
 
         //then
-        Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertEquals(expected, actual);
+
     }
 
     @Test
-    public void testAccountConstructorCountsId() {
+    public void accountConstructorSetsBalanceTest() {
 
         //given
-        Account acct = new Account("Leon");
-        Account acct2 = new Account("Hunter");
-        long expectedResult = 2;
+        Account account1 = new Account("Leon");
+        long expected = 100000;
 
         //when
-        long actualResult = acct2.getId();
+        long actual = account1.getAccountBalance();
 
         //then
-        Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void setAccountIdTest() {
+
+        //given
+        Account account1 = new Account("Leon");
+        account1.setId(50);
+        long expected = 50;
+
+        //when
+        long actual = account1.getId();
+
+        //then
+        Assert.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void adjustAccountBalanceUp() {
+
+        //given
+        Account account1 = new Account("Leon");
+        account1.setAccountBalance(1000);
+        long expected = 101000;
+
+        //when
+        long actual = account1.getAccountBalance();
+
+        //then
+        Assert.assertEquals(expected, actual);
+
+    }
+    @Test
+    public void adjustAccountBalanceDown() {
+
+        //given
+        Account account1 = new Account("Leon");
+        account1.setAccountBalance(-1000);
+        long expected = 99000;
+
+        //when
+        long actual = account1.getAccountBalance();
+
+        //then
+        Assert.assertEquals(expected, actual);
 
     }
 
@@ -45,7 +91,7 @@ public class TestAccount {
 
         //given
         Account acct = new Account("Leon");
-        String expectedResult = "Account ID: 1\nAccount Holder: Leon\nAccount Balance: $1000.00";
+        String expectedResult = "Account ID: 0\nAccount Holder: Leon\nAccount Balance: $1000.00";
 
         //when
         String actualResult = acct.toString();
@@ -54,5 +100,4 @@ public class TestAccount {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-*/
 }

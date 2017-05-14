@@ -45,7 +45,7 @@ public class Console {
     public static String moneyToString(long amount) {
         long whole = amount / 100;
         long part = amount % 100;
-        return "$" + whole + "." + part;
+        return String.format("$" + whole + "." + part);
     }
 
     public static Double getDoubleInput(String prompt, Object... args) {
