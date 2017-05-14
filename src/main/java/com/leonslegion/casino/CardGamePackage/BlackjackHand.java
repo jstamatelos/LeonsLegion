@@ -73,9 +73,11 @@ public class BlackjackHand extends Hand implements Comparable {
     @Override
     public int compareTo(Object otherHand) {
 
-        if (getPoints() == ((BlackjackHand) otherHand).getPoints()) {
+        int otherPoints = ((BlackjackHand) otherHand).getPoints();
+
+        if (getPoints() == otherPoints || (isOver21() && otherPoints > 21)) {
             return 0;
-        } else if (getPoints() > ((BlackjackHand) otherHand).getPoints()) {
+        } else if (!isOver21() && getPoints() > otherPoints || otherPoints > 21) {
             return -1;
         } else {
             return 1;

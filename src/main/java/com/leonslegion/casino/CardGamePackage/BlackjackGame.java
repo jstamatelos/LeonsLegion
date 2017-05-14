@@ -62,7 +62,8 @@ public class BlackjackGame extends CardGame {
 
     public BlackjackGame() {
         dealer = createDealer();
-        playing = true;
+        player = loadPlayer();
+        setHasDealer(true);
     }
 
     public String promptTurnAction() {
@@ -84,7 +85,7 @@ public class BlackjackGame extends CardGame {
                 } else {
                     Console.println("Your hand: ");
                 }
-                BlackjackHand playerHand = (BlackjackHand)player.getHand();
+                BlackjackHand playerHand = player.getHand();
                 Console.println(playerHand + " total = " + playerHand.sumHand());
                 break;
             case "stay":
@@ -239,11 +240,11 @@ public class BlackjackGame extends CardGame {
     }
 
 
-    private void loadPlayer() {
+    private BlackjackPlayer loadPlayer() {
         long accountId = Long.parseLong(InputHandler.getStringInput("Enter ID number: "));
         Account acct = Account.AccountManager.findAccount(accountId);
         double balance = Account.AccountManager.getBalance(acct);
-        player = new BlackjackPlayer(acct);
+        return new BlackjackPlayer(acct);
     }
 
     private void placeBet() {
@@ -253,7 +254,7 @@ public class BlackjackGame extends CardGame {
         bet = Double.parseDouble(b);
     }
 
-    public void play() {
+ /*   public void play() {
 
         if (player == null) {
             loadPlayer();
@@ -271,7 +272,7 @@ public class BlackjackGame extends CardGame {
         Console.println("play loop iteration completed");
         promptPlayAgain();
 
-    }
+    }*/
 
     public void promptPlayAgain() {
         Console.println(" Your new balance is " + returnBalance());
@@ -291,13 +292,61 @@ public class BlackjackGame extends CardGame {
         }
     }
 
-    public static void startBlackJack() {
+
+
+    private void selectHand() {
+        String h = Console.getStringInput("Which hand?");
+    }
+
+    private void handlePlayerAction(String action) {
+        switch(action) {
+            case "hit":
+                if (player.hasSplitHands()) {
+
+                }
+                player.hit(deck);
+                break;
+            case "stay":
+                 break;
+            case  "split":
+                  player.split();
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    private double getBet() {
+        return Console.getDoubleInput("How much would you like to bet?");
+    }
 
 
 
 
-        BlackjackGame b = new BlackjackGame();
-        b.play();
+    private void turn() {
+        String action;
+        if (player.getHand().splitPossible()) {
+            action = Console.getStringInput("Hit, stay, or split?");
+        } else {
+            action = Console.getStringInput("Hit or stay?");
+        }
+        handlePlayerAction(action);
+
+    }
+
+    public void startBlackJack() {
+
+        turn();
+
+    }
+
+    public static void main(String[] args) {
+        Account acct = Account.AccountFactory.createAccountWithName("Cameron");
+        System.out.println(acct);
+        BlackjackPlayer plr = new BlackjackPlayer(acct);
+        BlackjackGame game = new BlackjackGame();
+        game.startBlackJack();
     }
 
 

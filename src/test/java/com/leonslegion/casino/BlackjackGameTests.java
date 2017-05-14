@@ -15,23 +15,25 @@ import org.junit.Test;
 public class BlackjackGameTests {
 
     BlackjackPlayer player;
-    BlackjackGame newGame;
+    BlackjackGame blackjackGame;
 
     @Before
     public void setUp() {
         Account acct = Account.AccountFactory.createAccountWithName("Cameron");
         player = new BlackjackPlayer(acct);
-
-        newGame = new BlackjackGame(player);
-
+        blackjackGame = new BlackjackGame(player);
     }
 
     @Test
     public void testNewGame() {
 
-        Assert.assertTrue(newGame.getHasDealer());
+        BlackjackGame g = new BlackjackGame();
 
-        System.out.println(newGame);
+        Assert.assertTrue(blackjackGame.getHasDealer());
+
+        g.startBlackJack();
+
+
     }
 
 }

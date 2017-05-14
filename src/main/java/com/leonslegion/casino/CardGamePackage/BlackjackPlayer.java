@@ -25,11 +25,34 @@ public class BlackjackPlayer extends CardPlayer {
         hand.addCard(card);
     }
 
+    public void hitSplitHand(int hand, Deck deck) {
+        Card card = deck.dealCard();
+        if (hand == 1) {
+            BlackjackHand h = getSplitHands().get(0);
+            h.addCard(card);
+        } else if (hand == 2) {
+            BlackjackHand h = getSplitHands().get(1);
+            h.addCard(card);
+        }
+    }
+
+    public void showHand() {
+        if (hasSplitHands()) {
+            int num = 1;
+            for (Hand h : getSplitHands()) {
+                Console.println("Hand " + num + ": ");
+                Console.println(h.toString());
+                num +=1 ;
+            }
+        } else {
+            Console.println("Your hand: ");
+            Console.println(getHand().toString());
+        }
+    }
+
+
     public BlackjackHand getHand() {
         return hand;
-    }
-    public void stay() {
-        //nothing happens. not sure if this needs a method.
     }
 
     public void split() {
@@ -42,6 +65,7 @@ public class BlackjackPlayer extends CardPlayer {
         if (hand.splitPossible()) {
             BlackjackHand hand1 = new BlackjackHand();
             BlackjackHand hand2 = new BlackjackHand();
+            System.out.println(hand.getCards());
             hand1.addCard(hand.getCards().get(0));
             hand2.addCard(hand.getCards().get(1));
             splitHands.add(hand1);
@@ -58,6 +82,16 @@ public class BlackjackPlayer extends CardPlayer {
     }
     public void setHand(BlackjackHand blackjackHand) {
         hand = blackjackHand;
+    }
+
+    public void deductBetFromAccount(int bet) {
+        double balance = getBalance();
+        getAccount().setAccountBalance(balance + (bet * -1));
+    }
+
+    public void addBetToAccount(int bet) {
+        double balance = getBalance();
+        getAccount().setAccountBalance(bet * 1.5);
     }
 
 

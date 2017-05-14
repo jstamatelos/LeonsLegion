@@ -112,7 +112,7 @@ public class BlackjackHandTests {
     }
 
     @Test
-    public void compareHandsTest() {
+    public void compareHandsUnder21_Test() {
         Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
         Card card2 = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS);
 
@@ -131,6 +131,57 @@ public class BlackjackHandTests {
 
         Assert.assertEquals(-1, hand1.compareTo(hand2));
     }
+
+    @Test
+    public void compareHandsHand1Over21_Test() {
+        Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS);
+        Card card3 = new Card(Card.Rank.FIVE, Card.Suit.CLUBS);
+
+        BlackjackHand hand1 = new BlackjackHand();
+
+        hand1.addCard(card1);
+        hand1.addCard(card2);
+        hand1.addCard(card3);
+
+        Card card4 = new Card(Card.Rank.KING, Card.Suit.SPADES);
+        Card card5 = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS);
+
+        BlackjackHand hand2 = new BlackjackHand();
+
+        hand2.addCard(card4);
+        hand2.addCard(card5);
+
+        System.out.println(hand1.compareTo(hand2));
+
+        Assert.assertEquals(1, hand1.compareTo(hand2));
+    }
+
+    @Test
+    public void compareHandsHand2Over21_Test() {
+        Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS);
+
+
+        BlackjackHand hand1 = new BlackjackHand();
+
+        hand1.addCard(card1);
+        hand1.addCard(card2);
+
+        Card card3 = new Card(Card.Rank.FIVE, Card.Suit.CLUBS);
+        Card card4 = new Card(Card.Rank.KING, Card.Suit.SPADES);
+        Card card5 = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS);
+
+        BlackjackHand hand2 = new BlackjackHand();
+
+        hand2.addCard(card3);
+        hand2.addCard(card4);
+        hand2.addCard(card5);
+
+        Assert.assertEquals(-1, hand1.compareTo(hand2));
+
+    }
+
 
 
 
