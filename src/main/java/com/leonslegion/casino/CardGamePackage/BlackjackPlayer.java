@@ -65,7 +65,6 @@ public class BlackjackPlayer extends CardPlayer {
         if (hand.splitPossible()) {
             BlackjackHand hand1 = new BlackjackHand();
             BlackjackHand hand2 = new BlackjackHand();
-            System.out.println(hand.getCards());
             hand1.addCard(hand.getCards().get(0));
             hand2.addCard(hand.getCards().get(1));
             splitHands.add(hand1);
