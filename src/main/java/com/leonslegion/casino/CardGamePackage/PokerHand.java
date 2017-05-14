@@ -14,6 +14,12 @@ public class PokerHand extends Hand implements Comparable {
         handType = null;
     }
 
+    public enum HandType {HIGHCARD, PAIR, TWOPAIR, THREEOFAKIND, STRAIGHT, FLUSH, FULLHOUSE, FOUROFAKIND, STRAIGHTFLUSH}
+
+    public HandType getHandType() {
+        return handType;
+    }
+
     public int compareTo(Object other) {
         PokerHand otherHand = (PokerHand) other;
         if(handType.ordinal() - otherHand.getHandType().ordinal() != 0) {
@@ -55,17 +61,25 @@ public class PokerHand extends Hand implements Comparable {
                     }
                     return 0;
                 case PAIR:
-                    return 0; //TODO - trickier
+                    Card.Rank rank1 = null;
+                    Card.Rank rank2 = null;
+                    for(int i = 0; i < 4; i++) {
+                        if(getCards().get(i).getRank() == getCards().get(i+1).getRank()) {
+                            rank1 = getCards().get(i).getRank();
+                            break;
+                        }
+                    }
+                    for(int i = 0; i < 4; i++) {
+                        if(otherHand.getCards().get(i).getRank() == otherHand.getCards().get(i+1).getRank()) {
+                            rank2 = otherHand.getCards().get(i).getRank();
+                            break;
+                        }
+                    }
+                    return rank1.ordinal() - rank2.ordinal(); //TODO - compare kickers
                 default:
                     return 0;
             }
         }
-    }
-
-    public enum HandType {HIGHCARD, PAIR, TWOPAIR, THREEOFAKIND, STRAIGHT, FLUSH, FULLHOUSE, FOUROFAKIND, STRAIGHTFLUSH}
-
-    public HandType getHandType() {
-        return handType;
     }
 
     void determineHandType() {

@@ -25,14 +25,14 @@ public class PokerGame extends CardGame {
         return (ArrayList<PokerPlayer>)super.getPlayers();
     }
 
-
     private void printRules() {
-        Console.println( "Unfortunately for you, this is a degenerate form\n" +
-                            "of poker, wherein tiebreakers are determined by\n" +
-                            "whom I like the best. So your pair of aces might\n" +
-                            "lose to a pair of twos. Sucks, but if you wanted\n" +
-                            "to win money, you should've gone on Price Is Right\n" +
-                            "or become an Instagram model.\n\n");
+        Console.println( "Well, well, well. Another sucker.\n\n" +
+                            "Welcome to Leon's Casino's Pokerstravaganza.\n" +
+                            "You're probably gonna lose, but I hope you have\n" +
+                            "fun doing it. When you can't pay the ante, we'll" +
+                            "kick you out. Feel free to take it personally.\n" +
+                            "Oh, and aces are always high. No Ace-5 straights.\n\n");
+        Console.printDashes();
     }
 
     /*
@@ -58,6 +58,16 @@ public class PokerGame extends CardGame {
         }
     }
 
+    private void checkPlayerBalances() {
+        for(int i = 0; i < players.size(); i++) {
+            PokerPlayer player = getPlayers().get(i);
+            if(player.getBalance() < 1000) {
+                Console.println(getPokerPlayerName(player) + ": You don't have to go home, but you can't stay here.\n");
+                players.remove(i);
+                i--;
+            }
+        }
+    }
 
     private void resetHand() {
         hasFolded = new boolean[players.size()];
@@ -113,7 +123,7 @@ public class PokerGame extends CardGame {
             playerChoice(turnIndex);
             turnIndex = getNextPlayer(turnIndex);
         } while(countFolds() < hasFolded.length - 1 && turnIndex != lastToRaiseIndex);
-        // end of round
+        // end of betting round
     }
 
     /*
@@ -232,6 +242,8 @@ public class PokerGame extends CardGame {
     Calls compareTo method from PokerHand to find a winner.
      */
     private PokerPlayer compareHands() {
+        // All the "firstNotToFold" stuff is to ensure
+        // that a folded player doesn't win the hand.
         int firstNotToFold = 0;
         while(hasFolded[firstNotToFold]) {
             firstNotToFold++;
@@ -293,6 +305,7 @@ public class PokerGame extends CardGame {
     public void run() {
         promptGame();
         printRules();
+        checkPlayerBalances();
 
         while (players.size() > 1) {
             resetHand();
@@ -302,6 +315,7 @@ public class PokerGame extends CardGame {
             printPot();
             resolveWinner();
             promptPlayerExits();
+            checkPlayerBalances();
         }
     }
 
