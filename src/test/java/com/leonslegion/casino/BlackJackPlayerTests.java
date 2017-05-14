@@ -97,7 +97,7 @@ public class BlackJackPlayerTests {
     public void deductBetTest() {
         int bet = 5;
         player.deductBetFromAccount(bet);
-        Assert.assertEquals(1995.0, player.getBalance(), 0.001);
+        Assert.assertEquals(995.0, player.getBalance(), 0.001);
     }
 
     @Test

@@ -84,12 +84,10 @@ public class BlackjackPlayer extends CardPlayer {
     }
 
     public void deductBetFromAccount(int bet) {
-        double balance = getBalance();
-        getAccount().setAccountBalance(balance + (bet * -1));
+        getAccount().setAccountBalance(bet * -1);
     }
 
     public void addBetToAccount(int bet) {
-        double balance = getBalance();
         getAccount().setAccountBalance(bet * 1.5);
     }
 

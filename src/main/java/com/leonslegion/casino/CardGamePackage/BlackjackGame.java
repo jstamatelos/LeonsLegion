@@ -18,36 +18,9 @@ public class BlackjackGame extends CardGame {
     // Restart game
 
     private BlackjackPlayer player;
-    private BlackjackPlayer dealer;
+    private BlackjackDealer dealer;
     private boolean playing;
-    private double bet;
-
-    private BlackjackPlayer createDealer() {
-        Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
-        Account.AccountManager.addAccount(newDealerAccount);
-        newDealerAccount.setAccountBalance(1000000);
-
-        return new BlackjackPlayer(newDealerAccount) {
-            @Override
-            public double placeBet(double d) {
-                // do nothing
-                return -1;
-            }
-
-            @Override
-            public void showHand() {
-                int len = getHand().getCards().size();
-                System.out.println(getHand().getCards().size());
-                Console.println("Dealer is showing: ");
-
-                for (int i=1; i<len; i++) {
-                    Console.println(getHand().getCards().get(i).toString());
-                    Console.println(getHand().getCards().get(i).toStringReverse() + "\n");
-                }
-            }
-
-        };
-    }
+    private long bet;
 
     public BlackjackGame() {
         dealer = createDealer();
@@ -58,9 +31,16 @@ public class BlackjackGame extends CardGame {
 
     public BlackjackGame(BlackjackPlayer player) {
         this.player = player;
-        this.dealer = createDealer();
+        dealer = createDealer();
         playing = true;
         setHasDealer(true);
+    }
+
+    private BlackjackDealer createDealer() {
+        Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
+        Account.AccountManager.addAccount(newDealerAccount);
+        newDealerAccount.setAccountBalance(1000000);
+        return new BlackjackDealer(newDealerAccount);
     }
 
     private String dealerAction() {
@@ -257,20 +237,30 @@ public class BlackjackGame extends CardGame {
 
 
     private void loadPlayer() {
-        long accountId = Long.parseLong(Console.getStringInput("Enter ID number: "));
-        Account acct = Account.AccountManager.findAccount(accountId);
-        System.out.println(acct);
-        //double balance = Account.AccountManager.getBalance(acct);
-        player = new BlackjackPlayer(acct);
-        System.out.println("Player");
-        System.out.println(player);
+
+        long accountId = -1;
+
+        while (accountId == -1) {
+            accountId = Console.getLongInput("Enter ID number: ");
+            Account acct = Account.AccountManager.findAccount(accountId);
+            if (acct == null) {
+                Console.println("Not a valid account id.");
+                accountId = -1;
+            } else {
+                player = new BlackjackPlayer(acct);
+                System.out.println("Player");
+                System.out.println(player);
+            }
+
+        }
+        
     }
 
     private void placeBet() {
 
         String b = InputHandler.getStringInput("How much would you like to bet?");
        // player.placeBet(b);
-        bet = Double.parseDouble(b);
+        bet = Integer.parseInt(b);
     }
 
  /*   public void play() {
@@ -294,11 +284,11 @@ public class BlackjackGame extends CardGame {
     }*/
 
     public void promptPlayAgain() {
-        Console.println(" Your new balance is " + returnBalance());
+        Console.println(" Your new balance is " + player.getBalance());
         String playAgain = InputHandler.getStringInput("Play again?").toLowerCase();
         switch (playAgain) {
             case "yes":
-                //play();
+                startBlackJack();
                 break;
 
             case "no":
@@ -310,7 +300,6 @@ public class BlackjackGame extends CardGame {
                 break;
         }
     }
-
 
 
     private void selectHand() {
@@ -336,14 +325,10 @@ public class BlackjackGame extends CardGame {
         }
     }
 
-    private double getBet() {
-        return Console.getDoubleInput("How much would you like to bet?");
+    private void getBet() {
+        bet = Console.getLongInput("How much would you like to bet?");
     }
 
-    private void showCards() {
-        dealer.showHand();
-        player.showHand();
-    }
 
     private void turn() {
         String action;
@@ -356,12 +341,32 @@ public class BlackjackGame extends CardGame {
 
     }
 
+    private void endRound() {
+        player.showHand();
+        dealer.showHand();
+    }
+
+    private void bust() {
+        Console.println("Bust!");
+        endRound();
+        System.out.println(bet);
+        player.deductBetFromAccount((int)bet);
+        System.out.println(player.getBalance());
+        promptPlayAgain();
+    }
+
     public void startBlackJack() {
 
         initialDeal();
+        getBet();
 
         while (playing) {
-            showCards();
+            if (player.getHand().isOver21()) {
+                bust();
+                break;
+            }
+            player.showHand();
+            dealer.cardsShowing();
             turn();
             dealerTurn();
         }
