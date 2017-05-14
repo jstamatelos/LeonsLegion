@@ -340,7 +340,7 @@ public class BlackjackGame extends CardGame {
 
             System.out.println(b);
             System.out.println(player.getBalance());
-            if (bet > (long)player.getBalance()) {
+            if (b > player.getBalance()) {
                 Console.println("Bet exceeds you balance!");
                 b = -1;
             }
