@@ -1,5 +1,6 @@
 package com.leonslegion.casino.CardGamePackage;
 
+import com.leonslegion.casino.Abstracts.Player;
 import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
@@ -16,6 +17,7 @@ public class PokerGame extends CardGame {
     private long ante = 1000;  //For the time being, ante is set to $10 automatically.
     private boolean[] hasFolded;
     private long[] amountInThePot;
+    private int turnIndex = 0;
 
     @Override
     public ArrayList<PokerPlayer> getPlayers() {
@@ -60,6 +62,22 @@ public class PokerGame extends CardGame {
     }
 
     /*
+    Ante up!
+     */
+    private void anteUp() {
+        for(PokerPlayer p : getPlayers()) {
+            String name = getPokerPlayerName(p);
+            try {
+                pot += p.placeBet(ante);
+                Console.print(name + " antes " + Console.moneyToString(ante) + ".\n");
+            } catch (Exception e){
+                Console.println(name + ": You don't have to go home, but you can't stay here.\n");
+                players.remove(p);
+            }
+        }
+    }
+
+    /*
     Called at the beginning of each round to repopulate PokerPlayers' Hands.
      */
     public void initialDeal() {
@@ -73,13 +91,129 @@ public class PokerGame extends CardGame {
     }
 
     /*
+    This method holds the logic that ends a round
+    of betting when it becomes the turn of the last
+    player who raised.
+    */
+    void playersMakeBets() {
+        //each iteration of the loop is a turn by a player
+        do {
+            playerChoice(turnIndex);
+            turnIndex = getNextPlayer(turnIndex);
+        } while(countFolds() < hasFolded.length - 1 && amountInThePot[turnIndex] != getHighBet() && getHighBet() > 0);
+        // end of round
+    }
+
+    /*
+    Offers each player their options and routs their choice appropriately.
+    */
+    private void playerChoice(int playerIndex) {
+        PokerPlayer player = getPlayers().get(playerIndex);
+        long highBet = getHighBet();
+
+        Console.printDashes();
+        Console.println(player.getAccount().getAccountHolderName() + "\n" + player.getHand().toString());
+        Console.printDashes();
+
+        boolean loopCondition = true;
+
+        while(loopCondition) {
+            loopCondition = false;
+            String choice = InputHandler.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
+            try {
+                switch (choice.toUpperCase()) {
+                    case "FOLD":
+                        hasFolded[playerIndex] = true;
+                        break;
+                    case "RAISE":
+                        long raise = Console.getMoneyInput("\nThe high bet is currently " + Console.moneyToString(highBet) + ". How much would you like to raise above that?");
+                        player.placeBet(highBet + raise);
+                        amountInThePot[playerIndex] = highBet + raise;
+                        break;
+                    case "CALL":
+                        if (highBet == 0) {
+                            throw new Exception("\nThere was no raise to call.");
+                        }
+                        player.placeBet(highBet - amountInThePot[playerIndex]);
+                        amountInThePot[playerIndex] = highBet;
+                        break;
+                    case "CHECK":
+                        if (highBet > 0) {
+                            throw new Exception("\nYou cannot check.");
+                        }
+                        break;
+                    default:
+                        throw new Exception("\nNot a valid choice. Read the instructions again.");
+                }
+            } catch (Exception e) {
+                Console.println(e.getMessage());
+                loopCondition = true;
+            }
+        }
+    }
+
+    /*
+    An exception will be generated if all the players
+    fold consecutively, so this will control for that
+    possibility.
+    */
+    private int countFolds() {
+        int count = 0;
+        for(boolean bool : hasFolded) {
+            if(bool) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*
+    getNextPlayer iterates around the table and skips folded players.
+     */
+    private int getNextPlayer(int playerIndex) {
+        do {
+            turnIndex = (turnIndex + 1) % hasFolded.length;
+        } while(!hasFolded[turnIndex]);
+
+        return turnIndex;
+    }
+
+    private long getHighBet() {
+        long highBet = 0;
+        for(long l : amountInThePot) {
+            if(l > highBet) {
+                highBet = l;
+            }
+        }
+        return highBet;
+    }
+
+    private void rakeBetsIn() {
+        for(int i = 0; i < players.size(); i++) {
+            pot += amountInThePot[i];
+        }
+    }
+
+    private void printPot() {
+        Console.println("There's currently " + Console.moneyToString(pot) + " in the pot.\n");
+    }
+
+    /*
     Calls compareTo method from PokerHand to find a winner.
      */
-    private PokerPlayer compareHands(ArrayList<PokerPlayer> players) {
-        PokerPlayer winner = players.get(0);
-        for (int i = 1; i < players.size(); i++) {
-            if(winner.getHand().compareTo(players.get(i).getHand()) < 0) {
-                winner = players.get(i);
+    private PokerPlayer compareHands() {
+        int firstNotToFold = 0;
+        while(hasFolded[firstNotToFold]) {
+            firstNotToFold++;
+        }
+        PokerPlayer winner = getPlayers().get(firstNotToFold);
+        for (int i = 0; i < hasFolded.length; i++) {
+            if(hasFolded[i]) {
+                continue;
+            }
+            setPlayerHandType(getPlayers().get(i));
+            if(winner.getHand().compareTo(getPlayers().get(i).getHand()) < 0) {
+                winner = getPlayers().get(i);
             }
         }
 
@@ -87,22 +221,24 @@ public class PokerGame extends CardGame {
     }
 
     /*
-    This helper method takes the PokerPlayerBettingRound
-    object and deducts the amount they committed to the
-    last pot from their account.
+    Sets handType and prints it.
+    */
+    private void setPlayerHandType(PokerPlayer player) {
+        player.getHand().determineHandType();
+        Console.println(player.getHand().handType.toString());
+        Console.printDashes();
+    }
+
+    /*
+    This helper method takes the PokerPlayer
+    object and deducts the amount committed to
+    the last pot from their account.
      */
     private void debitFromPokerPlayerAccount(PokerPlayer p, long amount) {
         p.getAccount().setAccountBalance(-1 * amount);
         Console.println(getPokerPlayerName(p) + ": After debiting your bets, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
     }
 
-    /*
-    Pays the pot to the Account of the winner.
-     */
-    private void payToWinnersAccount(PokerPlayer p) {
-        p.getAccount().setAccountBalance(pot);
-        Console.println("Congratulations! After your win, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
-    }
 
     /*
     For getting a PokerPlayer's name.
@@ -112,57 +248,22 @@ public class PokerGame extends CardGame {
     }
 
     /*
-    For setting all the remaining players' HandTypes.
-     */
-    private void setPlayerHandTypes(ArrayList<PokerPlayer> remainingPlayers) {
-        for(PokerPlayer p : remainingPlayers) {
-            p.getHand().determineHandType();
-            Console.println(p.getHand().handType.toString());
-        }
-        Console.printDashes();
-    }
-
-    /*
     Takes care of finding, announcing, paying winner.
      */
-    private void resolveWinner(ArrayList<PokerPlayer> remainingPlayers) {
-        PokerPlayer winner = compareHands(remainingPlayers);
+    private void resolveWinner() {
+        PokerPlayer winner = compareHands();
         Console.println("The winner is " + getPokerPlayerName(winner) + "!\n");
         payToWinnersAccount(winner);
     }
 
     /*
-    Ante up!
-     */
-    private void anteUp() {
-        for(PokerPlayer p : getPlayers()) {
-            String name = p.getAccount().getAccountHolderName();
-            try {
-                pot += p.placeBet(ante);
-                Console.print(name + " antes " + Console.moneyToString(ante) + ".\n");
-            } catch (Exception e){
-                Console.println(name + ": You don't have to go home, but you can't stay here.\n");
-                players.remove(p);
-            }
-        }
+    Pays the pot to the Account of the winner.
+    */
+    private void payToWinnersAccount(PokerPlayer p) {
+        p.getAccount().setAccountBalance(pot);
+        Console.println("Congratulations! After your win, you have " + Console.moneyToString(p.getBalance()) + " remaining in your account.\n");
     }
 
-    /*
-    This method doesn't adhere to SRP. It rakes the bets
-    into the pot and adds the non-folded players into
-    an ArrayList to compare hands and choose winner.
-     */
-    private ArrayList<PokerPlayer> resolveRound(PokerBettingRound round) {
-        ArrayList<PokerPlayer> remainingPlayers = new ArrayList<PokerPlayer>();
-        for (PokerPlayerBettingRound p : round.playersInRound) {
-            pot += p.amountIn;
-            //debitFromPokerPlayerAccount(p.player, p.amountIn);
-            if(!p.folded) {
-                remainingPlayers.add(p.player);
-            }
-        }
-        return  remainingPlayers;
-    }
 
     private void promptPlayerExits() {
         ArrayList<PokerPlayer> players = getPlayers();
@@ -177,12 +278,14 @@ public class PokerGame extends CardGame {
         hasFolded = new boolean[players.size()];
         amountInThePot = new long[players.size()];
         pot = 0;
+        turnIndex = 0;
         for(PokerPlayer p : getPlayers()) {
             p.hand = null;
         }
         deck = new Deck();
         initialDeal();
     }
+
 
     /*
     Sets into motion the logic behind a game of poker.
@@ -201,19 +304,13 @@ public class PokerGame extends CardGame {
         printRules();
 
         while (players.size() > 1) { //
-
-            resetHand();
-
-            PokerBettingRound round = new PokerBettingRound(getPlayers());
             anteUp();
-            round.playersMakeBets();
-
-            ArrayList<PokerPlayer> remainingPlayers = resolveRound(round);
-            Console.println("There's currently " + Console.moneyToString(pot) + " in the pot.\n");
-
-            setPlayerHandTypes(remainingPlayers);
-            resolveWinner(remainingPlayers); //TODO - write this method
+            playersMakeBets();
+            rakeBetsIn();
+            printPot();
+            resolveWinner();
             promptPlayerExits();
+            resetHand();
         }
     }
 
