@@ -15,6 +15,7 @@ public class RouletteGameManager {
         RoulettePrint.printWelcomeMessage();
         long numberOfPlayers = RouletteInputOutput.getNumberOfPlayers(new InputAsker(System.in, System.out));
         ArrayList<RoulettePlayer> players = RouletteInputOutput.createRoulettePlayerList(numberOfPlayers);
+
        /* boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {
             doesPlayerHaveABalance(players);
