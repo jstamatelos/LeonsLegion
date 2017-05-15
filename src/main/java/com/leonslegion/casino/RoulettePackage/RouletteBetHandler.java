@@ -13,9 +13,13 @@ public class RouletteBetHandler {
     public static String handleAnyBet(InputAsker asker) {
         String bet = asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.");
         while (NumberUtils.isParsable(bet)) {
-            if (Integer.parseInt(bet) > -1 && Integer.parseInt(bet) < 37) {
+            if ((Integer.parseInt(bet) > 0 && Integer.parseInt(bet) < 37)) {
                 return bet;
-            } else {
+            }
+            else if (bet.equalsIgnoreCase("0") || bet.equalsIgnoreCase("00")) {
+                return bet;
+            }
+            else {
                 bet = asker.askForInput("You must bet 0, 00, or a number between 1 and 36.");
             }
         }

@@ -193,6 +193,19 @@ public class RouletteGameTest {
     }
 
     @Test
+    public void testThatPlayerCanMakeInsideBetAfterInvalidZeroChoice() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+
+        //When:
+        Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("000");
+        Mockito.when(asker.askForInput("You must bet 0, 00, or a number between 1 and 36.")).thenReturn("00");
+
+        //Then:
+        Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("00"));
+    }
+
+    @Test
     public void testThatPlayerCanMakeAnOutsideBetAfterInvalidNumberChoice() {
         //Given:
         InputAsker asker = Mockito.mock(InputAsker.class);
