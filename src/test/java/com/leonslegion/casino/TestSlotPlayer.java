@@ -25,7 +25,7 @@ public class TestSlotPlayer {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-
+/*
     @Test
     public void testSlotPlayerDidNotPlaceBet() {
 
@@ -44,6 +44,6 @@ public class TestSlotPlayer {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-
+*/
 
 }
