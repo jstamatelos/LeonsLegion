@@ -137,8 +137,33 @@ public class RouletteGameTest {
         Assert.assertTrue(expectedOutput == actualOutput);
     }
 
+    @Test
+    public void testThatPlayerCanExit() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
 
+        //When
+        Mockito.when(asker.askForInput("Type 'exit' before the round starts to leave game. Or type any other letter to stay.")).thenReturn("exit");
 
+        //Then
+        Assert.assertTrue(RouletteCoreGameplayEngine.exitInput(asker));
+    }
+
+    @Test
+    public void testThatPlayerCanStay() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
+
+        //When
+        Mockito.when(asker.askForInput("Type 'exit' before the round starts to leave game. Or type any other letter to stay.")).thenReturn("n");
+
+        //Then
+        Assert.assertTrue(!RouletteCoreGameplayEngine.exitInput(asker));
+    }
 
 
 /*
