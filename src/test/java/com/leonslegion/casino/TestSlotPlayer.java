@@ -11,18 +11,39 @@ import org.junit.Test;
 public class TestSlotPlayer {
 
     @Test
-    public void testSlotPlayerPlaceBet() {
+    public void testSlotPlayerDidPlaceBet() {
 
         //given
-        Account acct = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(acct);
+        Account.AccountManager.addAccount("Hunter");
+        SlotPlayer player = new SlotPlayer(Account.AccountManager.findAccount("Hunter"));
         boolean expectedResult = true;
 
         //when
-        boolean actualResult = sp.placeBet();
+        boolean actualResult = player.placeBet();
 
         //then
         Assert.assertEquals(expectedResult, actualResult);
 
     }
+/*
+    @Test
+    public void testSlotPlayerDidNotPlaceBet() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        Account.AccountManager.findAccount("Leon").setAccountBalance(-100000);
+        SlotPlayer player = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        boolean expectedResult = false;
+
+
+
+        //when
+        boolean actualResult = player.placeBet();
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+*/
+
 }
