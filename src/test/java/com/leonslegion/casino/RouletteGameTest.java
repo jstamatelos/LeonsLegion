@@ -30,7 +30,7 @@ public class RouletteGameTest {
         //Then
         Assert.assertTrue(RouletteInputOutput.getNumberOfPlayers(asker) == 1);
     }
-    
+
 
     @Test
     public void testGetPlayerIDInput() {
@@ -139,7 +139,7 @@ public class RouletteGameTest {
         //Then
         Assert.assertTrue(expectedOutput == actualOutput);
     }
-/*
+
     @Test
     public void testSuccessfulRoulettePlayerCreation() {
         //Given:
@@ -157,7 +157,7 @@ public class RouletteGameTest {
 
 
 
-
+/*
     @Test
     public void testThatPlayerCanMakeBet() {
         //Given:

@@ -16,7 +16,6 @@ public class RouletteInputOutput {
 
     // Fully Tested, including:
     // testGetNumberOfPlayersInputCanBe0, testGetNumberOfPlayersInputCanBeInvalidOnce,
-    // testGetNumberOfPlayersInputCanBeInvalidTwice
     public static long getNumberOfPlayers(InputAsker inputAsker) {
         Console.println("Type '0' to return to menu.");
         String input = inputAsker.askForInput("Please enter integer number of players. 2 is max.");
@@ -28,8 +27,7 @@ public class RouletteInputOutput {
 
 
 
-    // Fully Tested, including:
-
+    // Sub-methods getPlayerID, checkIfPlayerIDExists, and isIDAlreadyRegistered are tested
     public static ArrayList<RoulettePlayer> createRoulettePlayerList(long numberOfPlayers) {
         ArrayList<RoulettePlayer> players = new ArrayList<>();
         while (players.size() != numberOfPlayers) {
@@ -41,6 +39,8 @@ public class RouletteInputOutput {
                     Account roulettePlayerAccount = Account.AccountManager.findAccount(playerID);
                     RoulettePlayer newPlayer = new RoulettePlayer(roulettePlayerAccount, new ArrayList<RouletteBet>());
                     players.add(newPlayer);
+                    RoulettePrint.printAccountAccepted();
+                    RoulettePrint.printAccountInformation(roulettePlayerAccount);
                 }
                 else {
                     RoulettePrint.printAccountAlreadyLoaded();
@@ -102,5 +102,6 @@ public class RouletteInputOutput {
             return false;
         }
     }
+
 }
 
