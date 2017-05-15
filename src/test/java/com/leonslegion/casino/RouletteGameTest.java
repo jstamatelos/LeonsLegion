@@ -31,19 +31,9 @@ public class RouletteGameTest {
         Assert.assertTrue(RouletteInputOutput.getNumberOfPlayers(asker) == 1);
     }
 
-    @Test
-    public void testGetNumberOfPlayersInputCanBeInvalidTwice() {
-        //Given:
-        InputAsker asker = Mockito.mock(InputAsker.class);
-        //When
-        Mockito.when(asker.askForInput("Please enter integer number of players. 2 is max.")).thenReturn("c");
-        Mockito.when(asker.askForInput("Not a valid input!")).thenReturn("c");
-        //Then
-        Assert.assertTrue(RouletteInputOutput.getNumberOfPlayers(asker) == 0);
-    }
 
     @Test
-    public void testGetPlayIDInput() {
+    public void testGetPlayerIDInput() {
         //Given:
         InputAsker asker = Mockito.mock(InputAsker.class);
         //When
@@ -64,21 +54,94 @@ public class RouletteGameTest {
     }
 
     @Test
-    public void testGetPlayerIDCanBeInvalidTwice() {
+    public void testGetPlayerIDCanBeNegativeOnce() {
         //Given:
         InputAsker asker = Mockito.mock(InputAsker.class);
         //When
-        Mockito.when(asker.askForInput("Please enter your ID. Fractional components will be ignored.")).thenReturn("c");
-        Mockito.when(asker.askForInput("Not a valid input!")).thenReturn("c");
+        Mockito.when(asker.askForInput("Please enter your ID. Fractional components will be ignored.")).thenReturn("-4");
+        Mockito.when(asker.askForInput("Not a valid input!")).thenReturn("5");
         //Then
-        Assert.assertTrue(RouletteInputOutput.getPlayerID(asker) == -1);
+        Assert.assertTrue(RouletteInputOutput.getPlayerID(asker) == 5);
+    }
+
+    @Test
+    public void testPlayerIDAsDouble() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+        //When
+        Mockito.when(asker.askForInput("Please enter your ID. Fractional components will be ignored.")).thenReturn("2.35");
+
+        //Then
+        Assert.assertTrue(RouletteInputOutput.getPlayerID(asker) == 2);
+    }
+
+
+    @Test
+    public void testIfPlayerIDThatExistsIsFound() {
+        //Given:
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
+        boolean expectedOutput = true;
+
+        //When
+        boolean actualOutput = RouletteInputOutput.checkIfPlayerIDExists(ID);
+
+        //Then
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testIfPlayerIDThatDoesNotExistIsNotFound() {
+        //Given:
+        Account.AccountManager.addAccount("leon");
+        long ID = 999;
+        boolean expectedOutput = false;
+
+        //When
+        boolean actualOutput = RouletteInputOutput.checkIfPlayerIDExists(ID);
+
+        //Then
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatAccountNotRegisteredIsAdded() {
+        //Given:
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
+        ArrayList<RoulettePlayer> players = new ArrayList<>();
+        boolean expectedOutput = false;
+
+        //When
+        boolean actualOutput = RouletteInputOutput.checkIfPlayerAlreadyRegistered(players, ID);
+
+        //Then
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatRegisteredAccountIsNotAdded() {
+        //Given:
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
+        Account newAccount = Account.AccountManager.findAccount("leon");
+        RoulettePlayer newPlayer = new RoulettePlayer(newAccount, new ArrayList<RouletteBet>());
+        ArrayList<RoulettePlayer> players = new ArrayList<>();
+        players.add(newPlayer);
+        boolean expectedOutput = true;
+
+        //When
+        boolean actualOutput = RouletteInputOutput.checkIfPlayerAlreadyRegistered(players, ID);
+
+        //Then
+        Assert.assertTrue(expectedOutput == actualOutput);
     }
 
 
 
-    /*
 
 
+/*
     @Test
     public void testThatPlayerCanMakeBet() {
         //Given:

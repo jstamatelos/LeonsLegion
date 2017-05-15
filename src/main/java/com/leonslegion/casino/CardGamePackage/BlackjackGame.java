@@ -14,6 +14,13 @@ public class BlackjackGame extends CardGame {
     private boolean stay;
     private long bet;
 
+    private BlackjackDealer createDealer() {
+        Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
+        Account.AccountManager.addAccount("Dealer");
+        newDealerAccount.setAccountBalance(1000000);
+        return new BlackjackDealer(newDealerAccount);
+    }
+
     public BlackjackGame() {
         dealer = createDealer();
         loadPlayer();
@@ -21,20 +28,12 @@ public class BlackjackGame extends CardGame {
         stay = false;
         setHasDealer(true);
     }
-
     public BlackjackGame(BlackjackPlayer player) {
         this.player = player;
         dealer = createDealer();
         playing = true;
         stay = false;
         setHasDealer(true);
-    }
-
-    private BlackjackDealer createDealer() {
-        Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
-        Account.AccountManager.addAccount(newDealerAccount);
-        newDealerAccount.setAccountBalance(1000000);
-        return new BlackjackDealer(newDealerAccount);
     }
 
     public void initialDeal() {
@@ -336,7 +335,7 @@ public class BlackjackGame extends CardGame {
     }
 
     public static void main(String[] args) {
-        Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Cameron"));
+        Account.AccountManager.addAccount("Cameron");
         BlackjackGame game = new BlackjackGame();
         game.startBlackJack();
     }

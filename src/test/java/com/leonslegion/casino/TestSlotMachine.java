@@ -29,7 +29,7 @@ public class TestSlotMachine {
     }
     //Deprecated Test
 
-*/
+
     @Test
     public void testDetermineWinningsLemon() {
 
@@ -112,5 +112,5 @@ public class TestSlotMachine {
             machine = new SlotMachine(sp);
             machine.pullLever();
         } while (machine.matchImages());
-    }
+    } */
 }
