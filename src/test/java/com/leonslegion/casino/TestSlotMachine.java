@@ -97,7 +97,7 @@ public class TestSlotMachine {
     }
 
     @Test
-    public void testPullLever() {
+    public void testPullLeverWithMatchingImages() {
 
         //given
         Account.AccountManager.addAccount("Leon");
@@ -109,6 +109,29 @@ public class TestSlotMachine {
             machine.pullLever();
         } while (!machine.matchImages());
         boolean expectedResult = true;
+
+
+        //when
+        boolean actualResult = machine.matchImages();
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testPullLeverImagesDoNotMatch() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        do {
+
+            machine = new SlotMachine(sp);
+            machine.pullLever();
+        } while (machine.matchImages());
+        boolean expectedResult = false;
 
 
         //when
