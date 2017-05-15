@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class RouletteCoreGameplayEngine implements Spin {
 
 
+
     public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers, InputAsker asker) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
             Console.println("Does Player #" + roulettePlayers.get(count).getAccount().getId() + " want to exit?");
@@ -31,9 +32,6 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
         }
     }
-
-
-
     public static void doesPlayerHaveABalance (ArrayList<RoulettePlayer> roulettePlayers) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
             if (roulettePlayers.get(count).getBalance() <= 0) {
@@ -53,8 +51,6 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
         }
     }
-
-
     // Fully Tested, including:
     // testThatPlayerCanExit, testThatPlayerCanStay
     public static boolean exitInput(InputAsker asker) {
@@ -73,13 +69,10 @@ public class RouletteCoreGameplayEngine implements Spin {
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
     }
-
-
-
     private static void gatherEachPlayersBets(RoulettePlayer roulettePlayer) {
         boolean stillBetting = true;
         while (stillBetting) {
-            String keepBetting = keepBettingLoop();
+            String keepBetting = keepBettingLoop(new InputAsker(System.in, System.out));
             if (keepBetting.equalsIgnoreCase("Yes")) {
                 rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
             }
@@ -88,16 +81,11 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
             else {
                 Console.println("Not a valid answer.");
-                continue;
             }
         }
     }
-
-
-
-
     private static void rouletteRoundBettingEngineForOnePlayer(RoulettePlayer roulettePlayer) {
-        String newBetType = RouletteBetHandler.handleAnyBet();
+        String newBetType = RouletteBetHandler.handleAnyBet(new InputAsker(System.in, System.out));
         String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
         String newBetValue = roulettePlayer.placeBet(betValue);
         long newBetValueAsDouble = Long.parseLong(newBetValue);
@@ -112,12 +100,8 @@ public class RouletteCoreGameplayEngine implements Spin {
             Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }
-
-
-
-
-    public static String keepBettingLoop() {
-        return InputHandler.getStringInput("Do you want to place another bet? Type 'yes' or 'no'.");
+    public static String keepBettingLoop(InputAsker asker) {
+        return asker.askForInput("Do you want to place another bet? Type 'yes' or 'no'.");
     }
 
 
@@ -127,12 +111,6 @@ public class RouletteCoreGameplayEngine implements Spin {
         int randomNumber = (int) Math.floor(Math.random()*37);
         return Integer.toString(randomNumber);
     }
-
-
-
-
-
-
 
 
 
