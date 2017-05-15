@@ -107,9 +107,8 @@ public class Lobby {
 
     public void createAccount(){
         String newName = InputHandler.getStringInput("What is your name?");
-        Account newAccount = Account.AccountFactory.createAccountWithName(newName);
         Account.AccountManager.addAccount(newName);
-        Console.println(newAccount.toString());
+        Console.println(newName.toString());
         askToBuyMoreChips();
     }
 
@@ -155,7 +154,8 @@ public class Lobby {
                 break;
 
             case "blackjack":
-                BlackjackGame.startBlackJack();
+                BlackjackGame blackjackGame = new BlackjackGame();
+                blackjackGame.startBlackJack();
                 break;
 
             case "war":
