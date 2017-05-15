@@ -168,15 +168,11 @@ public class RouletteGameTest {
     @Test
     public void testThatPlayerCanMakeInsideBet() {
         //Given:
-        ArrayList<RouletteBet> bet = new ArrayList<RouletteBet>();
-        ArrayList<RoulettePlayer> players = new ArrayList<RoulettePlayer>();
         InputAsker asker = Mockito.mock(InputAsker.class);
-
         //When:
-        Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("00");
-
+        Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("1");
         //Then:
-        Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("00"));
+        Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("1"));
     }
 
     @Test
@@ -186,10 +182,10 @@ public class RouletteGameTest {
 
         //When:
         Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("40");
-        Mockito.when(asker.askForInput("You must bet 0, 00, or a number between 1 and 36.")).thenReturn("00");
+        Mockito.when(asker.askForInput("You must bet from one of the options above.")).thenReturn("1");
 
         //Then:
-        Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("00"));
+        Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("1"));
     }
 
     @Test
@@ -199,7 +195,7 @@ public class RouletteGameTest {
 
         //When:
         Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("000");
-        Mockito.when(asker.askForInput("You must bet 0, 00, or a number between 1 and 36.")).thenReturn("00");
+        Mockito.when(asker.askForInput("You must bet from one of the options above.")).thenReturn("00");
 
         //Then:
         Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("00"));
@@ -212,7 +208,7 @@ public class RouletteGameTest {
 
         //When:
         Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("40");
-        Mockito.when(asker.askForInput("You must bet 0, 00, or a number between 1 and 36.")).thenReturn("1st C");
+        Mockito.when(asker.askForInput("You must bet from one of the options above.")).thenReturn("1st C");
 
         //Then:
         Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("1st C"));
