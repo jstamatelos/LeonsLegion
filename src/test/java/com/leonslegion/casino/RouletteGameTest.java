@@ -361,5 +361,480 @@ public class RouletteGameTest {
         Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("Black"));
     }
 
+    @Test
+    public void testThatPlayerCanMakeAnOutsideBetAfterInvalidInput() {
+        //Given:
+        InputAsker asker = Mockito.mock(InputAsker.class);
+
+        //When:
+        Mockito.when(asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.")).thenReturn("cc");
+        Mockito.when(asker.askForInput("You must bet from one of the options above.")).thenReturn("1st C");
+
+        //Then:
+        Assert.assertTrue(RouletteBetHandler.handleAnyBet(asker).equals("1st C"));
+    }
+
+    @Test
+    public void testThatPlayerCanWinInsideBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "00";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "00";
+        double expectedOutput = 90000 + (35*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForInsideBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseInsideBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "00";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForInsideBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+
+    @Test
+    public void testThatPlayerCanWinFirstDozenBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "1st D";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000 + (3*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinSecondDozenBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "2nd D";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "13";
+        double expectedOutput = 90000 + (3*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinThirdDozenBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "3rd D";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "27";
+        double expectedOutput = 90000 + (3*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseDozenBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "2nd D";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinFirstColumnBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "1st C";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000 + (3*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinSecondColumnBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "2nd C";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "2";
+        double expectedOutput = 90000 + (3*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinThirdColumnBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "3rd C";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "3";
+        double expectedOutput = 90000 + (3*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinLoseColumnBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "3rd C";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinFrontBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Front";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "3";
+        double expectedOutput = 90000 + (2*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseFrontBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Front";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "36";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinEvenBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Even";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "36";
+        double expectedOutput = 90000 + (2*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseEvenBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Even";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "3";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinOddBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Odd";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "3";
+        double expectedOutput = 90000 + (2*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseOddBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Odd";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "36";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinBackBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Back";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "36";
+        double expectedOutput = 90000 + (2*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseBackBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Back";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "3";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinRedBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Red";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000 + (2*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseRedBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Red";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "2";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanWinBlackBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Black";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "2";
+        double expectedOutput = 90000 + (2*10000);
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
+
+    @Test
+    public void testThatPlayerCanLoseBlackBet() {
+        //Given:
+        Account account = new Account();
+        RoulettePlayer player = new RoulettePlayer(account, new ArrayList<RouletteBet>());
+        String newBetType = "Black";
+        String newBetValue = player.placeBet("100");
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        player.makeRouletteBet(newBetType, newBetValueAsLong);
+        String spin = "1";
+        double expectedOutput = 90000;
+        //When:
+        player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(player.getBetList(), spin));
+        double actualOutput = player.getBalance();
+        Console.printDouble(actualOutput);
+        //Then:
+        Assert.assertTrue(expectedOutput == actualOutput);
+    }
 
 }

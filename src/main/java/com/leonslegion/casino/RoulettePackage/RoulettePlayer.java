@@ -43,26 +43,24 @@ public class RoulettePlayer extends Player {
     }
 
 
-    //TODO - this logic should probably be left to the Console class.
     public String placeBet (String bet) {
-        if (!NumberUtils.isParsable(bet)) {
-            String newBet = InputHandler.getStringInput("That's not a valid bet.");
-            return placeBet(newBet);
+        while (!NumberUtils.isParsable(bet)) {
+            String newBet = Console.getStringInput("That's not a valid bet.");
         }
-        else if (Double.parseDouble(bet) < 0.01 && Double.parseDouble(bet) > 0) {
-            String newBet = InputHandler.getStringInput("Minimum bet is one cent!");
-            return placeBet(newBet);
-        }
-        else if (Double.parseDouble(bet) < 0) {
-            String newBet = InputHandler.getStringInput("You cannot make a negative bet!");
-            return placeBet(newBet);
-        }
-        else if (getBalance() - Double.parseDouble(bet) < 0) {
-            String newBet = InputHandler.getStringInput("Your bet is greater than your balance!");
-            return placeBet(newBet);
-        }
-        else {
-            getAccount().setAccountBalance(Long.parseLong(bet) * -1);
+        while (NumberUtils.isParsable(bet)) {
+            if (Double.parseDouble(bet) < 0.01 && Double.parseDouble(bet) > 0) {
+                String newBet = Console.getStringInput("Minimum bet is one cent!");
+            }
+            else if (Double.parseDouble(bet) < 0) {
+                String newBet = Console.getStringInput("You cannot make a negative bet!");
+            }
+            else if (getBalance() - Double.parseDouble(bet) < 0) {
+                String newBet = Console.getStringInput("Your bet is greater than your balance!");
+            }
+            else {
+                getAccount().setAccountBalance(Long.parseLong(bet) * 100 * -1);
+                return bet;
+            }
         }
         return bet;
     }

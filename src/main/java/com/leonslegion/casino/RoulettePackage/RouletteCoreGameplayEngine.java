@@ -86,10 +86,13 @@ public class RouletteCoreGameplayEngine implements Spin {
     }
     private static void rouletteRoundBettingEngineForOnePlayer(RoulettePlayer roulettePlayer) {
         String newBetType = RouletteBetHandler.handleAnyBet(new InputAsker(System.in, System.out));
-        String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
+        String betValue = Console.getStringInput("How much would you like to put down for this bet?" +
+                "Please use dollars and cents format without dollar sign. Fractional cents will be ignored.");
         String newBetValue = roulettePlayer.placeBet(betValue);
-        long newBetValueAsDouble = Long.parseLong(newBetValue);
-        roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        roulettePlayer.makeRouletteBet(newBetType, newBetValueAsLong);
         Console.printDashes();
         Console.print("Your balance is now: ");
         Console.printMoney(roulettePlayer.getBalance());
