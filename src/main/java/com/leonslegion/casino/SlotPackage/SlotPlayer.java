@@ -26,7 +26,7 @@ public class SlotPlayer extends Player {
             return false;
         }
         else {
-            this.getAccount().setAccountBalance(getBalance() - 500);
+            this.getAccount().setAccountBalance(-500);
             return true;
         }
     }

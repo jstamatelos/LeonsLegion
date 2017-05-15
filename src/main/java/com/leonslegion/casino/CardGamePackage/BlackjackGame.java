@@ -17,20 +17,8 @@ public class BlackjackGame extends CardGame {
     private BlackjackDealer createDealer() {
         Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
         Account.AccountManager.addAccount("Dealer");
-<<<<<<< HEAD
-        newDealerAccount.setAccountBalance(100000000);
-
-        return new BlackjackPlayer(newDealerAccount) {
-            @Override
-            public long placeBet(long d) {
-                // do nothing
-                return -1;
-            }
-        };
-=======
         newDealerAccount.setAccountBalance(1000000);
         return new BlackjackDealer(newDealerAccount);
->>>>>>> c4b7571152f9780ef87aad498bbbb5e3f8993a1a
     }
 
     public BlackjackGame() {

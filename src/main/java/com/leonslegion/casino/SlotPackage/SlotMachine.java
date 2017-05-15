@@ -76,7 +76,7 @@ public class SlotMachine {
         Console.println(displayImages());
         if(matchImages()) {
             Console.println("You won: "+ Console.moneyToString(determineWinnings(image1)));
-            sp.getAccount().setAccountBalance(sp.getBalance() + determineWinnings(image1));
+            sp.getAccount().setAccountBalance(determineWinnings(image1));
             return determineWinnings(image1);
         }
         else {
