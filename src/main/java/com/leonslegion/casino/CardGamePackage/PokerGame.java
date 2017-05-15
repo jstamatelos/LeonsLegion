@@ -147,7 +147,8 @@ public class PokerGame extends CardGame {
 
         while(loopCondition) {
             loopCondition = false;
-            String choice = InputHandler.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n");
+            String choice = Console.getStringInput("\nYou can FOLD, RAISE, CALL a raise, or if no bets have been made, CHECK.\n" +
+                    "Your current balance is " + Console.moneyToString(player.getBalance()) + ".\n");
             try {
                 switch (choice.toUpperCase()) {
                     case "FOLD":

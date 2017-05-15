@@ -17,7 +17,9 @@ public class PokerPlayer extends CardPlayer {
 
     boolean leaveGame() {
         Console.printDashes();
-        String string = Console.getStringInput("You gonna stick around, " + getAccount().getAccountHolderName() +  "? (Y/N)\n");
+        String string = Console.getStringInput("You gonna stick around, " + getAccount().getAccountHolderName() +  "?\n" +
+                "Your current balance is " + Console.moneyToString(getBalance()) + ".\n" +
+                "(Y/N)?\n");
         if(string.equalsIgnoreCase("y") || string.equalsIgnoreCase("yes")) {
             Console.println("OK, " + getAccount().getAccountHolderName() + ". You can stay, but you should probably slow down on the jack and cokes.\n");
             return false;
