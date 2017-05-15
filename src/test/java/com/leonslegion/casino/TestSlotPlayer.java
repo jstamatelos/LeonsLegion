@@ -25,25 +25,25 @@ public class TestSlotPlayer {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-/*
-    @Test
-    public void testSlotPlayerDidNotPlaceBet() {
 
-        //given
-        Account.AccountManager.addAccount("Leon");
-        Account.AccountManager.findAccount("Leon").setAccountBalance(-100000);
-        SlotPlayer player = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
-        boolean expectedResult = false;
+//    @Test
+//    public void testSlotPlayerDidNotPlaceBet() {
+//
+//        //given
+//        Account.AccountManager.addAccount("Leon");
+//        Account.AccountManager.findAccount("Leon").setAccountBalance(-100000);
+//        SlotPlayer player = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+//        boolean expectedResult = false;
+//
+//
+//
+//        //when
+//        boolean actualResult = player.placeBet();
+//
+//        //then
+//        Assert.assertEquals(expectedResult, actualResult);
+//
+//    }
 
-
-
-        //when
-        boolean actualResult = player.placeBet();
-
-        //then
-        Assert.assertEquals(expectedResult, actualResult);
-
-    }
-*/
 
 }
