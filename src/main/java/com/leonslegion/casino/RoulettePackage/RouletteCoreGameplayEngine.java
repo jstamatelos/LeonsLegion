@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class RouletteCoreGameplayEngine implements Spin {
 
 
+
     public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers, InputAsker asker) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
             Console.println("Does Player #" + roulettePlayers.get(count).getAccount().getId() + " want to exit?");
@@ -31,9 +32,6 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
         }
     }
-
-
-
     public static void doesPlayerHaveABalance (ArrayList<RoulettePlayer> roulettePlayers) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
             if (roulettePlayers.get(count).getBalance() <= 0) {
@@ -53,8 +51,6 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
         }
     }
-
-
     // Fully Tested, including:
     // testThatPlayerCanExit, testThatPlayerCanStay
     public static boolean exitInput(InputAsker asker) {
@@ -73,13 +69,13 @@ public class RouletteCoreGameplayEngine implements Spin {
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
     }
-
-
-
     private static void gatherEachPlayersBets(RoulettePlayer roulettePlayer) {
         boolean stillBetting = true;
         while (stillBetting) {
-            String keepBetting = keepBettingLoop();
+            if (roulettePlayer.getBalance() == 0) {
+                break;
+            }
+            String keepBetting = keepBettingLoop(new InputAsker(System.in, System.out));
             if (keepBetting.equalsIgnoreCase("Yes")) {
                 rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
             }
@@ -88,36 +84,33 @@ public class RouletteCoreGameplayEngine implements Spin {
             }
             else {
                 Console.println("Not a valid answer.");
-                continue;
             }
         }
     }
-
-
-
-
     private static void rouletteRoundBettingEngineForOnePlayer(RoulettePlayer roulettePlayer) {
-        String newBetType = RouletteBetHandler.handleAnyBet();
-        String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
+        String newBetType = RouletteBetHandler.handleAnyBet(new InputAsker(System.in, System.out));
+        String betValue = Console.getStringInput("How much would you like to put down for this bet? " +
+                "Please use whole dollars.");
         String newBetValue = roulettePlayer.placeBet(betValue);
-        long newBetValueAsDouble = Long.parseLong(newBetValue);
-        roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
+        float newBetValueAsFloat = Float.parseFloat(newBetValue);
+        newBetValueAsFloat *= 100;
+        long newBetValueAsLong = (long) newBetValueAsFloat;
+        roulettePlayer.makeRouletteBet(newBetType, newBetValueAsLong);
         Console.printDashes();
         Console.print("Your balance is now: ");
-        Console.printMoney(roulettePlayer.getBalance());
-        Console.printDashes();
+        RoulettePrint.moneyFormatterForPrinting(roulettePlayer.getBalance());
+        Console.println("");
         Console.println("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
-            Console.printMoney(roulettePlayer.getBetList().get(i).getBetValue());
-            Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
+            RoulettePrint.moneyFormatterForPrinting(roulettePlayer.getBetList().get(i).getBetValue());
+            Console.print(" on " + roulettePlayer.getBetList().get(i).getBetType());
+            Console.println("");
         }
+        Console.println("");
     }
-
-
-
-
-    public static String keepBettingLoop() {
-        return InputHandler.getStringInput("Do you want to place another bet? Type 'yes' or 'no'.");
+    public static String keepBettingLoop(InputAsker asker) {
+        Console.println("If your balance is 0, the roulette wheel will spin.");
+        return asker.askForInput("Do you want to place another bet? Type 'yes' or 'no'.");
     }
 
 
@@ -130,29 +123,29 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
 
-
-
-
-
-
-
     public static void checkPlayerBetsForResults(ArrayList<RoulettePlayer> roulettePlayers, String spinResult) {
-        Console.printDashes();
+        Console.println("");
         Console.println("The ball landed in: " + spinResult);
         for (int count = 0; count < roulettePlayers.size(); count++) {
             RoulettePlayer player = roulettePlayers.get(count);
             Console.printDashes();
             Console.println("Checking bets for Player #" + player.getAccount().getId());
-            Console.printDashes();
             ArrayList<RouletteBet> betList = player.getBetList();
+            for (int bet = 0; bet < betList.size(); bet++) {
+                RoulettePrint.moneyFormatterForPrinting(betList.get(bet).getBetValue());
+                Console.print(" on " + betList.get(bet).getBetType());
+                Console.println("");
+            }
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForInsideBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(betList, spinResult));
+            Console.println("");
             Console.print("Player #" + roulettePlayers.get(count).getAccount().getId() + " new balance: ");
-            Console.printMoney(roulettePlayers.get(count).getBalance());
+            RoulettePrint.moneyFormatterForPrinting(roulettePlayers.get(count).getBalance());
+            Console.println("");
             Console.printDashes();
             player.resetBetList();
         }
