@@ -103,9 +103,8 @@ public class Lobby {
 
     public void createAccount(){
         String newName = InputHandler.getStringInput("What is your name?");
-        Account newAccount = Account.AccountFactory.createAccountWithName(newName);
-        Account.AccountManager.addAccount(newAccount);
-        Console.println(newAccount.toString());
+        Account.AccountManager.addAccount(newName);
+        Console.println(newName.toString());
         askToBuyMoreChips();
     }
 
@@ -150,7 +149,8 @@ public class Lobby {
                 break;
 
             case "blackjack":
-                BlackjackGame.startBlackJack();
+                BlackjackGame blackjackGame = new BlackjackGame();
+                blackjackGame.startBlackJack();
                 break;
 
             case "war":
@@ -178,7 +178,7 @@ public class Lobby {
     @Deprecated // convenience method to generate generic accounts for testing
     private void populateAccounts(int count){
         for(int i = 1; i <= count; i++){
-            Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Guest" + i));
+            Account.AccountManager.addAccount("Guest" + i);
         }
     }
 
