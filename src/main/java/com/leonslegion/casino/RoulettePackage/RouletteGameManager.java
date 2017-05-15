@@ -21,6 +21,7 @@ public class RouletteGameManager {
             RouletteCoreGameplayEngine.doesPlayerWantToExit(players, new InputAsker(System.in, System.out));
             if (players.size() == 0) {
                 Console.println("No more players! Leaving roulette table!");
+                Console.println("");
                 break;
             }
             RouletteCoreGameplayEngine.gatherPlayerBets(players);
