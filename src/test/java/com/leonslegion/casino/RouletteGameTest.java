@@ -79,9 +79,8 @@ public class RouletteGameTest {
     @Test
     public void testIfPlayerIDThatExistsIsFound() {
         //Given:
-        Account newAccount = new Account();
-        Account.AccountManager.addAccount(newAccount);
-        long ID = newAccount.getId();
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
         boolean expectedOutput = true;
 
         //When
@@ -94,8 +93,7 @@ public class RouletteGameTest {
     @Test
     public void testIfPlayerIDThatDoesNotExistIsNotFound() {
         //Given:
-        Account newAccount = new Account();
-        Account.AccountManager.addAccount(newAccount);
+        Account.AccountManager.addAccount("leon");
         long ID = 999;
         boolean expectedOutput = false;
 
@@ -109,9 +107,8 @@ public class RouletteGameTest {
     @Test
     public void testThatAccountNotRegisteredIsAdded() {
         //Given:
-        Account newAccount = new Account();
-        Account.AccountManager.addAccount(newAccount);
-        long ID = newAccount.getId();
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
         ArrayList<RoulettePlayer> players = new ArrayList<>();
         boolean expectedOutput = false;
 
@@ -125,9 +122,9 @@ public class RouletteGameTest {
     @Test
     public void testThatRegisteredAccountIsNotAdded() {
         //Given:
-        Account newAccount = new Account();
-        Account.AccountManager.addAccount(newAccount);
-        long ID = newAccount.getId();
+        Account.AccountManager.addAccount("leon");
+        long ID = 1;
+        Account newAccount = Account.AccountManager.findAccount("leon");
         RoulettePlayer newPlayer = new RoulettePlayer(newAccount, new ArrayList<RouletteBet>());
         ArrayList<RoulettePlayer> players = new ArrayList<>();
         players.add(newPlayer);
@@ -140,20 +137,7 @@ public class RouletteGameTest {
         Assert.assertTrue(expectedOutput == actualOutput);
     }
 
-    @Test
-    public void testSuccessfulRoulettePlayerCreation() {
-        //Given:
-        InputAsker asker = Mockito.mock(InputAsker.class);
-        int expectedOutcome = 1;
-
-        //When
-        Mockito.when(asker.askForInput("Please enter your ID. Fractional components will be ignored.")).thenReturn("17");
-        ArrayList<RoulettePlayer> players = RouletteInputOutput.createRoulettePlayerList(1);
-        int actualOutcome = players.size();
-
-        //Then
-        Assert.assertTrue(expectedOutcome == actualOutcome);
-    }
+    
 
 
 
