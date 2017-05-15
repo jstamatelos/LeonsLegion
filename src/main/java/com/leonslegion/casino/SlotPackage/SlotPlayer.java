@@ -20,13 +20,13 @@ public class SlotPlayer extends Player {
     }
 
     public boolean placeBet() {
-        if (super.getBalance() < 500) {
+        if (super.getBalance() < bet) {
             Console.println("It is $5.00 to play this machine.");
             Console.println("You do not have enough in your account to play.");
             return false;
         }
         else {
-            this.getAccount().setAccountBalance(getBalance() - 5);
+            this.getAccount().setAccountBalance(-500);
             return true;
         }
     }

@@ -14,7 +14,6 @@ public class SlotGame {
     public static void playSlots() {
         SlotPlayer newPlayer = createSlotPlayer();
         playSlots(newPlayer);
-        adjustBalance(newPlayer);
     }
 
 
@@ -33,7 +32,7 @@ public class SlotGame {
             }
             SlotMachine machine = new SlotMachine(sp);
             machine.pullLever();
-            Console.println("Your balance is now: " + Console.moneyToString(sp.getBalance()) + "\n");
+            Console.println("Your balance is now: " + Console.moneyToString(sp.getAccount().getAccountBalance()) + "\n");
         }
     }
 
