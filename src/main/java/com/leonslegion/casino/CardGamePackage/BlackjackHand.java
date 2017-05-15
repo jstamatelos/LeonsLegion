@@ -28,6 +28,13 @@ public class BlackjackHand extends Hand implements Comparable {
         return sumHand() > 21;
     }
 
+    public boolean hasBlackjack() {
+        if (getCards().size() == 2 && sumHand() == 21) {
+            return true;
+        }
+        return false;
+    }
+
     public int numAces() {
         int aces = 0;
         for (Card card : getCards()) {
@@ -41,14 +48,6 @@ public class BlackjackHand extends Hand implements Comparable {
     public int sumHand() {
         int sum = 0;
         for (Card card: getCards()) {
-            sum += card.getPointValue();
-        }
-        return sum;
-    }
-
-    private int sumHand(Hand hand) {
-        int sum = 0;
-        for (Card card : hand.getCards()) {
             sum += card.getPointValue();
         }
         return sum;
@@ -73,9 +72,11 @@ public class BlackjackHand extends Hand implements Comparable {
     @Override
     public int compareTo(Object otherHand) {
 
-        if (getPoints() == ((BlackjackHand) otherHand).getPoints()) {
+        int otherPoints = ((BlackjackHand) otherHand).getPoints();
+
+        if (getPoints() <= 21 && otherPoints <= 21 && getPoints() == otherPoints) {
             return 0;
-        } else if (getPoints() > ((BlackjackHand) otherHand).getPoints()) {
+        } else if ((getPoints() <= 21 && getPoints() > otherPoints) || otherPoints > 21) {
             return -1;
         } else {
             return 1;

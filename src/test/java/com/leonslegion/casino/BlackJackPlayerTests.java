@@ -57,5 +57,56 @@ public class BlackJackPlayerTests {
 
         Assert.assertEquals(1, player.getHand().getCards().size());
 
+        player.hit(deck);
+
+        Assert.assertEquals(2, player.getHand().getCards().size());
+
+    }
+
+    @Test
+    public void hitSplitTest() {
+
+        Card card1 = new Card(Card.Rank.KING, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.KING, Card.Suit.DIAMONDS);
+        Deck deck = new Deck();
+        deck.shuffleDeck();
+        BlackjackHand hand = new BlackjackHand();
+        hand.addCard(card1);
+        hand.addCard(card2);
+        player.setHand(hand);
+        player.split();
+        player.hitSplitHand(2, deck);
+
+        Assert.assertTrue(player.hasSplitHands());
+
+        // Player has exactly two hands
+        Assert.assertEquals(2, player.getSplitHands().size());
+
+        // Player has 2 cards in hand 2
+        Assert.assertEquals(2, player.getSplitHands().get(1).getCards().size());
+
+        }
+
+
+    // Money results are returned as long cents; Console.printMoney() will
+    // display human-readable currency format
+    @Test
+    public void playerBalanceTest() {
+        Assert.assertEquals(100000.0, player.getBalance(), 0.001);
+    }
+
+    @Test
+    public void deductBetTest() {
+        int bet = 5;
+        player.deductBetFromAccount(bet);
+        Assert.assertEquals(99995.0, player.getBalance(), 0.001);
+    }
+
+    @Test
+    public void addBetTest() {
+        int bet = 200;
+        player.addBetToAccount(bet);
+        Assert.assertEquals(100200.0, player.getBalance(), 0.001);
     }
 }
+
