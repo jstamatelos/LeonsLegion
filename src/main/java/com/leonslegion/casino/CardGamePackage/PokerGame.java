@@ -25,13 +25,12 @@ public class PokerGame extends CardGame {
         return (ArrayList<PokerPlayer>)super.getPlayers();
     }
 
-    public PokerPlayer getPlayer(int index) {
+    private PokerPlayer getPlayer(int index) {
         return (PokerPlayer)super.getPlayers().get(index);
     }
 
     private void printRules() {
-        Console.println( "Well, well, well. Another sucker.\n\n" +
-                            "Welcome to Leon's Casino's Pokerstravaganza.\n" +
+        Console.println("Welcome to Leon's Casino's Pokerstravaganza.\n" +
                             "You're probably gonna lose, but I hope you have\n" +
                             "fun doing it. When you can't pay the ante, we'll\n" +
                             "kick you out. Feel free to take it personally.\n" +
@@ -248,16 +247,22 @@ public class PokerGame extends CardGame {
     }
 
     /*
-    Calls compareTo method from PokerHand to find a winner.
+    Helper method to ensure that a player who folded
+    cannot win.
      */
-    private PokerPlayer compareHands() {
-        // All the "firstNotToFold" stuff is to ensure
-        // that a folded player doesn't win the hand.
+    private int findFirstNotToFold() {
         int firstNotToFold = 0;
         while(hasFolded[firstNotToFold]) {
             firstNotToFold++;
         }
-        PokerPlayer winner = getPlayer(firstNotToFold);
+        return firstNotToFold;
+    }
+
+    /*
+    Calls compareTo method from PokerHand to find a winner.
+     */
+    private PokerPlayer compareHands() {
+        PokerPlayer winner = getPlayer(findFirstNotToFold());
         for (int i = 0; i < hasFolded.length; i++) {
             if(hasFolded[i]) {
                 continue;
@@ -267,7 +272,6 @@ public class PokerGame extends CardGame {
                 winner = getPlayer(i);
             }
         }
-
         return winner;
     }
 
