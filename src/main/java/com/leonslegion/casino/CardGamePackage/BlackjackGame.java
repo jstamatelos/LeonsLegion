@@ -302,6 +302,7 @@ public class BlackjackGame extends CardGame {
 
         if (player.getBalance() < 1) {
             Console.println("You're busted! Goodbye!");
+            playing = false;
             return;
         }
 
