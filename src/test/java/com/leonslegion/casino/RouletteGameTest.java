@@ -137,7 +137,7 @@ public class RouletteGameTest {
         Assert.assertTrue(expectedOutput == actualOutput);
     }
 
-    
+
 
 
 

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class RouletteCoreGameplayEngine implements Spin {
 
 
-    public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers) {
+    public static void doesPlayerWantToExit (ArrayList<RoulettePlayer> roulettePlayers, InputAsker asker) {
         for (int count = 0; count < roulettePlayers.size(); count++) {
             Console.println("Does Player #" + roulettePlayers.get(count).getAccount().getId() + " want to exit?");
-            if (RouletteCoreGameplayEngine.exitInput()) {
+            if (RouletteCoreGameplayEngine.exitInput(asker)) {
                 Console.println("Player #" + roulettePlayers.get(count).getAccount().getId() + " has exited.");
                 long remainingBalance = roulettePlayers.get(count).getBalance();
                 long accountID = roulettePlayers.get(count).getAccount().getId();
@@ -56,7 +56,7 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
 
-    public static boolean exitInput() {
+    public static boolean exitInput(InputAsker asker) {
         String exitOpportunity = InputHandler.getStringInput("Type 'exit' before the round starts to leave game. Or type any other letter to stay.");
         if (exitOpportunity.equalsIgnoreCase("exit")) {return true;}
         else {return false;}

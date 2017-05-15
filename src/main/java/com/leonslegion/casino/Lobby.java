@@ -154,7 +154,8 @@ public class Lobby {
                 break;
 
             case "blackjack":
-                BlackjackGame.startBlackJack();
+                BlackjackGame blackjackGame = new BlackjackGame();
+                blackjackGame.startBlackJack();
                 break;
 
             case "war":

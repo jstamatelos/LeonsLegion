@@ -18,7 +18,7 @@ public class RouletteGameManager {
         boolean currentlyPlayingRound = true;
         while (currentlyPlayingRound) {
             RouletteCoreGameplayEngine.doesPlayerHaveABalance(players);
-            RouletteCoreGameplayEngine.doesPlayerWantToExit(players);
+            RouletteCoreGameplayEngine.doesPlayerWantToExit(players, new InputAsker(System.in, System.out));
             if (players.size() == 0) {
                 Console.println("No more players! Leaving roulette table!");
                 break;
