@@ -37,6 +37,7 @@ public class Lobby {
 
         while(isRunning){
             actionSelection();
+            // after selected action completes, return us to the lobby
             Console.println("\n------------------------------------------------");
             Console.println("        you are back in the Lobby \n");
         }
@@ -94,9 +95,11 @@ public class Lobby {
                 break;
 
             case "n":
+                // do nothing but return
                 break;
 
             default:
+                // do nothing but return
                 break;
         }
     }
