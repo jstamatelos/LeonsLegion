@@ -28,54 +28,83 @@ public class PokerHand extends Hand implements Comparable {
             CardComparator comp = new CardComparator();
             switch(handType) {
                 case STRAIGHTFLUSH:
-                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                    return comp.compare(getCards().get(2), otherHand.getCards().get(2));
                 case FOUROFAKIND:
-                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                    return comp.compare(getCards().get(2), otherHand.getCards().get(2));
                 case FULLHOUSE:
-                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                    return comp.compare(getCards().get(2), otherHand.getCards().get(2));
                 case STRAIGHT:
-                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                    return comp.compare(getCards().get(2), otherHand.getCards().get(2));
                 case THREEOFAKIND:
-                    return comp.compare(getCards().get(2), ((PokerHand) other).getCards().get(2));
+                    return comp.compare(getCards().get(2), otherHand.getCards().get(2));
                 case TWOPAIR:
-                    if(comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3)) != 0) {
-                        return comp.compare(getCards().get(3), ((PokerHand) other).getCards().get(3));
-                    } else if(comp.compare(getCards().get(1), ((PokerHand) other).getCards().get(1)) != 0) {
-                        return comp.compare(getCards().get(1), ((PokerHand) other).getCards().get(1));
-                    } else { //TODO - add condition for final kicker, wherein the ordinal values of the
-                             //cards in each hand are added and it returns the difference between the two
-                        return 0;
+                    if(comp.compare(getCards().get(3), otherHand.getCards().get(3)) != 0) {
+                        return comp.compare(getCards().get(3), otherHand.getCards().get(3));
+                    } else if(comp.compare(getCards().get(1), otherHand.getCards().get(1)) != 0) {
+                        return comp.compare(getCards().get(1), otherHand.getCards().get(1));
+                    } else {
+                        //this finds out which hand has the better kicker by adding the ordinal values of
+                        //each hand's ranks. since we know four of the cards have the same rank, this
+                        //reveals the tiebreaker.
+                        int handSum1 = 0;
+                        for(int i = 0; i < 5; i++) {
+                            handSum1 += getCards().get(i).getRank().ordinal();
+                        }
+                        int handSumToo = 0;
+                        for(int i = 0; i < 5; i++) {
+                            handSumToo += otherHand.getCards().get(i).getRank().ordinal();
+                        }
+                        return handSum1 - handSumToo;
                     }
                 case FLUSH:
                     for(int i = 4; i >= 0; i--) {
-                        if(comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i)) != 0){
-                            return comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i));
+                        if(comp.compare(getCards().get(i), otherHand.getCards().get(i)) != 0){
+                            return comp.compare(getCards().get(i), otherHand.getCards().get(i));
                         }
                     }
                     return 0;
                 case HIGHCARD:
                     for(int i = 4; i >= 0; i--) {
-                        if(comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i)) != 0){
-                            return comp.compare(getCards().get(i), ((PokerHand) other).getCards().get(i));
+                        if(comp.compare(getCards().get(i), otherHand.getCards().get(i)) != 0){
+                            return comp.compare(getCards().get(i), otherHand.getCards().get(i));
                         }
                     }
                     return 0;
                 case PAIR:
-                    Card.Rank rank1 = null;
-                    Card.Rank rank2 = null;
-                    for(int i = 0; i < 4; i++) {
-                        if(getCards().get(i).getRank() == getCards().get(i+1).getRank()) {
+                    Card.Rank rank1 = null; //the rank of the pair in the Hand calling the method
+                    Card.Rank rank2 = null; //the rank of the pair in the other Hand
+                    ArrayList<Integer> list1 = new ArrayList<>();
+                    ArrayList<Integer> list2 = new ArrayList<>();
+
+                    //the ensuing lines and loops create lists of the ranks present in each hand
+                    //and locate the rank of the pairs
+
+                    for(int i = 0; i < 5; i++) {
+                        if(countRank(getCards().get(i).getRank()) == 2) {
                             rank1 = getCards().get(i).getRank();
-                            break;
+                        } else {
+                            list1.add(getCards().get(i).getRank().ordinal());
                         }
                     }
-                    for(int i = 0; i < 4; i++) {
-                        if(otherHand.getCards().get(i).getRank() == otherHand.getCards().get(i+1).getRank()) {
+
+                    for(int i = 0; i < 5; i++) {
+                        if(otherHand.countRank(getCards().get(i).getRank()) == 2) {
                             rank2 = otherHand.getCards().get(i).getRank();
-                            break;
+                        } else {
+                            list2.add(otherHand.getCards().get(i).getRank().ordinal());
                         }
                     }
-                    return rank1.ordinal() - rank2.ordinal(); //TODO - compare kickers
+
+                    if(rank1.ordinal() != rank2.ordinal()) { //pairs are different ranks
+                        return rank1.ordinal() - rank2.ordinal();
+                    } else {  //else walk through the kickers one by one
+                        for(int i = 2; i >= 0; i--) {
+                            if(list1.get(i) != list2.get(i)) {
+                                return list1.get(i) - list2.get(i);
+                            }
+                        }
+                    }
+                    return 0;
                 default:
                     return 0;
             }
