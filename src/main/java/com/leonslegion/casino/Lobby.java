@@ -107,7 +107,7 @@ public class Lobby {
     public void createAccount(){
         String newName = InputHandler.getStringInput("What is your name?");
         Account.AccountManager.addAccount(newName);
-        Console.println(newName.toString());
+        Console.println(Account.AccountManager.findAccount(newName).toString());
         askToBuyMoreChips();
     }
 
