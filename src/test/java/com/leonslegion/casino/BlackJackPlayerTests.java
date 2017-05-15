@@ -88,23 +88,25 @@ public class BlackJackPlayerTests {
         }
 
 
+    // Money results are returned as long cents; Console.printMoney() will
+    // display human-readable currency format
     @Test
     public void playerBalanceTest() {
-        Assert.assertEquals(1000.0, player.getBalance(), 0.001);
+        Assert.assertEquals(100000.0, player.getBalance(), 0.001);
     }
 
     @Test
     public void deductBetTest() {
         int bet = 5;
         player.deductBetFromAccount(bet);
-        Assert.assertEquals(995.0, player.getBalance(), 0.001);
+        Assert.assertEquals(99995.0, player.getBalance(), 0.001);
     }
 
     @Test
     public void addBetTest() {
         int bet = 200;
         player.addBetToAccount(bet);
-        Assert.assertEquals(1300.0, player.getBalance(), 0.001);
+        Assert.assertEquals(100200.0, player.getBalance(), 0.001);
     }
 }
 

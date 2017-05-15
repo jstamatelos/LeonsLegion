@@ -108,7 +108,6 @@ public class BlackjackHandTests {
         hand.addCard(card2);
 
         Assert.assertFalse(hand.splitPossible());
-
     }
 
     @Test
@@ -152,8 +151,6 @@ public class BlackjackHandTests {
         hand2.addCard(card4);
         hand2.addCard(card5);
 
-        System.out.println(hand1.compareTo(hand2));
-
         Assert.assertEquals(1, hand1.compareTo(hand2));
     }
 
@@ -179,10 +176,33 @@ public class BlackjackHandTests {
         hand2.addCard(card5);
 
         Assert.assertEquals(-1, hand1.compareTo(hand2));
-
     }
 
+    @Test
+    public void hitsBlackjackTest() {
 
+        Card card1 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS);
 
+        BlackjackHand hand1 = new BlackjackHand();
 
+        hand1.addCard(card1);
+        hand1.addCard(card2);
+
+        Assert.assertTrue(hand1.hasBlackjack());
+    }
+
+    @Test
+    public void hitsBlackjackFalseTest() {
+
+        Card card1 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
+        Card card2 = new Card(Card.Rank.SEVEN, Card.Suit.DIAMONDS);
+
+        BlackjackHand hand1 = new BlackjackHand();
+
+        hand1.addCard(card1);
+        hand1.addCard(card2);
+
+        Assert.assertFalse(hand1.hasBlackjack());
+    }
 }

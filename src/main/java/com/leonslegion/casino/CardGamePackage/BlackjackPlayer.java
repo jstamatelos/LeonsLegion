@@ -44,15 +44,21 @@ public class BlackjackPlayer extends CardPlayer {
                 Console.println(h.toString());
                 num +=1 ;
             }
+            Console.println("\n" + getHand().getPoints() + " points.");
         } else {
-            Console.println("Your hand: ");
+            Console.println("Your hand: \n");
             Console.println(getHand().toString());
+            Console.println("\n" + getHand().getPoints() + " points.");
         }
     }
 
 
     public BlackjackHand getHand() {
         return hand;
+    }
+
+    public void removeSplitHand() {
+        splitHands = new ArrayList<>();
     }
 
     public void split() {
@@ -88,13 +94,16 @@ public class BlackjackPlayer extends CardPlayer {
     }
 
     public void addBetToAccount(int bet) {
-        getAccount().setAccountBalance(bet * 1.5);
+        getAccount().setAccountBalance(bet);
     }
 
 
+<<<<<<< HEAD
 
     //TODO - dzf - probably good idea to use getMoneyInput here.
 
+=======
+>>>>>>> 9aa74a41b9692dbfb64450da884e8761f66c8302
     public String placeBet (String bet) {
         if (!NumberUtils.isParsable(bet)) {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");
