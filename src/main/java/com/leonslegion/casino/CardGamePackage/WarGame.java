@@ -58,11 +58,11 @@ public class WarGame extends CardGame implements Comparator {
      */
 
     private static void setUp() {
-
+        Console.println("***************************");
         Console.println("WAR! WHAT IS IT GOOD FOR!");
-        Console.printDashes();
+        Console.println("***************************");
         Console.println("Welcome to the game of War \n May the odds never be in your favor");
-        Console.printDashes();
+        Console.println("***************************");
 
     }
 

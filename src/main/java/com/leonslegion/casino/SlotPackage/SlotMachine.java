@@ -17,14 +17,25 @@ public class SlotMachine {
     String image2 = reel2.spinReel();
     String image3 = reel3.spinReel();
 
+    public String getImage1() {
+        return image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
     public SlotMachine(SlotPlayer sp) {
         this.sp = sp;
     }
 
-    public void displayImages() {
+    public String displayImages() {
 
-        Console.println("Results: \t" + image1 + "\t|\t" + image2 + "\t|\t" + image3);
-
+        return "Results: \t" + image1 + "\t|\t" + image2 + "\t|\t" + image3;
     }
 
     public boolean matchImages() {
@@ -60,18 +71,19 @@ public class SlotMachine {
             }
     }
 
-    public double pullLever() {
+    public long pullLever() {
 
-        displayImages();
+        Console.println(displayImages());
         if(matchImages()) {
             Console.println("You won: "+ Console.moneyToString(determineWinnings(image1)));
-            sp.getAccount().setAccountBalance(sp.getBalance() + determineWinnings(image1));
+            sp.getAccount().setAccountBalance(determineWinnings(image1));
             return determineWinnings(image1);
         }
         else {
             Console.println("No Match.  Please try again.");
             return 0;
         }
+
     }
 
 

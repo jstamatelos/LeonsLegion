@@ -43,27 +43,25 @@ public class RoulettePlayer extends Player {
     }
 
 
-    //TODO - this logic should probably be left to the Console class.
     public String placeBet (String bet) {
-        if (!NumberUtils.isParsable(bet)) {
-            String newBet = InputHandler.getStringInput("That's not a valid bet.");
-            return placeBet(newBet);
+        while (!NumberUtils.isParsable(bet) || (Double.parseDouble(bet) < 1 && Double.parseDouble(bet) >= 0) || (Double.parseDouble(bet) < 0) || ((getBalance()/100) - Double.parseDouble(bet) < 0)) {
+           bet = Console.getStringInput("That's not a valid bet.");
         }
-        else if (Double.parseDouble(bet) < 0.01 && Double.parseDouble(bet) > 0) {
-            String newBet = InputHandler.getStringInput("Minimum bet is one cent!");
-            return placeBet(newBet);
-        }
-        else if (Double.parseDouble(bet) < 0) {
-            String newBet = InputHandler.getStringInput("You cannot make a negative bet!");
-            return placeBet(newBet);
-        }
-        else if (getBalance() - Double.parseDouble(bet) < 0) {
-            String newBet = InputHandler.getStringInput("Your bet is greater than your balance!");
-            return placeBet(newBet);
-        }
-        else {
-            getAccount().setAccountBalance(Long.parseLong(bet) * -1);
-        }
+        /*
+        while (getBalance() - Double.parseDouble(bet) < 0) {
+            if (getBalance() - Double.parseDouble(bet) < 0) {
+                bet = Console.getStringInput("Your bet is greater than your balance!");
+            }
+            else {
+                double betAsDouble = Double.parseDouble(bet);
+                long betAsLong = (long) betAsDouble;
+                getAccount().setAccountBalance(betAsLong * 100 * -1);
+                return bet;
+            }
+        }*/
+        double betAsDouble = Double.parseDouble(bet);
+        long betAsLong = (long) betAsDouble;
+        getAccount().setAccountBalance(betAsLong * 100 * -1);
         return bet;
     }
 

@@ -10,15 +10,174 @@ import org.junit.Test;
  * Created by sarahweisser on 5/11/17.
  */
 public class TestSlotMachine {
-/*
+
     @Test
-    public void testMatchImages() {
+    public void displayImagesTest() {
 
         //given
-        Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account.getAccountBalance(), account.getId());
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
         SlotMachine machine = new SlotMachine(sp);
+        String expectedResult = "Results: \t" + machine.getImage1() + "\t|\t" + machine.getImage2() + "\t|\t" + machine.getImage3();
+
+        //when
+        String actualResult = machine.displayImages();
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsCherry() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Cherry");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsOrange() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Orange");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsWatermelon() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Watermelon");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsBar() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Bar");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsLemon() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Lemon");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsDoubleBar() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 100000;
+
+        //when
+        long actualResult = machine.determineWinnings("Double Bar");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsTripleBar() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 200000;
+
+        //when
+        long actualResult = machine.determineWinnings("Triple Bar");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsLuckySeven() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 500000;
+
+        //when
+        long actualResult = machine.determineWinnings("Lucky Seven");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testPullLeverWithMatchingImages() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        do {
+
+            machine = new SlotMachine(sp);
+            machine.pullLever();
+        } while (!machine.matchImages());
         boolean expectedResult = true;
+
 
         //when
         boolean actualResult = machine.matchImages();
@@ -27,90 +186,27 @@ public class TestSlotMachine {
         Assert.assertEquals(expectedResult, actualResult);
 
     }
-    //Deprecated Test
-
 
     @Test
-    public void testDetermineWinningsLemon() {
+    public void testPullLeverImagesDoNotMatch() {
 
         //given
-        Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
         SlotMachine machine = new SlotMachine(sp);
-        double expectedResult = 500;
-
-        //when
-        double actualResult = machine.determineWinnings("Lemon");
-
-        //then
-        Assert.assertEquals(expectedResult, actualResult, 0);
-
-    }
-
-    @Test
-    public void testDetermineWinningsDoubleBar() {
-
-        //given
-        Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
-        SlotMachine machine = new SlotMachine(sp);
-        double expectedResult = 1000;
-
-        //when
-        double actualResult = machine.determineWinnings("Double Bar");
-
-        //then
-        Assert.assertEquals(expectedResult, actualResult, 0);
-
-    }
-
-    @Test
-    public void testDetermineWinningsTripleBar() {
-
-        //given
-        Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
-        SlotMachine machine = new SlotMachine(sp);
-        double expectedResult = 2000;
-
-        //when
-        double actualResult = machine.determineWinnings("Triple Bar");
-
-        //then
-        Assert.assertEquals(expectedResult, actualResult, 0);
-
-    }
-
-    @Test
-    public void testDetermineWinningsLuckySeven() {
-
-        //given
-        Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
-        SlotMachine machine = new SlotMachine(sp);
-        double expectedResult = 5000;
-
-        //when
-        double actualResult = machine.determineWinnings("Lucky Seven");
-
-        //then
-        Assert.assertEquals(expectedResult, actualResult, 0);
-
-    }
-
-    @Test
-    public void testPullLever() {
-
-        //given
-
-        Account account = new Account("Leon");
-        SlotPlayer sp = new SlotPlayer(account);
-        SlotMachine machine = new SlotMachine(sp);
-
         do {
-
             machine = new SlotMachine(sp);
             machine.pullLever();
         } while (machine.matchImages());
-    } */
+        boolean expectedResult = false;
+
+
+        //when
+        boolean actualResult = machine.matchImages();
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
 }

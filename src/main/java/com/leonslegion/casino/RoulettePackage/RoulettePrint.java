@@ -49,6 +49,7 @@ public class RoulettePrint {
         Console.print("Current Balance: ");
         moneyFormatterForPrinting(Account.AccountManager.getBalance(account));
         Console.println("");
+        Console.println("");
         Console.printDashes();
     }
 
@@ -56,7 +57,6 @@ public class RoulettePrint {
         double dollarsAndCents = money / 100;
         System.out.print("$");
         System.out.printf("%,.2f", dollarsAndCents);
-        Console.println("");
     }
 
 

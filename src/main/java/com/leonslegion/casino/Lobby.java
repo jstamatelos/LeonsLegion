@@ -20,9 +20,9 @@ public class Lobby {
     public void start(){
         isRunning = true;
         populateAccounts(16); // create some dummy accounts named Guest1, Guest2, ... GuestN
-        Console.println("\n* * * * * * * * * * * * * * * * * * * * * * * * * * ");
-        Console.println(" * * * * * * Welcome to Leon's Casino !!! * * * * * *");
-        Console.println("* * * * * * * * * * * * * * * * * * * * * * * * * *\n");
+        Console.println(" * * * * * * * * * * * * * * * * * * * * * * * * * * ");
+        Console.println("* * * * * * Welcome to Leon's Casino!!! * * * * * * * ");
+        Console.println(" * * * * * * * * * * * * * * * * * * * * * * * * * * ");
         Console.println("        Please sign in or create an account. \n");
         createAccount();
         startLobby();
@@ -30,20 +30,21 @@ public class Lobby {
 
     // this is the main game loop
     public void startLobby(){
-        while(isRunning){
-            Console.println("\n------------------------------------------------");
-            Console.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
-            Console.println("------------------------------------------------");
-            Console.println("         (Enter 'Q' at any time to quit) \n");
-            actionSelection();
 
+        while(isRunning){
+            Console.println("------------------------------------------------");
+            Console.println("~~~~~~~~~~~~~~~~~ Casino Lobby ~~~~~~~~~~~~~~~~~");
+            Console.println("------------------------------------------(Q)uit");
+
+            actionSelection();
         }
+
         Console.println("\nThanks for playing!  Have a nice day! \n");
     }
 
     public void actionSelection() {
-        Console.println("\nWhat would you like to do?");
-        Console.println("*'play' a game \n*'create' an account \n*'check' balance \n*'buy' more chips \n*'exit' casino");
+        Console.println("What would you like to do?");
+        Console.println("*(play) a game \n*(create) an account \n*(check) balance \n*(buy) more chips \n*(exit) casino");
         String question = "Please enter a keyword to select";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch (selection) {
@@ -61,13 +62,10 @@ public class Lobby {
 
             case "buy":
                 buyMoreChips();
-                actionSelection();
                 break;
 
             case "check":
-                Account account = Account.AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
-                Console.println("This account has a balance of: " + Console.moneyToString(account.getAccountBalance()) + "\n");
-                actionSelection();
+                checkBalance();
                 break;
 
             case "create":
@@ -76,13 +74,12 @@ public class Lobby {
 
             default:
                 Console.println("That selection was unrecognized. Please enter a valid selection.");
-                actionSelection();
                 break;
         }
     }
 
     public void askToBuyMoreChips(){
-        String question = "\nWould you like to buy more chips? 'y' or 'n' ";
+        String question = "\nWould you like to add more funds to your account? 'y' or 'n' ";
         String selection = InputHandler.getStringInput(question).toLowerCase();
         switch(selection){
             case "q":
@@ -91,16 +88,14 @@ public class Lobby {
 
             case "y":
                 buyMoreChips();
-                actionSelection();
                 break;
 
             case "n":
-                actionSelection();
+                // do nothing but return
                 break;
 
             default:
-                Console.println("That selection was unrecognized. Please enter a valid selection.");
-                askToBuyMoreChips();
+                // do nothing but return
                 break;
         }
     }
@@ -108,7 +103,7 @@ public class Lobby {
     public void createAccount(){
         String newName = InputHandler.getStringInput("What is your name?");
         Account.AccountManager.addAccount(newName);
-        Console.println(newName.toString());
+        Console.println(Account.AccountManager.findAccount(newName).toString());
         askToBuyMoreChips();
     }
 
@@ -127,16 +122,15 @@ public class Lobby {
             buyMoreChips(id);
         }else{
             Console.println("Account not found.");
-            buyMoreChips();
         }
     }
 
     public void buyMoreChips(long ID){
         Account account = Account.AccountManager.findAccount(ID);
-        account.toString();
+        checkBalance(ID);
         long bal = Console.getMoneyInput("How much money would you like to add to your account?");
         account.setAccountBalance(bal);
-        account.toString();
+        checkBalance(ID);
     }
 
     public void selectGame(){
@@ -172,17 +166,22 @@ public class Lobby {
 
             default:
                 Console.println("We do not currently offer " + selectedGame + ", please make another selection.");
-                selectGame();
+                // selectGame(); // recursive method call, dangerous
         }
+    }
+
+    public void checkBalance(){
+        long id = InputHandler.getLongInput("Please enter ID");
+        checkBalance(id);
+    }
+
+    public void checkBalance(long id){
+        Account account = Account.AccountManager.findAccount(id);
+        Console.println("This account currently has a balance of: " + Console.moneyToString(account.getAccountBalance()));
     }
 
     public void exit(){
         isRunning = false;
-    }
-
-    @Deprecated // backdoor method to check how many accounts have been created
-    private int getNumAccounts(){
-        return  Account.AccountManager.getAccounts().size();
     }
 
     @Deprecated // convenience method to generate generic accounts for testing
