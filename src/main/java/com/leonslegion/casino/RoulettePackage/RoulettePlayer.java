@@ -44,7 +44,7 @@ public class RoulettePlayer extends Player {
 
 
     public String placeBet (String bet) {
-        while (!NumberUtils.isParsable(bet) || (Double.parseDouble(bet) < 1 && Double.parseDouble(bet) > 0) || (Double.parseDouble(bet) < 0) || ((getBalance()/100) - Double.parseDouble(bet) < 0)) {
+        while (!NumberUtils.isParsable(bet) || (Double.parseDouble(bet) < 1 && Double.parseDouble(bet) >= 0) || (Double.parseDouble(bet) < 0) || ((getBalance()/100) - Double.parseDouble(bet) < 0)) {
            bet = Console.getStringInput("That's not a valid bet.");
         }
         /*
