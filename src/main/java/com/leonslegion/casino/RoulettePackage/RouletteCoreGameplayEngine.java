@@ -72,6 +72,9 @@ public class RouletteCoreGameplayEngine implements Spin {
     private static void gatherEachPlayersBets(RoulettePlayer roulettePlayer) {
         boolean stillBetting = true;
         while (stillBetting) {
+            if (roulettePlayer.getBalance() == 0) {
+                break;
+            }
             String keepBetting = keepBettingLoop(new InputAsker(System.in, System.out));
             if (keepBetting.equalsIgnoreCase("Yes")) {
                 rouletteRoundBettingEngineForOnePlayer(roulettePlayer);
@@ -86,8 +89,8 @@ public class RouletteCoreGameplayEngine implements Spin {
     }
     private static void rouletteRoundBettingEngineForOnePlayer(RoulettePlayer roulettePlayer) {
         String newBetType = RouletteBetHandler.handleAnyBet(new InputAsker(System.in, System.out));
-        String betValue = Console.getStringInput("How much would you like to put down for this bet?" +
-                "Please use dollars and cents format without dollar sign. Fractional cents will be ignored.");
+        String betValue = Console.getStringInput("How much would you like to put down for this bet? " +
+                "Please use whole dollars.");
         String newBetValue = roulettePlayer.placeBet(betValue);
         float newBetValueAsFloat = Float.parseFloat(newBetValue);
         newBetValueAsFloat *= 100;
@@ -95,15 +98,18 @@ public class RouletteCoreGameplayEngine implements Spin {
         roulettePlayer.makeRouletteBet(newBetType, newBetValueAsLong);
         Console.printDashes();
         Console.print("Your balance is now: ");
-        Console.printMoney(roulettePlayer.getBalance());
-        Console.printDashes();
+        RoulettePrint.moneyFormatterForPrinting(roulettePlayer.getBalance());
+        Console.println("");
         Console.println("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
-            Console.printMoney(roulettePlayer.getBetList().get(i).getBetValue());
-            Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
+            RoulettePrint.moneyFormatterForPrinting(roulettePlayer.getBetList().get(i).getBetValue());
+            Console.print(" on " + roulettePlayer.getBetList().get(i).getBetType());
+            Console.println("");
         }
+        Console.println("");
     }
     public static String keepBettingLoop(InputAsker asker) {
+        Console.println("If your balance is 0, the roulette wheel will spin.");
         return asker.askForInput("Do you want to place another bet? Type 'yes' or 'no'.");
     }
 
@@ -118,22 +124,28 @@ public class RouletteCoreGameplayEngine implements Spin {
 
 
     public static void checkPlayerBetsForResults(ArrayList<RoulettePlayer> roulettePlayers, String spinResult) {
-        Console.printDashes();
+        Console.println("");
         Console.println("The ball landed in: " + spinResult);
         for (int count = 0; count < roulettePlayers.size(); count++) {
             RoulettePlayer player = roulettePlayers.get(count);
             Console.printDashes();
             Console.println("Checking bets for Player #" + player.getAccount().getId());
-            Console.printDashes();
             ArrayList<RouletteBet> betList = player.getBetList();
+            for (int bet = 0; bet < betList.size(); bet++) {
+                RoulettePrint.moneyFormatterForPrinting(betList.get(bet).getBetValue());
+                Console.print(" on " + betList.get(bet).getBetType());
+                Console.println("");
+            }
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForInsideBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideColumnBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForOutsideDozenBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForEvenOrOddBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForFrontOrBackBetWins(betList, spinResult));
             player.getAccount().setAccountBalance(RouletteBetHandler.checkPlayerBetsForColorBetWins(betList, spinResult));
+            Console.println("");
             Console.print("Player #" + roulettePlayers.get(count).getAccount().getId() + " new balance: ");
-            Console.printMoney(roulettePlayers.get(count).getBalance());
+            RoulettePrint.moneyFormatterForPrinting(roulettePlayers.get(count).getBalance());
+            Console.println("");
             Console.printDashes();
             player.resetBetList();
         }

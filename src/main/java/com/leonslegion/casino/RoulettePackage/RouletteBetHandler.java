@@ -6,6 +6,7 @@ import com.leonslegion.casino.Console;
 import com.leonslegion.casino.InputHandler;
 import org.apache.commons.lang3.math.NumberUtils;
 
+//Virtually Fully Tested
 public class RouletteBetHandler {
 
 
@@ -54,8 +55,8 @@ public class RouletteBetHandler {
         for (int count = 0; count < betList.size(); count++) {
             if (spinResult.equals(betList.get(count).getBetType())) {
                 Console.print("You won a 35:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue() * 34);
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue() * 34);
+                Console.println("");
                 return betList.get(count).getBetValue() * 35;
             }
         }
@@ -68,20 +69,20 @@ public class RouletteBetHandler {
         for (int count = 0; count < betList.size(); count++) {
             if (Integer.parseInt(spinResult) > 0 && Integer.parseInt(spinResult) < 13 && betList.get(count).getBetType().equalsIgnoreCase("1st D")) {
                 Console.print("You won a 2:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue()*2);
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue()*2);
+                Console.println("");
                 return betList.get(count).getBetValue() * 3;
             }
             if (Integer.parseInt(spinResult) > 12 && Integer.parseInt(spinResult) < 25 && betList.get(count).getBetType().equalsIgnoreCase("2nd D")) {
                 Console.print("You won a 2:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue()*2);
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue()*2);
+                Console.println("");
                 return betList.get(count).getBetValue() * 3;
             }
             if (Integer.parseInt(spinResult) > 24 && Integer.parseInt(spinResult) < 37 && betList.get(count).getBetType().equalsIgnoreCase("3rd D")) {
                 Console.print("You won a 2:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue()*2);
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue()*2);
+                Console.println("");
                 return betList.get(count).getBetValue() * 3;
             }
         }
@@ -95,24 +96,24 @@ public class RouletteBetHandler {
             for (int columnStart = 1; columnStart < 35; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && betList.get(count).getBetType().equalsIgnoreCase("1st C")) {
                     Console.print("You won a 2:1 Payout! You won: ");
-                    Console.printMoney(betList.get(count).getBetValue()*2);
-                    Console.printDashes();
+                    RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue()*2);
+                    Console.println("");
                     return betList.get(count).getBetValue() * 3;
                 }
             }
             for (int columnStart = 2; columnStart < 36; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && betList.get(count).getBetType().equalsIgnoreCase("2nd C")) {
                     Console.print("You won a 2:1 Payout! You won: ");
-                    Console.printMoney(betList.get(count).getBetValue()*2);
-                    Console.printDashes();
+                    RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue()*2);
+                    Console.println("");
                     return betList.get(count).getBetValue() * 3;
                 }
             }
             for (int columnStart = 3; columnStart < 37; columnStart += 3) {
                 if (Integer.parseInt(spinResult) == columnStart && betList.get(count).getBetType().equalsIgnoreCase("3rd C")) {
                     Console.print("You won a 2:1 Payout! You won: ");
-                    Console.printMoney(betList.get(count).getBetValue()*2);
-                    Console.printDashes();
+                    RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue()*2);
+                    Console.println("");
                     return betList.get(count).getBetValue() * 3;
                 }
             }
@@ -126,14 +127,14 @@ public class RouletteBetHandler {
         for (int count = 0; count < betList.size(); count++) {
             if (Integer.parseInt(spinResult) % 2 == 0 && Integer.parseInt(spinResult) != 0 && betList.get(count).getBetType().equalsIgnoreCase("Even")) {
                 Console.print("You won a 1:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue());
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue());
+                Console.println("");
                 return betList.get(count).getBetValue() * 2;
             }
             if (Integer.parseInt(spinResult) % 2 == 1 && Integer.parseInt(spinResult) != 0 && betList.get(count).getBetType().equalsIgnoreCase("Odd")) {
                 Console.print("You won a 1:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue());
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue());
+                Console.println("");
                 return betList.get(count).getBetValue() * 2;
             }
         }
@@ -146,14 +147,14 @@ public class RouletteBetHandler {
         for (int count = 0; count < betList.size(); count++) {
             if (Integer.parseInt(spinResult) > 0 && Integer.parseInt(spinResult) < 19 && betList.get(count).getBetType().equalsIgnoreCase("Front")) {
                 Console.print("You won a 1:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue());
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue());
+                Console.println("");
                 return betList.get(count).getBetValue() * 2;
             }
             if (Integer.parseInt(spinResult) > 18 && Integer.parseInt(spinResult) < 37 && betList.get(count).getBetType().equalsIgnoreCase("Back")) {
                 Console.print("You won a 1:1 Payout! You won: ");
-                Console.printMoney(betList.get(count).getBetValue());
-                Console.printDashes();
+                RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue());
+                Console.println("");
                 return betList.get(count).getBetValue() * 2;
             }
         }
@@ -168,8 +169,8 @@ public class RouletteBetHandler {
                 for (int i = 0; i < redList.length; i++) {
                     if (Integer.parseInt(spinResult) == redList[i]) {
                         Console.print("You won a 1:1 Payout! You won: ");
-                        Console.printMoney(betList.get(count).getBetValue());
-                        Console.printDashes();
+                        RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue());
+                        Console.println("");
                         return betList.get(count).getBetValue() * 2;
                     }
                 }
@@ -178,8 +179,8 @@ public class RouletteBetHandler {
                 for (int i = 0; i < blackList.length; i++) {
                     if (Integer.parseInt(spinResult) == blackList[i]) {
                         Console.print("You won a 1:1 Payout! You won: ");
-                        Console.printMoney(betList.get(count).getBetValue());
-                        Console.printDashes();
+                        RoulettePrint.moneyFormatterForPrinting(betList.get(count).getBetValue());
+                        Console.println("");
                         return betList.get(count).getBetValue() * 2;
                     }
                 }

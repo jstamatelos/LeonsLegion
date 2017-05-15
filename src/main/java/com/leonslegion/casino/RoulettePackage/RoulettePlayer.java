@@ -45,20 +45,22 @@ public class RoulettePlayer extends Player {
 
     public String placeBet (String bet) {
         while (!NumberUtils.isParsable(bet)) {
-            String newBet = Console.getStringInput("That's not a valid bet.");
+           bet = Console.getStringInput("That's not a valid bet.");
         }
         while (NumberUtils.isParsable(bet)) {
-            if (Double.parseDouble(bet) < 0.01 && Double.parseDouble(bet) > 0) {
-                String newBet = Console.getStringInput("Minimum bet is one cent!");
+            if (Double.parseDouble(bet) < 1 && Double.parseDouble(bet) > 0) {
+                bet = Console.getStringInput("Minimum bet is one dollar!");
             }
             else if (Double.parseDouble(bet) < 0) {
-                String newBet = Console.getStringInput("You cannot make a negative bet!");
+                bet = Console.getStringInput("You cannot make a negative bet!");
             }
             else if (getBalance() - Double.parseDouble(bet) < 0) {
-                String newBet = Console.getStringInput("Your bet is greater than your balance!");
+                bet = Console.getStringInput("Your bet is greater than your balance!");
             }
             else {
-                getAccount().setAccountBalance(Long.parseLong(bet) * 100 * -1);
+                double betAsDouble = Double.parseDouble(bet);
+                long betAsLong = (long) betAsDouble;
+                getAccount().setAccountBalance(betAsLong * 100 * -1);
                 return bet;
             }
         }
