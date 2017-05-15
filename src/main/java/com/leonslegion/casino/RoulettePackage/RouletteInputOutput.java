@@ -32,18 +32,13 @@ public class RouletteInputOutput {
         ArrayList<RoulettePlayer> players = new ArrayList<>();
         while (players.size() != numberOfPlayers) {
             long playerID = getPlayerID(new InputAsker(System.in, System.out));
-            boolean doesIDExist = checkIfPlayerIDExists(playerID);
-            if (doesIDExist) {
-                boolean isIDAlreadyRegistered = checkIfPlayerAlreadyRegistered(players, playerID);
-                if (!isIDAlreadyRegistered) {
+            if (checkIfPlayerIDExists(playerID)) {
+                if (!checkIfPlayerAlreadyRegistered(players, playerID)) {
                     Account roulettePlayerAccount = Account.AccountManager.findAccount(playerID);
                     RoulettePlayer newPlayer = new RoulettePlayer(roulettePlayerAccount, new ArrayList<RouletteBet>());
                     players.add(newPlayer);
                     RoulettePrint.printAccountAccepted();
                     RoulettePrint.printAccountInformation(roulettePlayerAccount);
-                }
-                else {
-                    RoulettePrint.printAccountAlreadyLoaded();
                 }
             }
             else {
