@@ -6,7 +6,7 @@ import org.junit.*;
 
 
 public class PokerHandTest {
-//TODO - more testing for straightflush, twopair, threeofakind, flush, pair
+//TODO - more testing for straightflush, threeofakind, flush
     @Test
     public void compareHandTypesNegativeTest() {
         PokerHand hand1 = new PokerHand();
@@ -125,6 +125,30 @@ public class PokerHandTest {
     }
 
     @Test
+    public void compareThreeOfAKindTest() {
+        PokerHand hand1 = new PokerHand();
+        hand1.addCard(new Card(Card.Rank.TWO, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.CLUBS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.SPADES));
+        hand1.setHandType(PokerHand.HandType.THREEOFAKIND);
+
+        PokerHand hand2 = new PokerHand();
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.CLUBS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.HEARTS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.SPADES));
+        hand2.addCard(new Card(Card.Rank.TEN, Card.Suit.DIAMONDS));
+        hand2.addCard(new Card(Card.Rank.ACE, Card.Suit.CLUBS));
+        hand2.setHandType(PokerHand.HandType.THREEOFAKIND);
+
+
+        int result = hand1.compareTo(hand2);
+
+        Assert.assertTrue(result > 0);
+    }
+
+    @Test
     public void compareTwoPairsDifferentHighPairTest() {
         PokerHand hand1 = new PokerHand();
         hand1.addCard(new Card(Card.Rank.TWO, Card.Suit.HEARTS));
@@ -173,6 +197,30 @@ public class PokerHandTest {
     }
 
     @Test
+    public void compareTwoPairsDifferentKickerTest() {
+        PokerHand hand1 = new PokerHand();
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.SPADES));
+        hand1.addCard(new Card(Card.Rank.KING, Card.Suit.HEARTS));
+        hand1.setHandType(PokerHand.HandType.TWOPAIR);
+
+        PokerHand hand2 = new PokerHand();
+        hand2.addCard(new Card(Card.Rank.THREE, Card.Suit.CLUBS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.HEARTS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.SPADES));
+        hand2.addCard(new Card(Card.Rank.SIX, Card.Suit.DIAMONDS));
+        hand2.addCard(new Card(Card.Rank.SIX, Card.Suit.CLUBS));
+        hand2.setHandType(PokerHand.HandType.TWOPAIR);
+
+
+        int result = hand1.compareTo(hand2);
+
+        Assert.assertTrue(result > 0);
+    }
+
+    @Test
     public void comparePairsTest() {
         PokerHand hand1 = new PokerHand();
         hand1.addCard(new Card(Card.Rank.TWO, Card.Suit.HEARTS));
@@ -195,6 +243,79 @@ public class PokerHandTest {
 
         Assert.assertTrue(result < 0);
     }
+
+    @Test
+    public void compareSamePairDifferentFirstKickerTest() {
+        PokerHand hand1 = new PokerHand();
+        hand1.addCard(new Card(Card.Rank.TWO, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.TEN, Card.Suit.SPADES));
+        hand1.setHandType(PokerHand.HandType.PAIR);
+
+        PokerHand hand2 = new PokerHand();
+        hand2.addCard(new Card(Card.Rank.TWO, Card.Suit.CLUBS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.HEARTS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.SPADES));
+        hand2.addCard(new Card(Card.Rank.SIX, Card.Suit.DIAMONDS));
+        hand2.addCard(new Card(Card.Rank.KING, Card.Suit.CLUBS));
+        hand2.setHandType(PokerHand.HandType.PAIR);
+
+
+        int result = hand1.compareTo(hand2);
+
+        Assert.assertTrue(result < 0);
+    }
+
+    @Test
+    public void compareSamePairDifferentSecondKickerTest() {
+        PokerHand hand1 = new PokerHand();
+        hand1.addCard(new Card(Card.Rank.TWO, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.EIGHT, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.TEN, Card.Suit.SPADES));
+        hand1.setHandType(PokerHand.HandType.PAIR);
+
+        PokerHand hand2 = new PokerHand();
+        hand2.addCard(new Card(Card.Rank.TWO, Card.Suit.CLUBS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.HEARTS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.SPADES));
+        hand2.addCard(new Card(Card.Rank.SIX, Card.Suit.DIAMONDS));
+        hand2.addCard(new Card(Card.Rank.TEN, Card.Suit.CLUBS));
+        hand2.setHandType(PokerHand.HandType.PAIR);
+
+
+        int result = hand1.compareTo(hand2);
+
+        Assert.assertTrue(result > 0);
+    }
+
+    @Test
+    public void compareSamePairDifferentThirdKickerTest() {
+        PokerHand hand1 = new PokerHand();
+        hand1.addCard(new Card(Card.Rank.TWO, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.SIX, Card.Suit.DIAMONDS));
+        hand1.addCard(new Card(Card.Rank.TEN, Card.Suit.HEARTS));
+        hand1.addCard(new Card(Card.Rank.TEN, Card.Suit.SPADES));
+        hand1.setHandType(PokerHand.HandType.PAIR);
+
+        PokerHand hand2 = new PokerHand();
+        hand2.addCard(new Card(Card.Rank.THREE, Card.Suit.CLUBS));
+        hand2.addCard(new Card(Card.Rank.FOUR, Card.Suit.HEARTS));
+        hand2.addCard(new Card(Card.Rank.SIX, Card.Suit.SPADES));
+        hand2.addCard(new Card(Card.Rank.TEN, Card.Suit.DIAMONDS));
+        hand2.addCard(new Card(Card.Rank.TEN, Card.Suit.CLUBS));
+        hand2.setHandType(PokerHand.HandType.PAIR);
+
+
+        int result = hand1.compareTo(hand2);
+
+        Assert.assertTrue(result < 0);
+    }
+
 
     @Test
     public void compareHighCardFirstKickerTest() {
