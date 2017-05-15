@@ -11,93 +11,6 @@ import java.util.ArrayList;
  */
 public class RouletteCoreGameplayEngine implements Spin {
 
-
-
-    public static RoulettePlayer addRoulettePlayer(ArrayList<RoulettePlayer> roulettePlayers) {
-        long numberOfAttempts = 2;
-        while (numberOfAttempts > 0) {
-            Console.printNumberOfAttemptsRemaining(numberOfAttempts);
-            long ID = RouletteInputOutputAndPrint.getPlayerID();
-            if (ID == -1 && numberOfAttempts == 2) {
-                numberOfAttempts--;
-                continue;
-            }
-            if (ID == -1 && numberOfAttempts == 1) {
-                Console.printAttemptsExceeded();
-                numberOfAttempts = 2;
-                continue;
-            }
-            Account roulettePlayerAccount = Account.AccountManager.findAccount(ID);
-            if (roulettePlayerAccount == null && numberOfAttempts == 2) {
-                numberOfAttempts--;
-                Console.printAccountNotFoundMessage();
-                continue;
-            }
-            if (roulettePlayerAccount == null && numberOfAttempts == 1) {
-                Console.printAttemptsExceeded();
-                numberOfAttempts = 2;
-                continue;
-
-            }
-            if (roulettePlayers.size() == 1 && roulettePlayerAccount.getId() == roulettePlayers.get(0).getAccount().getId()) {
-                if (numberOfAttempts == 2) {
-                    Console.printAccountAlreadyLoaded();
-                    numberOfAttempts--;
-                }
-                else {
-                    Console.printAccountAlreadyLoaded();
-                    Console.printAttemptsExceeded();
-                    numberOfAttempts = 2;
-                }
-            }
-            else {
-                Console.printAccountAccepted();
-                return new RoulettePlayer(roulettePlayerAccount, new ArrayList<RouletteBet>());}
-        }
-        return null;
-    }
-
-
-
-    public static ArrayList<RoulettePlayer> createRoulettePlayerList(long numberOfPlayers) {
-        ArrayList<RoulettePlayer> players = new ArrayList<>();
-        for (int playerIndex = 0; playerIndex < numberOfPlayers; playerIndex++) {
-            RoulettePlayer newPlayer = addRoulettePlayer(players);
-            players.add(newPlayer);
-        }
-        return players;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private static void printTableInformation() {
-        RouletteTable.printRouletteTable();
-        RouletteTable.printInsideBets();
-        RouletteTable.printOutsideBets();
-    }
-
-
-
     public static boolean exitInput() {
         String exitOpportunity = InputHandler.getStringInput("Type 'exit' before the round starts to leave game. Or type any other letter to stay.");
         if (exitOpportunity.equalsIgnoreCase("exit")) {return true;}
@@ -108,7 +21,7 @@ public class RouletteCoreGameplayEngine implements Spin {
 
     public static void gatherPlayerBets(ArrayList<RoulettePlayer> roulettePlayers) {
         for (int i = 0; i < roulettePlayers.size(); i++) {
-            printTableInformation();
+            RoulettePrint.printTableInformation();
             Console.println("Now Betting For Player #" + roulettePlayers.get(i).getAccount().getId());
             gatherEachPlayersBets(roulettePlayers.get(i));
         }
@@ -140,16 +53,15 @@ public class RouletteCoreGameplayEngine implements Spin {
         String newBetType = RouletteBetHandler.handleAnyBet();
         String betValue = InputHandler.getStringInput("How much would you like to put down for this bet?");
         String newBetValue = roulettePlayer.placeBet(betValue);
-        double newBetValueAsDouble = Double.parseDouble(newBetValue);
+        long newBetValueAsDouble = Long.parseLong(newBetValue);
         roulettePlayer.makeRouletteBet(newBetType, newBetValueAsDouble);
         Console.printDashes();
-        System.out.print("Your balance is now: $");
-        System.out.printf("%,.2f", roulettePlayer.getBalance());
+        Console.print("Your balance is now: ");
+        Console.printMoney(roulettePlayer.getBalance());
         Console.printDashes();
         Console.println("You have placed the following bets:");
         for (int i = 0; i < roulettePlayer.getBetList().size(); i++) {
-            System.out.print("$");
-            System.out.printf("%,.2f", roulettePlayer.getBetList().get(i).getBetValue());
+            Console.printMoney(roulettePlayer.getBetList().get(i).getBetValue());
             Console.println(" on " + roulettePlayer.getBetList().get(i).getBetType());
         }
     }

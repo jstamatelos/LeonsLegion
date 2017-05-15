@@ -20,7 +20,7 @@ public abstract class CardPlayer extends Player {
     }
 
     @Override
-    public double placeBet(double bet) throws Exception {
+    public long placeBet(long bet) throws Exception {
         if(getBalance() - bet < 0) {
             throw new Exception("Bet is too large.");
         }

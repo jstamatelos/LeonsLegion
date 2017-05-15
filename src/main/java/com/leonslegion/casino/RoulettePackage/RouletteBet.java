@@ -8,11 +8,11 @@ public class RouletteBet {
 
 
     private String betType;
-    private double betValue;
+    private long betValue;
 
 
 
-    public RouletteBet (String betType, double betValue) {
+    public RouletteBet (String betType, long betValue) {
         this.betType = betType;
         this.betValue = betValue;
     }
@@ -20,7 +20,7 @@ public class RouletteBet {
 
 
     public String getBetType() {return betType;}
-    public double getBetValue() {return betValue;}
+    public long getBetValue() {return betValue;}
 
 
 

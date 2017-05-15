@@ -21,9 +21,31 @@ public class Console {
 
     public static void printDouble(double val, Object... args){println(Double.toString(val), args);}
 
+    public static void printMoney(long val) {
+        println(moneyToString(val));
+    }
+
     public static String getStringInput(String prompt, Object... args) {
         println(prompt, args);
         return scanner.nextLine();
+    }
+
+    public static long getMoneyInput(String prompt, Object... args) {
+        String stringInput = getStringInput(prompt, args);
+        try {
+            double doubleInput = Double.parseDouble(stringInput);
+            return Math.round(doubleInput*100);
+        } catch (NumberFormatException nfe) {
+            println("[ %s ] is an invalid input!", stringInput);
+            println("Try inputting a numeric value!");
+            return getMoneyInput(prompt, args);
+        }
+    }
+
+    public static String moneyToString(long amount) {
+        long whole = amount / 100;
+        long part = amount % 100;
+        return "$" + whole + "." + part;
     }
 
     public static Double getDoubleInput(String prompt, Object... args) {
@@ -70,36 +92,6 @@ public class Console {
             sb.append(val);
         }
         print(sb.toString());
-    }
-
-    public static void printNumberOfAttemptsRemaining(long numberOfAttempts) {
-        println("");
-        println("Number of Attempts Remaining: " + numberOfAttempts);
-    }
-
-    public static void printAccountNotFoundMessage() {
-        println("");
-        println("Account Not Found!");
-    }
-
-    public static void printAccountAlreadyLoaded() {
-        println("");
-        println("Account Already Loaded!");
-    }
-
-    public static void printAttemptsExceeded() {
-        println("");
-        println("You've surpassed the two attempts limit.");
-        println("We'll give you two more, but your activity has been flagged.");
-    }
-
-    public static void printAccountAccepted() {
-        println("");
-        println("ID Accepted! Loading Account Info...");
-    }
-
-    public static void printAccountInformation(Account account) {
-        println("");
     }
 
 }

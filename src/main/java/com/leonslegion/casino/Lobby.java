@@ -66,7 +66,7 @@ public class Lobby {
 
             case "check":
                 Account account = Account.AccountManager.findAccount(InputHandler.getLongInput("Please enter ID"));
-                System.out.format("This account has a balance of: $%.2f \n", account.getAccountBalance());
+                Console.println("This account has a balance of: " + Console.moneyToString(account.getAccountBalance()) + "\n");
                 actionSelection();
                 break;
 
@@ -134,10 +134,10 @@ public class Lobby {
 
     public void buyMoreChips(long ID){
         Account account = Account.AccountManager.findAccount(ID);
-        System.out.format("This account has a balance of: $%.2f \n",  account.getAccountBalance() );
-        double bal = InputHandler.getDoubleInput("How much money would you like to add to your account?");
+        account.toString();
+        long bal = Console.getMoneyInput("How much money would you like to add to your account?");
         account.setAccountBalance(bal);
-        System.out.format("This account now has a balance of: $%.2f \n", account.getAccountBalance() );
+        account.toString();
     }
 
     public void selectGame(){

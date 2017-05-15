@@ -27,6 +27,19 @@ public class BlackjackGame extends CardGame {
         loadPlayer();
         playing = true;
         setHasDealer(true);
+
+    public BlackjackPlayer createDealer() {
+        Account newDealerAccount = Account.AccountFactory.createAccountWithName("Dealer");
+        Account.AccountManager.addAccount(newDealerAccount);
+        newDealerAccount.setAccountBalance(100000000);
+
+        return new BlackjackPlayer(newDealerAccount) {
+            @Override
+            public long placeBet(long d) {
+                // do nothing
+                return -1;
+            }
+        };
     }
 
     public BlackjackGame(BlackjackPlayer player) {
@@ -117,7 +130,7 @@ public class BlackjackGame extends CardGame {
         getPlayerAccount().setAccountBalance(bet *= 1.5);
     }
 
-    private double returnBalance() {
+    private long returnBalance() {
         return getPlayerAccount().getAccountBalance();
     }
 
@@ -240,6 +253,7 @@ public class BlackjackGame extends CardGame {
 
 
     private void loadPlayer() {
+<<<<<<< HEAD
 
         long accountId = -1;
 
@@ -269,6 +283,17 @@ public class BlackjackGame extends CardGame {
        // player.placeBet(b);
         bet = b;
     }*/
+=======
+        long accountId = Long.parseLong(InputHandler.getStringInput("Enter ID number: "));
+        Account acct = Account.AccountManager.findAccount(accountId);
+        long balance = Account.AccountManager.getBalance(acct);
+        player = new BlackjackPlayer(acct);
+    }
+
+    private void placeBet() {
+        bet = Console.getMoneyInput("How much would you like to bet?");
+    }
+>>>>>>> eb026960a9abd6f05c2243c894516e2c5e7c4703
 
  /*   public void play() {
 
@@ -340,7 +365,7 @@ public class BlackjackGame extends CardGame {
 
             System.out.println(b);
             System.out.println(player.getBalance());
-            if (bet > (long)player.getBalance()) {
+            if ((double)bet > player.getBalance()) {
                 Console.println("Bet exceeds you balance!");
                 b = -1;
             }

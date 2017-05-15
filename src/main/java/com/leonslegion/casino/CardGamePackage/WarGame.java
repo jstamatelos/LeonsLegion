@@ -20,7 +20,11 @@ public class WarGame extends CardGame implements Comparator {
     static Card playerCard;
     static Card dealerCard;
 
-    // Game starter
+
+    /**
+     * Method called from the lobby to start the game
+     */
+
     public static void startWarGame(){
 
         setUp();
@@ -28,12 +32,18 @@ public class WarGame extends CardGame implements Comparator {
 
     }
 
+
+    /**
+     * Handles game logic
+     *  Dealer showing / Player showing card / comparison / result / exit
+     */
+
     private static void gameLogic(){
 
         WarPlayer newWarPlayer = createWarPlayer();
         boolean playRound = true;
         while (playRound) {
-            double bet = WarGame.placeBet(newWarPlayer);
+            long bet = WarGame.placeBet(newWarPlayer);
             Console.println(setDealerCard());
             Console.println(setplayerCard());
             Console.println(determineWinner(newWarPlayer, bet));
@@ -41,6 +51,11 @@ public class WarGame extends CardGame implements Comparator {
         }
 
     }
+
+
+    /**
+     * Display for game start
+     */
 
     private static void setUp(){
 
@@ -51,14 +66,19 @@ public class WarGame extends CardGame implements Comparator {
 
     }
 
-    public static WarPlayer createWarPlayer() {
+    /**
+     * Creates player, tests that ID is valid, will not accept an invalid ID
+     * @return
+     */
+
+    private static WarPlayer createWarPlayer() {
         while (true) {
-            String slotPlayerID = InputHandler.getStringInput("Please enter your ID.");
-            if (!NumberUtils.isParsable(slotPlayerID)) {
+            String warPlayerID = InputHandler.getStringInput("Please enter your ID.");
+            if (!NumberUtils.isParsable(warPlayerID)) {
                 Console.println("Not a valid ID");
                 continue;
             }
-            Account warPlayerAccount = Account.AccountManager.findAccount(Long.parseLong(slotPlayerID));
+            Account warPlayerAccount = Account.AccountManager.findAccount(Long.parseLong(warPlayerID));
             if (warPlayerAccount == null) {
                 Console.println("ID not found!");
                 continue;
@@ -70,15 +90,22 @@ public class WarGame extends CardGame implements Comparator {
 
     }
 
-    // Initial Bet
-    public static double placeBet(WarPlayer warPlayer) {
-        double bet = InputHandler.getDoubleInput("Please place a bet: ");
+    /**
+     * Places bet, 1 bet per round
+     * @param warPlayer player that is linked with the entered ID at game start
+     * @return places bet
+     */
+
+    private static long placeBet(WarPlayer warPlayer) {
+        long bet = Console.getMoneyInput("Please place a bet: ");
         long accountID = warPlayer.getAccount().getId();
         for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
             if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
                 double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
                 if (balance == 0) {
                     Console.println("You have a balance of 0!");
+                    Console.println("Sorry! You are out of money.");
+
                     return 0;
                 }
                 if (bet > balance) {
@@ -94,30 +121,42 @@ public class WarGame extends CardGame implements Comparator {
         return bet;
     }
 
-    // Dealer draws card from dealer deck (deck == hand)
-    public static String setDealerCard(){
+    /**
+     * Dealers card
+     * @return displays dealers card
+     */
+
+    private static String setDealerCard(){
         dealerDeck.shuffleDeck();
         dealerCard = dealerDeck.dealCard();
         return "Dealer draws a : " + dealerCard.toString();
     }
-    // Player draws card from player deck (deck == hand)
-    public static String setplayerCard(){
+
+    /**
+     * players card
+     * @return displays players card
+     */
+    private static String setplayerCard(){
         playerDeck.shuffleDeck();
         playerCard = playerDeck.dealCard();
         return "Player draws a : " + playerCard.toString();
     }
 
 
-    // Dealer card is compared to player card by point value
-    public static String determineWinner(WarPlayer warPlayer, double bet){
+    /**
+     * Compares dealercard / playercard / determines high card
+     * @param warPlayer
+     * @param bet player bet - doubled if 'War' condition met
+     * @return win / loss / draw message
+     */
+    public static String determineWinner(WarPlayer warPlayer, long bet){
         if (playerCard.getPointValue() > dealerCard.getPointValue()){
             long accountID = warPlayer.getAccount().getId();
             for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
                 if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
-                    double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
+                    long balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
                     Account.AccountManager.getAccounts().get(account).setAccountBalance(bet);
-                    Console.println("Your balance is now: $");
-                    Console.println("%,.2f", Account.AccountManager.getAccounts().get(account).getAccountBalance());
+                    Console.print("Your balance is now: " + Console.moneyToString(warPlayer.getAccount().getAccountBalance()));
                     Console.printDashes();
 
                 }
@@ -127,24 +166,26 @@ public class WarGame extends CardGame implements Comparator {
             long accountID = warPlayer.getAccount().getId();
             for (int account = 0; account < Account.AccountManager.getAccounts().size(); account++) {
                 if (Account.AccountManager.getAccounts().get(account).getId() == accountID) {
-                    double balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
+                    long balance = Account.AccountManager.getAccounts().get(account).getAccountBalance();
                     Account.AccountManager.getAccounts().get(account).setAccountBalance(-bet);
-                    Console.println("Your balance is now: $");
-                    Console.println("%,.2f", Account.AccountManager.getAccounts().get(account).getAccountBalance());
+                    Console.print("Your balance is now: " + Console.moneyToString(warPlayer.getAccount().getAccountBalance()));
                     Console.printDashes();
                 }
             }
             return "Dealer wins! Oh well.";
         } else {
-            Console.println("Tie! WAR!!!!!!");
+            Console.println("Tie! WAR!!!!!! Your bet is doubled!!!!\n Another Card is pulled for each player!");
             Console.println(setDealerCard());
             Console.println(setplayerCard());
             return determineWinner(warPlayer, bet * 2);
         }
     }
 
-    // Exit game
-    public static boolean exit() {
+    /**
+     * Allows exit back to menu
+     * @return
+     */
+    private static boolean exit() {
         String exitOpportunity = InputHandler.getStringInput("Type 'exit' to return to lobby or 'stay' to play again");
         if (exitOpportunity.equalsIgnoreCase("exit")) {
             return false;
@@ -154,14 +195,14 @@ public class WarGame extends CardGame implements Comparator {
     }
 
 
-    // Needed for implementation of interface
+
     public int compare(Object o1, Object o2) {
         Card dealerCard = (Card) o1;
         Card playerCard = (Card) o2;
         return dealerCard.getRank().ordinal() - playerCard.getRank().ordinal();
     }
 
-    // Needed for implementation of interface
+
     @Override
     public void initialDeal() {
        //

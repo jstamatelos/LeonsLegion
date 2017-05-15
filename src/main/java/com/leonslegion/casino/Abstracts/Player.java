@@ -14,10 +14,10 @@ public abstract class Player {
         return account;
     }
 
-    public double getBalance() {
+    public long getBalance() {
         return account.getAccountBalance();
     }
 
-    public abstract double placeBet(double bet) throws Exception;
+    public abstract long placeBet(long bet) throws Exception;
 
 }

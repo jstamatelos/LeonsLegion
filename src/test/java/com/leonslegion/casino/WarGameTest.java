@@ -1,8 +1,10 @@
 package com.leonslegion.casino;
-
+import com.leonslegion.casino.CardGamePackage.CardPlayer;
+import com.leonslegion.casino.AccountPackage.Account;
 import com.leonslegion.casino.CardGamePackage.Card;
 import com.leonslegion.casino.CardGamePackage.CardComparator;
 import com.leonslegion.casino.CardGamePackage.Deck;
+import com.leonslegion.casino.CardGamePackage.WarPlayer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,29 +13,37 @@ import org.junit.Test;
  */
 
 public class WarGameTest {
+
+
     @Test
-    public void startWarGame()  {
+    public void createWarPlayer() {
+        Account account = new Account();
+        WarPlayer newWarPlayer = new WarPlayer(account);
+
+        Assert.assertNotNull(newWarPlayer);
     }
 
     @Test
-    public void createWarPlayer()  {
+    public void placeBet()  {
+
+        Account account = new Account();
+        WarPlayer player = new WarPlayer(account);
+
+        try {
+            player.placeBet(100);
+        } catch (Exception e){
+            Console.print("This should never get hit.");
+        }
+
+
+        double actual = player.getBalance();
+        double expected = 900;
+
+
+        Assert.assertEquals(actual,expected,0.00001);
+
     }
 
-    @Test
-    public void placeBet() {
-    }
-
-    @Test
-    public void setDealerCard() {
-    }
-
-    @Test
-    public void setplayerCard() {
-    }
-
-    @Test
-    public void determineWinner() {
-    }
 
     @Test
     public void testDealerShowCard() {
@@ -47,7 +57,6 @@ public class WarGameTest {
 
 
     }
-
 
     @Test
     public void testPickHigherValue()  {
@@ -64,6 +73,7 @@ public class WarGameTest {
 
 
     }
+
     @Test
     public void testDealerAndPlayerShowSameCard() {
 
@@ -74,7 +84,7 @@ public class WarGameTest {
         Card card1 = new Card(Card.Rank.ACE, Card.Suit.CLUBS);
 
         int actual = comp.compare(card0, card1);
-        Console.printDouble(actual);
+
         Assert.assertEquals(expected, actual);
     }
     @Test

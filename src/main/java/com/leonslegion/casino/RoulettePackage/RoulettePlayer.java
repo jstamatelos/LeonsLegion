@@ -34,7 +34,7 @@ public class RoulettePlayer extends Player {
     }
 
 
-    public double placeBet (double bet) {
+    public long placeBet (long bet) {
         if (super.getBalance() - bet < 0) {
             Console.println("Bet greater than current Balance!");
         }
@@ -43,7 +43,7 @@ public class RoulettePlayer extends Player {
     }
 
 
-
+    //TODO - this logic should probably be left to the Console class.
     public String placeBet (String bet) {
         if (!NumberUtils.isParsable(bet)) {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");
@@ -62,7 +62,7 @@ public class RoulettePlayer extends Player {
             return placeBet(newBet);
         }
         else {
-            getAccount().setAccountBalance(Double.parseDouble(bet) * -1);
+            getAccount().setAccountBalance(Long.parseLong(bet) * -1);
         }
         return bet;
     }
@@ -70,7 +70,7 @@ public class RoulettePlayer extends Player {
 
 
 
-    public void makeRouletteBet (String betType, double betValue) {
+    public void makeRouletteBet (String betType, long betValue) {
         betList.add(new RouletteBet(betType, betValue));
     }
 
