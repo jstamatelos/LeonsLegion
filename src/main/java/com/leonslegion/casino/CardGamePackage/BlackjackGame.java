@@ -270,7 +270,12 @@ public class BlackjackGame extends CardGame {
                 stay = true;
                 break;
             case  "split":
-                handleSplit();
+                if (player.getHand().splitPossible()) {
+                    handleSplit();
+                } else {
+                    Console.println("Split not possible!");
+                    turn();
+                }
                 break;
             default:
                 turn();
