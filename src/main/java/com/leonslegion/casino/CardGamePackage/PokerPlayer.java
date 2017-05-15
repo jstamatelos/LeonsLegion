@@ -18,19 +18,19 @@ public class PokerPlayer extends CardPlayer {
     boolean leaveGame() {
         Console.printDashes();
         String string = Console.getStringInput("You gonna stick around, " + getAccount().getAccountHolderName() +  "? (Y/N)\n");
-        if(string.equalsIgnoreCase("y")) {
+        if(string.equalsIgnoreCase("y") || string.equalsIgnoreCase("yes")) {
             Console.println("OK, " + getAccount().getAccountHolderName() + ". You can stay, but you should probably slow down on the jack and cokes.\n");
             return false;
-        } else if(string.equalsIgnoreCase("n")){
-            Console.println("Good choice.\n");
+        } else if(string.equalsIgnoreCase("n") || string.equalsIgnoreCase("no")){
+            Console.println("Everyone else at the table is sad to see you go.\n");
             return true;
         } else {
             Console.println("I asked for a yes or no. Lets flip a coin, and if it's heads you stay.\n");
             if(Math.random() < 0.5) {
-                Console.println("I guess you're destined to lose more money.\n");
+                Console.println("Well, " + getAccount().getAccountHolderName() + ", I guess you're destined to stick around and lose more money.");
                 return false;
             } else {
-                Console.println("Bye, Felicia.\n");
+                Console.println("Make like MJ and beat it.\n");
                 return true;
             }
         }

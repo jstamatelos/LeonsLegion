@@ -25,13 +25,18 @@ public class PokerGame extends CardGame {
         return (ArrayList<PokerPlayer>)super.getPlayers();
     }
 
+    public PokerPlayer getPlayer(int index) {
+        return (PokerPlayer)super.getPlayers().get(index);
+    }
+
     private void printRules() {
         Console.println( "Well, well, well. Another sucker.\n\n" +
                             "Welcome to Leon's Casino's Pokerstravaganza.\n" +
                             "You're probably gonna lose, but I hope you have\n" +
-                            "fun doing it. When you can't pay the ante, we'll" +
+                            "fun doing it. When you can't pay the ante, we'll\n" +
                             "kick you out. Feel free to take it personally.\n" +
-                            "Oh, and aces are always high. No Ace-5 straights.\n\n");
+                            "Oh, and aces are always high. No Ace-5 straights.\n" +
+                            "...Don't judge.\n\n");
         Console.printDashes();
     }
 
@@ -60,7 +65,7 @@ public class PokerGame extends CardGame {
 
     private void checkPlayerBalances() {
         for(int i = 0; i < players.size(); i++) {
-            PokerPlayer player = getPlayers().get(i);
+            PokerPlayer player = getPlayer(i);
             if(player.getBalance() < 1000) {
                 Console.println(getPokerPlayerName(player) + ": You don't have to go home, but you can't stay here.\n");
                 players.remove(i);
@@ -87,6 +92,7 @@ public class PokerGame extends CardGame {
     Ante up!
      */
     private void anteUp() {
+        Console.printDashes();
         for(PokerPlayer p : getPlayers()) {
             String name = getPokerPlayerName(p);
             try {
@@ -130,7 +136,7 @@ public class PokerGame extends CardGame {
     Offers each player their options and routs their choice appropriately.
     */
     private void playerChoice(int playerIndex) {
-        PokerPlayer player = getPlayers().get(playerIndex);
+        PokerPlayer player = getPlayer(playerIndex);
         long highBet = getHighBet();
 
         Console.printDashes();
@@ -218,7 +224,9 @@ public class PokerGame extends CardGame {
     }
 
     private void printPot() {
+        Console.printDashes();
         Console.println("There's currently " + Console.moneyToString(pot) + " in the pot.\n");
+        Console.printDashes();
     }
 
     /*
@@ -248,14 +256,14 @@ public class PokerGame extends CardGame {
         while(hasFolded[firstNotToFold]) {
             firstNotToFold++;
         }
-        PokerPlayer winner = getPlayers().get(firstNotToFold);
+        PokerPlayer winner = getPlayer(firstNotToFold);
         for (int i = 0; i < hasFolded.length; i++) {
             if(hasFolded[i]) {
                 continue;
             }
-            setPlayerHandType(getPlayers().get(i));
-            if(winner.getHand().compareTo(getPlayers().get(i).getHand()) < 0) {
-                winner = getPlayers().get(i);
+            setPlayerHandType(getPlayer(i));
+            if(winner.getHand().compareTo(getPlayer(i).getHand()) < 0) {
+                winner = getPlayer(i);
             }
         }
 
@@ -282,11 +290,22 @@ public class PokerGame extends CardGame {
 
     private void promptPlayerExits() {
         for(int i = 0; i < players.size(); i++) {
-            if(getPlayers().get(i).leaveGame()) {
+            if(getPlayer(i).leaveGame()) {
                 players.remove(i);
                 i--;
             }
         }
+    }
+
+    private void gameExitMessage() {
+        Console.printDashes();
+        if(players.size() == 1) {
+            Console.println(getPokerPlayerName(getPlayer(0)) + ", you're the only one left, so the game is over.\n" +
+                    "Come back when you have some friends.");
+        } else {
+            Console.println("Everybody left the table. Time for a smoke break.");
+        }
+        Console.printDashes();
     }
 
 
@@ -317,6 +336,8 @@ public class PokerGame extends CardGame {
             promptPlayerExits();
             checkPlayerBalances();
         }
+
+        gameExitMessage();
     }
 
     /*
