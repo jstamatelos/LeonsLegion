@@ -25,11 +25,40 @@ public class BlackjackPlayer extends CardPlayer {
         hand.addCard(card);
     }
 
+    public void hitSplitHand(int hand, Deck deck) {
+        Card card = deck.dealCard();
+        if (hand == 1) {
+            BlackjackHand h = getSplitHands().get(0);
+            h.addCard(card);
+        } else if (hand == 2) {
+            BlackjackHand h = getSplitHands().get(1);
+            h.addCard(card);
+        }
+    }
+
+    public void showHand() {
+        if (hasSplitHands()) {
+            int num = 1;
+            for (Hand h : getSplitHands()) {
+                Console.println("Hand " + num + ": ");
+                Console.println(h.toString());
+                num +=1 ;
+            }
+            Console.println("\n" + getHand().getPoints() + " points.");
+        } else {
+            Console.println("Your hand: \n");
+            Console.println(getHand().toString());
+            Console.println("\n" + getHand().getPoints() + " points.");
+        }
+    }
+
+
     public BlackjackHand getHand() {
         return hand;
     }
-    public void stay() {
-        //nothing happens. not sure if this needs a method.
+
+    public void removeSplitHand() {
+        splitHands = new ArrayList<>();
     }
 
     public void split() {
@@ -60,7 +89,15 @@ public class BlackjackPlayer extends CardPlayer {
         hand = blackjackHand;
     }
 
-    //TODO - dzf - probably good idea to use getMoneyInput here.
+    public void deductBetFromAccount(int bet) {
+        getAccount().setAccountBalance(bet * -1);
+    }
+
+    public void addBetToAccount(int bet) {
+        getAccount().setAccountBalance(bet);
+    }
+
+
     public String placeBet (String bet) {
         if (!NumberUtils.isParsable(bet)) {
             String newBet = InputHandler.getStringInput("That's not a valid bet.");

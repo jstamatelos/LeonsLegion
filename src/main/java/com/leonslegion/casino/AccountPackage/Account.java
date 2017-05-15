@@ -39,14 +39,11 @@ public class Account {
     }
 
     @Override
-    //TODO - due to long conversion, this won't be right
     public String toString() {
-        return "Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: " + Console.moneyToString(accountBalance) + "\n";
+        return "Account ID: " + id + "\nAccount Holder: " + accountHolderName + "\nAccount Balance: "
+                + Console.moneyToString(accountBalance);
     }
 
-    /**
-     * Created by sarahweisser on 5/10/17.
-     */
     public static class AccountFactory {
 
         public static Account createAccountWithName(String accountHolderName) {
@@ -54,7 +51,6 @@ public class Account {
         }
 
     }
-
     /**
      * Created by sarahweisser on 5/9/17.
      */
@@ -62,17 +58,17 @@ public class Account {
 
         private static ArrayList<Account> accounts = new ArrayList<Account>();
 
-        public static String showBalance(Account account) {
-            return account.toString();
+        public static void addAccount(String accountHolderName) {
+            Account account = new Account(accountHolderName);
+            account.setId(accounts.size() + 1);
+            accounts.add(account);
         }
-
         public static ArrayList<Account> getAccounts() {
             return accounts;
         }
 
-        public static void addAccount(Account account) {
-            account.setId(accounts.size() + 1);
-            accounts.add(account);
+        public static String showBalance(Account account) {
+            return account.toString();
         }
 
         public static long getBalance(Account account) {
