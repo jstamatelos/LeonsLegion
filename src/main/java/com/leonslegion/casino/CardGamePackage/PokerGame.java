@@ -351,8 +351,7 @@ public class PokerGame extends CardGame {
      */
     public static void main(String[] args) {
         for(int i = 1; i <= 10; i++){
-            Account account = new Account("Guest" + i);
-            Account.AccountManager.addAccount(Account.AccountFactory.createAccountWithName("Guest" + i));
+            Account.AccountManager.addAccount("Guest" + i);
         }
 
         PokerGame game = new PokerGame();
