@@ -45,7 +45,7 @@ public class PokerGame extends CardGame {
     private void promptGame() {
         int numPlayers = Console.getIntegerInput("How many players?");
         while(numPlayers > 9 || numPlayers < 2) {
-            numPlayers = Console.getIntegerInput("Invalid number of players. Try in the 1 - 9 range.");
+            numPlayers = Console.getIntegerInput("Invalid number of players. Try in the 2 - 9 range.");
         }
         loadPlayers(numPlayers);
     }
