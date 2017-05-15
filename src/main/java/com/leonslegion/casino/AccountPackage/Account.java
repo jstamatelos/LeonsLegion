@@ -85,7 +85,7 @@ public class Account {
 
         public static Account findAccount(String accountHolderName) {
             for (Account a : accounts) {
-                if (accountHolderName.equalsIgnoreCase(a.getAccountHolderName())) {
+                if (accountHolderName.equals(a.getAccountHolderName())) {
                     return a;
                 }
             }

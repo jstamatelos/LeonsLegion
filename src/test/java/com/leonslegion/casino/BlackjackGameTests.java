@@ -23,17 +23,5 @@ public class BlackjackGameTests {
         player = new BlackjackPlayer(acct);
         blackjackGame = new BlackjackGame(player);
     }
-/*
-    @Test
-    public void testNewGame() {
 
-        BlackjackGame g = new BlackjackGame();
-
-        Assert.assertTrue(blackjackGame.getHasDealer());
-
-        g.startBlackJack();
-
-
-    }
-*/
 }
