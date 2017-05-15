@@ -12,49 +12,49 @@ public class RouletteBetHandler {
 
     public static String handleAnyBet(InputAsker asker) {
         String bet = asker.askForInput("Place a bet by using the options above. Fractional part of input will be ignored.");
-        while (NumberUtils.isParsable(bet)) {
-            if ((Double.parseDouble(bet) > 0 && Double.parseDouble(bet) < 37)) {
-                double betAsDouble = Double.parseDouble(bet);
-                int betAsInt = (int) betAsDouble;
-                return Integer.toString(betAsInt);
-            }
-            else if (bet.equalsIgnoreCase("0") || bet.equalsIgnoreCase("00")) {
-                return bet;
+        while (true) {
+            if (NumberUtils.isParsable(bet)) {
+                if ((Double.parseDouble(bet) > 0 && Double.parseDouble(bet) < 37)) {
+                    double betAsDouble = Double.parseDouble(bet);
+                    int betAsInt = (int) betAsDouble;
+                    return Integer.toString(betAsInt);
+                }
+                else {
+                    bet = asker.askForInput("You must bet from one of the options above.");
+                }
             }
             else {
-                bet = asker.askForInput("You must bet 0, 00, or a number between 1 and 36.");
+                if (bet.equalsIgnoreCase("0") || bet.equalsIgnoreCase("00")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("1st C")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("2nd C")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("3rd C")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("1st D")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("2nd D")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("3rd D")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("Front")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("Back")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("Odd")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("Even")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("Red")) {
+                    return bet;
+                } else if (bet.equalsIgnoreCase("Black")) {
+                    return bet;
+                } else {
+                    bet = asker.askForInput("You must bet from one of the options above.");
+                }
             }
         }
-        while (!NumberUtils.isParsable(bet)) {
-            if (bet.equalsIgnoreCase("1st C")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("2nd C")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("3rd C")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("1st D")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("2nd D")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("3rd D")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("Front")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("Back")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("Odd")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("Even")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("Red")) {
-                return bet;
-            } else if (bet.equalsIgnoreCase("Black")) {
-                return bet;
-            } else {
-                bet = asker.askForInput("You must bet from one of the options above.");
-            }
-        }
-        return bet;
     }
 
     public static long checkPlayerBetsForInsideBetWins(ArrayList<RouletteBet> betList, String spinResult) {
