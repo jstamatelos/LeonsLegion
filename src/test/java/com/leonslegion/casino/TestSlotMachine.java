@@ -29,6 +29,74 @@ public class TestSlotMachine {
     }
 
     @Test
+    public void testDetermineWinningsCherry() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Cherry");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsOrange() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Orange");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsWatermelon() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Watermelon");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
+    public void testDetermineWinningsBar() {
+
+        //given
+        Account.AccountManager.addAccount("Leon");
+        SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
+        SlotMachine machine = new SlotMachine(sp);
+        long expectedResult = 50000;
+
+        //when
+        long actualResult = machine.determineWinnings("Bar");
+
+        //then
+        Assert.assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
     public void testDetermineWinningsLemon() {
 
         //given
@@ -127,7 +195,6 @@ public class TestSlotMachine {
         SlotPlayer sp = new SlotPlayer(Account.AccountManager.findAccount("Leon"));
         SlotMachine machine = new SlotMachine(sp);
         do {
-
             machine = new SlotMachine(sp);
             machine.pullLever();
         } while (machine.matchImages());
